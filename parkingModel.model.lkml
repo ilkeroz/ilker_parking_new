@@ -1,4 +1,4 @@
-connection: "dwh_qastage2"
+connection: "dwh_netsensenext"
 
 # include all the views
 include: "*.view"

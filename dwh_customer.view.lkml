@@ -1,5 +1,5 @@
 view: dwh_customer {
-  sql_table_name: hive.dwh_giant.dwh_customer ;;
+  sql_table_name: dwh_customer ;;
   suggestions: yes
 
   dimension: city {

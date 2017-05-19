@@ -1,5 +1,5 @@
 view: dwh_parking_spot {
-  sql_table_name: hive.dwh_giant.dwh_parking_spot ;;
+  sql_table_name: dwh_parking_spot ;;
   suggestions: yes
 
   dimension: active {

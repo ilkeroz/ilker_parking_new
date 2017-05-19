@@ -6,7 +6,7 @@ view: daily_parking_aggregates_spot {
              sum(spot.turnovers) as daily_turnovers,
              sum(spot.occduration/(1000000*60)) / case when sum(spot.turnovers)=0 then 1 else sum(spot.turnovers) end as daily_parking_minutes
       FROM   dwh_aggregation_parking_spot spot
-      WHERE  spot.startday > date_format(date_add('day',-8,current_date), '%Y-%m-%d')
+      WHERE  spot.startday > date_format(date_add('day',-31,current_date), '%Y-%m-%d')
       GROUP BY spot.siteid, spot.parkingspotid, spot.startday
       ;;
   }
