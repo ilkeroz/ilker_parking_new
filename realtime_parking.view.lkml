@@ -2,7 +2,11 @@ view: realtime_parking {
 
   derived_table: {
     sql:
-      SELECT parkingspotid,(lat1+lat2+lat3+lat4)/4 as lat1, (lng1+lng2+lng3+lng4)/4 as lng1, since, siteid,
+      SELECT parkingspotid,
+             round((round(lat1,6)+round(lat2,6)+round(lat3,6)+round(lat4,6))/4, 6) as lat1,
+             round((round(lng1,6)+round(lng2,6)+round(lng3,6)+round(lng4,6))/4, 6) as lng1,
+             since,
+             siteid,
              case occupancy when true then 1 else 0 end as occupancy_01
       FROM   dwh_parking_spot
       WHERE  lat1 != 0
