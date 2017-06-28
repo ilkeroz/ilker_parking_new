@@ -8,7 +8,7 @@ view: daily_parking_aggregates {
       FROM   dwh_aggregation_parking_spot spot
       JOIN   dwh_site site ON site.siteid = spot.siteid
       JOIN   dwh_customer cust ON cust.orgid = site.orgid
-      WHERE  spot.startday > date_format(date_add('day',-31,current_date), '%Y-%m-%d')
+      WHERE  spot.startday > date_format(date_add('day',-131,current_date), '%Y-%m-%d')
       GROUP BY spot.siteid, spot.startday, cust.name, site.name
       ;;
   }
