@@ -34,6 +34,16 @@ explore: hourly_parking_aggregates {
     relationship: many_to_one
   }
 }
+explore: minutes_parking_aggregates {
+  join: dwh_site {
+    sql_on: ${minutes_parking_aggregates.siteid}=${dwh_site.siteid} ;;
+    relationship: many_to_one
+  }
+  join: dwh_customer {
+    sql_on: ${dwh_site.orgid}=${dwh_customer.orgid} ;;
+    relationship: many_to_one
+  }
+}
 
 
 
