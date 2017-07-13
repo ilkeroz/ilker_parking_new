@@ -5,6 +5,9 @@ view: minutes_parking_aggregates {
              hist.startday as startday,
              hist.weekday as weekday,
              hist.occduration as minute
+             hist.occpercent as minutes_occupancy_percentage,
+             hist.turnovers as minutes_parked_vehicles
+
 
       from
       (
