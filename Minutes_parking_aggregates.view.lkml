@@ -4,7 +4,7 @@ view: minutes_parking_aggregates {
       select hist.siteid as siteid,
              hist.startday as startday,
              hist.weekday as weekday,
-             hist.occduration as minute
+             hist.occduration as minute,
              occpercent as minutes_occupancy_percentage,
              turnovers as minutes_parked_vehicles
 
