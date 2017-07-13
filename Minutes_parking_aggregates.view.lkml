@@ -16,7 +16,7 @@ view: minutes_parking_aggregates {
              date_format(date_parse(startday,'%Y-%m-%d'), '%W') as weekday
       FROM   dwh_aggregation_parking_spot
       WHERE  startday > date_format(date_add('day',-31,current_date), '%Y-%m-%d')
-      GROUP BY siteid, startday,minute
+      GROUP BY siteid, startday
       ) hist
       LEFT OUTER JOIN
       (
@@ -47,9 +47,9 @@ view: minutes_parking_aggregates {
       ) week
       ON     hist.siteid = week.siteid
       AND    hist.weekday = week.weekday
-      AND    hist.minute = week.minute
 
-      ORDER  By hist.siteid, hist.startday,hist.minute
+
+      ORDER  By hist.siteid, hist.startday
       ;;
   }
 
