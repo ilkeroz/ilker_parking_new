@@ -4,27 +4,23 @@ view: minutes_parking_aggregates {
       select hist.siteid as siteid,
              hist.startday as startday,
              hist.weekday as weekday,
-             (occduration/(100000*60)) as minute,
-             occpercent as minutes_occupancy_percentage,
-             turnovers as minutes_parked_vehicles
+             hist.occduration as minute,
+             hist.occpercent as minutes_occupancy_percentage,
+             hist.turnovers as minutes_parked_vehicles
 
 
       from
       (
-      SELECT siteid, startday,
+      SELECT siteid, startday,(occduration/(100000*60)) as minute,occpercent,turnovers
              date_format(date_parse(startday,'%Y-%m-%d'), '%W') as weekday
-
-
       FROM   dwh_aggregation_parking_spot
       WHERE  startday > date_format(date_add('day',-31,current_date), '%Y-%m-%d')
-      GROUP BY siteid, startday
+      GROUP BY siteid, startday,minute
       ) hist
       LEFT OUTER JOIN
       (
-      SELECT siteid, startday,
+      SELECT siteid, startday,(occduration/(100000*60)) as minute,occpercent,
              date_format(date_parse(startday,'%Y-%m-%d'), '%W') as weekday
-
-
       FROM   dwh_aggregation_parking_spot
       WHERE  startday > date_format(date_add('day',-8,current_date), '%Y-%m-%d')
       and    case date_format(date_parse(startday,'%Y-%m-%d'),'%W')
@@ -50,8 +46,9 @@ view: minutes_parking_aggregates {
       ) week
       ON     hist.siteid = week.siteid
       AND    hist.weekday = week.weekday
+      AND    hist.minute = week.minute
 
-      ORDER  By hist.siteid, hist.startday
+      ORDER  By hist.siteid, hist.startday,hist.minute
       ;;
   }
 
