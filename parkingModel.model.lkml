@@ -35,6 +35,8 @@ explore: hourly_parking_aggregates {
   }
 }
 
+
+
 explore: daily_parking_aggregates_spot {
   join: dwh_site {
     sql_on: ${daily_parking_aggregates_spot.siteid}=${dwh_site.siteid} ;;
