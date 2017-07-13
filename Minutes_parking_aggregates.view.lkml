@@ -4,7 +4,7 @@ view: minutes_parking_aggregates {
       select hist.siteid as siteid,
              hist.startday as startday,
              hist.weekday as weekday,
-             hist.occduration as minute,
+             (occduration/(100000*60)) as minute,
              occpercent as minutes_occupancy_percentage,
              turnovers as minutes_parked_vehicles
 
@@ -12,18 +12,18 @@ view: minutes_parking_aggregates {
       from
       (
       SELECT siteid, startday,
-             date_format(date_parse(startday,'%Y-%m-%d'), '%W') as weekday,
-             (occduration/(100000*60)) as minute
+             date_format(date_parse(startday,'%Y-%m-%d'), '%W') as weekday
+
 
       FROM   dwh_aggregation_parking_spot
       WHERE  startday > date_format(date_add('day',-31,current_date), '%Y-%m-%d')
-      GROUP BY siteid, startday,(occduration/(100000*60))
+      GROUP BY siteid, startday
       ) hist
       LEFT OUTER JOIN
       (
       SELECT siteid, startday,
-             date_format(date_parse(startday,'%Y-%m-%d'), '%W') as weekday,
-             (occduration/(100000*600)) as minute
+             date_format(date_parse(startday,'%Y-%m-%d'), '%W') as weekday
+
 
       FROM   dwh_aggregation_parking_spot
       WHERE  startday > date_format(date_add('day',-8,current_date), '%Y-%m-%d')
@@ -50,8 +50,8 @@ view: minutes_parking_aggregates {
       ) week
       ON     hist.siteid = week.siteid
       AND    hist.weekday = week.weekday
-      AND    hist.minute = week.minute
-      ORDER  By hist.siteid, hist.startday, hist.minute
+
+      ORDER  By hist.siteid, hist.startday
       ;;
   }
 
@@ -77,34 +77,10 @@ view: minutes_parking_aggregates {
     sql: ${TABLE}.occduration ;;
   }
 
-
-
-
-  dimension: week_hourly_occupancy_percent {
-    type: number
-    value_format: "##\%"
-    sql: ${TABLE}.week_hourly_occupancy_percent ;;
-  }
-
   dimension_group: day_details {
     type: time
     timeframes: []
     sql: date_parse(${TABLE}.startday,'%Y-%m-%d') ;;
   }
 
-  measure: avg_occupancy {
-    type: average
-    value_format: "##\%"
-    label: "Average Occupancy"
-    sql: ${TABLE}.occpercent ;;
   }
-
-
-
-
-  measure: avg_turnovers {
-    type: average
-    value_format: "###"
-    label: "Average Parked Vehicles by Arrival Hour"
-    sql: ${TABLE}.turnovers ;;
-  }}
