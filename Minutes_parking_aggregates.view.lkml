@@ -10,7 +10,7 @@ view: minutes_parking_aggregates {
       (
       SELECT siteid, startday,
              date_format(date_parse(startday,'%Y-%m-%d'), '%W') as weekday,
-             (occduration/100000*60) as minutes,
+             occduration/(100000*60) as minutes,
              occpercent as minutes_occupancy_percentage,
              turnovers as minutes_parked_vehicles
       FROM   dwh_aggregation_parking_spot
