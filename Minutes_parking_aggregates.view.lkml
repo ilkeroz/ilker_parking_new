@@ -17,7 +17,7 @@ view: minutes_parking_aggregates {
 
       FROM   dwh_aggregation_parking_spot
       WHERE  startday > date_format(date_add('day',-31,current_date), '%Y-%m-%d')
-      GROUP BY siteid, startday,occduration
+      GROUP BY siteid, startday,minute
       ) hist
       LEFT OUTER JOIN
       (
