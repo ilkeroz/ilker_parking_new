@@ -28,10 +28,6 @@ view: minutes_parking_aggregates {
     sql: ${TABLE}.weekday ;;
   }
 
-  dimension: occduration {
-    type: number
-    sql: ${TABLE}.occduration ;;
-  }
   dimension: occpercent {
     type: string
     sql: ${TABLE}.occpercent ;;
