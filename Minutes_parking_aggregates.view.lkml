@@ -1,9 +1,9 @@
 view: minutes_parking_aggregates {
   derived_table: {
     sql:
-      select siteid ,startday,
+      select siteid ,startday,occduration
      -- date_format(date_parse(startday,'%Y-%m-%d'), '%W') as weekday,
-      (occduration/(1000000*60)) as minute,
+    --(occduration/(1000000*60)) as minute,
       occpercent , turnovers
       from dwh_aggregation_parking_spot
       -- WHERE  startday > date_format(date_add('day',-31,current_date), '%Y-%m-%d')
