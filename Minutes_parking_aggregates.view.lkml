@@ -29,7 +29,7 @@ view: minutes_parking_aggregates {
   }
 
   dimension: occduration {
-    type: number
+    type: date_time
     sql: ${TABLE}.occduration ;;
   }
   dimension: occpercent {
