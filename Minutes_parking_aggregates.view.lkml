@@ -2,11 +2,11 @@ view: minutes_parking_aggregates {
   derived_table: {
     sql:
       select siteid ,startday,
-      date_format(date_parse(startday,'%Y-%m-%d'), '%W') as weekday,
+     -- date_format(date_parse(startday,'%Y-%m-%d'), '%W') as weekday,
       (occduration/(1000000*60)) as minute,
       occpercent , turnovers
       from dwh_aggregation_parking_spot
-      WHERE  startday > date_format(date_add('day',-31,current_date), '%Y-%m-%d')
+      -- WHERE  startday > date_format(date_add('day',-31,current_date), '%Y-%m-%d')
       ;;
 
   }
@@ -23,10 +23,7 @@ view: minutes_parking_aggregates {
     sql: ${TABLE}.startday ;;
   }
 
-  dimension: weekday {
-    type: string
-    sql: ${TABLE}.weekday ;;
-  }
+
 
   dimension: minute {
     type: number
