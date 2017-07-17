@@ -1,7 +1,7 @@
 view: minutes_parking_aggregates {
   derived_table: {
     sql:
-      select siteid ,startday,date_parse(enddt,'%Y-%m-%d %H:%i:%s') as enddate,date_parse(startdt, '%Y-%m-%d %H:%i:%s') as startdate,
+      select siteid ,startday,date_parse(enddt,'%Y-%m-%d %T') as enddate,date_parse(startdt, '%Y-%m-%d %T') as startdate,
       date_format(date_parse(startday,'%Y-%m-%d'), '%W') as weekday,
       --date_format(date_parse(startdt, '%Y-%m-%d %H:%i:%s'),'%Y-%m-%d %H:%i:%s') as startdate,
       occpercent , turnovers,parkingspotid,zoneid,groupid
