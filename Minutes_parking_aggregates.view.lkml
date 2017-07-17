@@ -32,11 +32,11 @@ view: minutes_parking_aggregates {
 
 
   dimension: startdate {
-    type: date_time
+    type: date_time_of_day
     sql: ${TABLE}.startdate ;;
   }
   dimension: enddate {
-    type: date_minute15
+    type: date_time_of_day
     sql: ${TABLE}.enddate ;;
   }
   dimension: occpercent {
