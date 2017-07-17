@@ -30,13 +30,13 @@ view: minutes_parking_aggregates {
 
 
 
-  dimension: startdt {
-    type: string
-    sql: ${TABLE}.startdt ;;
+  dimension: startdate {
+    type: date
+    sql: ${TABLE}.startdate ;;
   }
-  dimension: enddt {
-    type: string
-    sql: ${TABLE}.enddt ;;
+  dimension: enddate {
+    type: date
+    sql: ${TABLE}.enddate ;;
   }
   dimension: occpercent {
     type: string
