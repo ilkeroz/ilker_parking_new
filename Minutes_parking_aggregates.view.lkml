@@ -23,10 +23,15 @@ view: minutes_parking_aggregates {
     sql: ${TABLE}.startday ;;
   }
 
+  dimension: weekday {
+    type: string
+    sql: ${TABLE}.weekday ;;
+  }
+
 
 
   dimension: startdt {
-    type: string
+    type: date
     sql: ${TABLE}.startdt ;;
   }
   dimension: occpercent {
