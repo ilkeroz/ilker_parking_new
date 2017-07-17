@@ -32,7 +32,7 @@ view: minutes_parking_aggregates {
 
 
   dimension: startdate {
-    type: date_minute15
+    type: date_time
     sql: ${TABLE}.startdate ;;
   }
   dimension: enddate {
