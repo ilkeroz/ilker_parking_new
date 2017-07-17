@@ -7,6 +7,7 @@ view: minutes_parking_aggregates {
       occpercent , turnovers,parkingspotid,zoneid,groupid
       from dwh_aggregation_parking_spot
       WHERE  startday > date_format(date_add('day',-31,current_date), '%Y-%m-%d')
+      ORDER BY enddate ASC
       ;;
 
   }
