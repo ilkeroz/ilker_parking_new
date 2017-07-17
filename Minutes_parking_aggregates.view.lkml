@@ -47,6 +47,18 @@ view: minutes_parking_aggregates {
     type: string
     sql: ${TABLE}.turnovers ;;
   }
+  dimension: parkingspotid {
+    type: string
+    sql: ${TABLE}.parkingspotid ;;
+  }
+  dimension: zoneid {
+    type: string
+    sql: ${TABLE}.zoneid ;;
+  }
+  dimension: groupid {
+    type: string
+    sql: ${TABLE}.groupid ;;
+  }
 
 
 
