@@ -1,8 +1,9 @@
 view: minutes_parking_aggregates {
   derived_table: {
     sql:
-      select siteid ,startday,occduration
+      select siteid ,startday,
      -- date_format(date_parse(startday,'%Y-%m-%d'), '%W') as weekday,
+    date_format(date_parse(startdt, '%Y-%m-%d %H:%i:%s'),'%Y-%m-%d %H:%i:%s') as startdate,
     --(occduration/(1000000*60)) as minute,
       occpercent , turnovers
       from dwh_aggregation_parking_spot
@@ -25,9 +26,9 @@ view: minutes_parking_aggregates {
 
 
 
-  dimension: minute {
-    type: number
-    sql: ${TABLE}.occduration ;;
+  dimension: startdt {
+    type: string
+    sql: ${TABLE}.startdt ;;
   }
   dimension: occpercent {
     type: string
