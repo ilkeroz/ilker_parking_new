@@ -1,9 +1,9 @@
 view: sql_runner_query_test_occ_report {
   derived_table: {
     sql: SELECT occpercent,date_parse(startdt, '%Y-%m-%d %H:%i:%s') as startdate,date_parse(enddt,'%Y-%m-%d %H:%i:%s') as enddate,siteid,parkingspotid,zoneid
-      FROM hive.dwh_netsensenext.dwh_aggregation_parking_spot
-      startday > date_format(date_add('day',-31,current_date), '%Y-%m-%d')
-      ORDER BY startday
+          FROM hive.dwh_netsensenext.dwh_aggregation_parking_spot
+          WHERE startday > date_format(date_add('day',-31,current_date), '%Y-%m-%d')
+          ORDER BY startday
        ;;
   }
 
