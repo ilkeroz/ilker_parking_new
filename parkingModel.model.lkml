@@ -12,6 +12,8 @@ explore: daily_parking_aggregates {}
 
 explore: dwh_parking_spot  {}
 
+explore: sql_runner_query_test_occ_report {}
+
 explore: realtime_parking {
 #   sql_always_where: lat1 != 0 ;;
 join: dwh_site {
@@ -44,6 +46,8 @@ explore: minutes_parking_aggregates {
     relationship: many_to_one
   }
 }
+
+
 
 
 
