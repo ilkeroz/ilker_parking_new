@@ -16,6 +16,7 @@ view: sql_runner_query_test_occ_report {
 
   dimension: occpercent {
     type: number
+    value_format: "##\%"
     sql: ${TABLE}.occpercent ;;
   }
 
