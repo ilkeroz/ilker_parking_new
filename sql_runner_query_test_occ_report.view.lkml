@@ -3,8 +3,8 @@ view: sql_runner_query_test_occ_report {
     sql: SELECT avg(occpercent),date_parse(enddt,'%Y-%m-%d %H:%i:%s') as enddate,siteid,parkingspotid,zoneid
           FROM hive.dwh_netsensenext.dwh_aggregation_parking_spot
           WHERE startday > date_format(date_add('day',-31,current_date), '%Y-%m-%d')
-          GROUP BY enddate
-          ORDER BY enddate
+          GROUP BY enddt,siteid,parkingspotid,zoneid
+          ORDER BY enddt
        ;;
   }
 
