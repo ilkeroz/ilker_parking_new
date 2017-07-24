@@ -14,6 +14,10 @@ explore: dwh_parking_spot  {}
 
 explore: sql_runner_query_test_occ_report {}
 
+explore: occ_report_parking_zone {}
+
+explore:occ_report_parking_spot {}
+
 explore: minutes_parking_aggregates {}
 
 explore: realtime_parking {
