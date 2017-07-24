@@ -16,7 +16,9 @@ explore: sql_runner_query_test_occ_report {}
 
 explore: occ_report_parking_zone {}
 
-explore:occ_report_parking_spot {}
+explore:occ_report_parking_site {}
+
+explore:occ_report_parking {}
 
 explore: minutes_parking_aggregates {}
 
