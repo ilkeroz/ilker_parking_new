@@ -3,7 +3,7 @@ view: occ_report_parking_zone {
     sql: SELECT avg(occpercent) as occpercent,date_parse(enddt,'%Y-%m-%d %H:%i:%s') as enddate,siteid,zoneid,parkingspotid
           FROM hive.dwh_netsensenext.dwh_aggregation_parking_spot
           WHERE startday > date_format(date_add('day',-31,current_date), '%Y-%m-%d')
-          GROUP BY enddt,zoneid,parkingspotid
+          GROUP BY enddt,siteid,zoneid,parkingspotid
           ORDER BY enddt
        ;;
   }
