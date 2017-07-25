@@ -20,6 +20,8 @@ explore:occ_report_parking_site {}
 
 explore:occ_report_parking {}
 
+explore: occ_report_parking_zone_multiple_spots {}
+
 explore: minutes_parking_aggregates {}
 
 explore: realtime_parking {
