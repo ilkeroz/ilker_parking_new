@@ -10,11 +10,6 @@ view: occ_report_parking_zone_multiple_spots {
 
   suggestions: no
 
-  measure: count {
-    type: count
-    drill_fields: [detail*]
-  }
-
   dimension: occpercent {
     type: number
     value_format: "##\%"
@@ -49,13 +44,4 @@ view: occ_report_parking_zone_multiple_spots {
     sql: ${TABLE}.parkingspotid ;;
   }
 
-  set: detail {
-    fields: [
-      occpercent,
-      siteid,
-      zoneid,
-      parkingspotid,
-      enddate_time
-    ]
-  }
 }
