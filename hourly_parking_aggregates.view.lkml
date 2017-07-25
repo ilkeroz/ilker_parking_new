@@ -27,7 +27,7 @@ view: hourly_parking_aggregates {
              substr(starthr, 12, 2) as hour,
              avg(case occpercent when 200 then 100 else occpercent end) as hourly_occupancy_percent
       FROM   dwh_aggregation_parking_spot
-      WHERE  startday > date_format(date_add('day',-18,current_date), '%Y-%m-%d')
+      WHERE  startday > date_format(date_add('day',-8,current_date), '%Y-%m-%d')
       and    case date_format(date_parse(startday,'%Y-%m-%d'),'%W')
              when 'Monday' then 1
              when 'Tuesday' then 2
