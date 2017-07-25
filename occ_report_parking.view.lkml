@@ -16,14 +16,6 @@ view: occ_report_parking {
     sql: ${TABLE}.occpercent ;;
   }
 
-  measure: avg_occpercent {
-    type: average
-    value_format: "##\%"
-    label: "Average Occupancy"
-    sql: ${occpercent} ;;
-  }
-
-
   dimension_group: enddate {
     type: time
     sql: ${TABLE}.enddate ;;
@@ -44,4 +36,10 @@ view: occ_report_parking {
     sql: ${TABLE}.parkingspotid ;;
   }
 
+  measure: avg_occpercent {
+    type: average
+    value_format: "##\%"
+    label: "Average Occupancy"
+    sql: ${occpercent} ;;
+  }
 }
