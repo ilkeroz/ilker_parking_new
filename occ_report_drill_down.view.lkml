@@ -1,9 +1,9 @@
 view: occ_report_drill_down {
   derived_table: {
-    sql: SELECT avg(occpercent) as occpercent,date_parse(enddt,'%Y-%m-%d %H:%i:%s') as enddate,siteid,zoneid,parkingspotid
+    sql: SELECT avg(occpercent) as occpercent,date_parse(enddt,'%Y-%m-%d %H:%i:%s') as enddate,siteid,zoneid
           FROM dwh_aggregation_parking_spot
           WHERE startday > date_format(date_add('day',-31,current_date), '%Y-%m-%d')
-          GROUP BY enddt,siteid,zoneid,parkingspotid
+          GROUP BY enddt,siteid,zoneid
           ORDER BY enddt
        ;;
   }
@@ -49,7 +49,6 @@ view: occ_report_drill_down {
       occpercent,
       siteid,
       zoneid,
-      parkingspotid,
       enddate_time
     ]
   }
