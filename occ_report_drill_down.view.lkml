@@ -1,4 +1,4 @@
-view: occ_report_parking {
+view: occ_report_drill_down {
   derived_table: {
     sql: SELECT avg(occpercent) as occpercent,date_parse(enddt,'%Y-%m-%d %H:%i:%s') as enddate,siteid,zoneid,parkingspotid
           FROM dwh_aggregation_parking_spot

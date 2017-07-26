@@ -22,6 +22,8 @@ explore:occ_report_parking {}
 
 explore: occ_report_parking_zone_multiple_spots {}
 
+explore: occ_report_drill_down {}
+
 explore: minutes_parking_aggregates {}
 
 explore: realtime_parking {
