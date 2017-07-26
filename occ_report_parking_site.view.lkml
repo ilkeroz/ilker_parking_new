@@ -20,6 +20,7 @@ view: occ_report_parking_site {
     type: average
     value_format: "##\%"
     label: "Average Occupancy"
+    drill_fields: [siteid]
     sql: ${occpercent} ;;
   }
 
@@ -33,4 +34,12 @@ view: occ_report_parking_site {
     sql: ${TABLE}.siteid ;;
   }
 
+  set: detail {
+    fields: [
+      occpercent,
+      siteid,
+      enddate_time
+
+    ]
+  }
 }
