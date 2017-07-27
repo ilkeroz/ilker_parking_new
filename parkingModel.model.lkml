@@ -22,8 +22,6 @@ explore:occ_report_parking {}
 
 explore: occ_report_parking_zone_multiple_spots {}
 
-explore: occ_report_drill_down {}
-
 explore: minutes_parking_aggregates {}
 
 explore: realtime_parking {
@@ -49,12 +47,6 @@ explore: hourly_parking_aggregates {
   }
 }
 
-
-
-
-
-
-
 explore: daily_parking_aggregates_spot {
   join: dwh_site {
     sql_on: ${daily_parking_aggregates_spot.siteid}=${dwh_site.siteid} ;;
@@ -71,5 +63,12 @@ explore: daily_parking_aggregates_spot {
   join: realtime_parking {
     sql_on: ${daily_parking_aggregates_spot.spotid}=${realtime_parking.parkingspotid} ;;
     relationship: many_to_one
+  }
+}
+
+explore: occ_report_drill_down_zone {
+  join: occ_report_drill_down_spot {
+    sql_on: ${occ_report_drill_down_zone.zoneid}=${occ_report_drill_down_spot.zoneid} ;;
+    relationship: one_to_many
   }
 }

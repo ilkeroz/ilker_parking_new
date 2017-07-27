@@ -1,4 +1,4 @@
-view: occ_report_drill_down {
+view: occ_report_drill_down_spot {
   derived_table: {
     sql: SELECT avg(occpercent) as occpercent,date_parse(enddt,'%Y-%m-%d %H:%i:%s') as enddate,siteid,zoneid,parkingspotid
           FROM dwh_aggregation_parking_spot
@@ -36,28 +36,12 @@ view: occ_report_drill_down {
     sql: ${TABLE}.parkingspotid ;;
   }
 
-  measure: avg_occpercentZone {
-    type: average
-    value_format: "##\%"
-    label: "Average Occupancy Zone"
-    drill_fields: [avg_occpercentZone,enddate_time,zoneid]
-    sql: ${occpercent} ;;
-  }
-
   measure: avg_occpercentSpot {
     type: average
     value_format: "##\%"
     label: "Average Occupancy Spot"
     drill_fields: [avg_occpercentSpot,enddate_time,zoneid,parkingspotid]
     sql: ${occpercent} ;;
-  }
-
-  set: occpercentZoneDetail {
-    fields: [
-      avg_occpercentZone,
-      zoneid,
-      enddate_time
-    ]
   }
 
   set: occpercentSpotDetail {
