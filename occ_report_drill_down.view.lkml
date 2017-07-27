@@ -36,19 +36,35 @@ view: occ_report_drill_down {
     sql: ${TABLE}.parkingspotid ;;
   }
 
-  measure: avg_occpercent {
+  measure: avg_occpercentZone {
     type: average
     value_format: "##\%"
     label: "Average Occupancy"
-    drill_fields: [avg_occpercent,enddate_time,zoneid]
+    drill_fields: [avg_occpercentZone,enddate_time,zoneid]
     sql: ${occpercent} ;;
   }
 
-  set: detail {
+  measure: avg_occpercentSpot {
+    type: average
+    value_format: "##\%"
+    label: "Average Occupancy"
+    drill_fields: [avg_occpercentSpot,enddate_time,zoneid,parkingspotid]
+    sql: ${occpercent} ;;
+  }
+
+  set: occpercentZoneDetail {
     fields: [
-      avg_occpercent,
-      siteid,
+      avg_occpercentZone,
       zoneid,
+      enddate_time
+    ]
+  }
+
+  set: occpercentSpotDetail {
+    fields: [
+      avg_occpercentSpot,
+      zoneid,
+      parkingspotid,
       enddate_time
     ]
   }
