@@ -43,7 +43,7 @@ view: occ_report_drill_down_zone {
     type: average
     value_format: "##\%"
     label: "Average Occupancy Zone"
-    drill_fields: [zoneid]
+    drill_fields: [avg_occpercentZone,enddate_time,zoneid]
     sql: ${occpercent} ;;
   }
 
