@@ -13,11 +13,13 @@ view: occ_report_drill_down_zone {
   dimension: occpercent {
     type: number
     value_format: "##\%"
+    drill_fields: [zoneid]
     sql: ${TABLE}.occpercent ;;
   }
 
   dimension_group: enddate {
     type: time
+    drill_fields: [zoneid]
     sql: ${TABLE}.enddate ;;
   }
 
@@ -29,7 +31,6 @@ view: occ_report_drill_down_zone {
 
   dimension: zoneid {
     type: string
-    drill_fields: [parkingspotid]
     sql: ${TABLE}.zoneid ;;
   }
 

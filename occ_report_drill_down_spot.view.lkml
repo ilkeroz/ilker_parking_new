@@ -18,6 +18,7 @@ view: occ_report_drill_down_spot {
 
   dimension_group: enddate {
     type: time
+    drill_fields: [parkingspotid]
     sql: ${TABLE}.enddate ;;
   }
 
@@ -28,6 +29,7 @@ view: occ_report_drill_down_spot {
 
   dimension: zoneid {
     type: string
+    drill_fields: [parkingspotid]
     sql: ${TABLE}.zoneid ;;
   }
 
