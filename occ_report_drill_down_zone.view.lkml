@@ -50,6 +50,7 @@ view: occ_report_drill_down_zone {
   set: occpercentZoneDetail {
     fields: [
       avg_occpercentZone,
+      zoneid,
       enddate_time
     ]
   }
