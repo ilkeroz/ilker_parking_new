@@ -23,12 +23,13 @@ view: occ_report_drill_down_zone {
 
   dimension: siteid {
     type: string
+    drill_fields: [siteid]
     sql: ${TABLE}.siteid ;;
   }
 
   dimension: zoneid {
     type: string
-    drill_fields: [parkingspotid]
+    drill_fields: [zoneid]
     sql: ${TABLE}.zoneid ;;
   }
 
