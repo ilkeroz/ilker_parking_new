@@ -19,7 +19,7 @@ view: occ_report_drill_down_zone {
 
   dimension_group: enddate {
     type: time
-    drill_fields: [zoneid,siteid]
+    drill_fields: [zoneid]
     sql: ${TABLE}.enddate ;;
   }
 
