@@ -66,4 +66,13 @@ explore: daily_parking_aggregates_spot {
   }
 }
 
-explore: occ_report_drill_down_zone {}
+explore: occ_report_drill_down_site {
+  join: occ_report_drill_down_zone {
+    sql_on: ${occ_report_drill_down_site.siteid}=${occ_report_drill_down_zone.siteid} ;;
+    relationship: one_to_many
+  }
+  join: occ_report_drill_down_spot {
+    sql_on: ${occ_report_drill_down_zone.zoneid}=${occ_report_drill_down_spot.zoneid} ;;
+    relationship: one_to_many
+  }
+}
