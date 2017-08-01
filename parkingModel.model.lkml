@@ -24,6 +24,8 @@ explore: occ_report_parking_zone_multiple_spots {}
 
 explore: minutes_parking_aggregates {}
 
+explore: occ_report_site {}
+
 explore: realtime_parking {
 #   sql_always_where: lat1 != 0 ;;
 join: dwh_site {
