@@ -32,6 +32,11 @@ view: occ_report_site {
   dimension: siteid {
     type: string
     sql: ${TABLE}.siteid ;;
+    link: {
+      label: "See zones"
+      url: "/dashboards/44?site={{value | uri_encode}}"
+    }
+
   }
 
   set: detail {
