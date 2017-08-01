@@ -13,7 +13,7 @@ view: occ_report_drill_down_site {
   dimension: occpercent {
     type: number
     value_format: "##\%"
-   # drill_fields: [zoneid]
+    drill_fields: [occ_report_drill_down_zone.zoneid]
     sql: ${TABLE}.occpercent ;;
   }
 
@@ -26,7 +26,7 @@ view: occ_report_drill_down_site {
   dimension: siteid {
     type: string
     primary_key: yes
-    drill_fields: [siteid]
+    #drill_fields: [siteid]
     sql: ${TABLE}.siteid ;;
   }
 
