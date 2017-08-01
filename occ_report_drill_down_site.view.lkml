@@ -30,17 +30,17 @@ view: occ_report_drill_down_site {
     sql: ${TABLE}.siteid ;;
   }
 
-  measure: avg_occpercentZone {
+  measure: avg_occpercentSite {
     type: average
     value_format: "##\%"
-    label: "Average Occupancy Zone"
+    label: "Average Occupancy Site"
     drill_fields: [occpercentSiteDetail*]
     sql: ${occpercent} ;;
   }
 
   set: occpercentSiteDetail {
     fields: [
-      avg_occpercentZone,
+      avg_occpercentSite,
       enddate_time,
       occ_report_drill_down_zone.zoneid
     ]
