@@ -1,6 +1,6 @@
 view: occ_report_drill_down_site {
   derived_table: {
-    sql: SELECT avg(occpercent) as occpercent,date_parse(enddt,'%Y-%m-%d %H:%i:%s') as enddate,siteid
+    sql: SELECT avg(occpercent) as occpercent,date_parse(enddt,'%Y-%m-%d %H:%i:%s') as enddate,siteid,zoneid
           FROM dwh_aggregation_parking_spot
           WHERE startday > date_format(date_add('day',-31,current_date), '%Y-%m-%d')
           GROUP BY enddt,siteid
@@ -13,7 +13,7 @@ view: occ_report_drill_down_site {
   dimension: occpercent {
     type: number
     value_format: "##\%"
-    drill_fields: [occ_report_drill_down_zone.zoneid]
+    drill_fields: [zoneid]
     sql: ${TABLE}.occpercent ;;
   }
 
@@ -30,6 +30,12 @@ view: occ_report_drill_down_site {
     sql: ${TABLE}.siteid ;;
   }
 
+  dimension: zoneid {
+    type: string
+    #drill_fields: [siteid]
+    sql: ${TABLE}.siteid ;;
+  }
+
   measure: avg_occpercentSite {
     type: average
     value_format: "##\%"
@@ -40,6 +46,7 @@ view: occ_report_drill_down_site {
 
   set: occpercentSiteDetail {
     fields: [
+
       occ_report_drill_down_zone.avg_occpercentZone,
       enddate_time,
       occ_report_drill_down_zone.zoneid
