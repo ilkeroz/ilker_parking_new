@@ -33,7 +33,7 @@ view: occ_report_drill_down_site {
   dimension: zoneid {
     type: string
     #drill_fields: [siteid]
-    sql: ${TABLE}.siteid ;;
+    sql: ${TABLE}.zoneid ;;
   }
 
   measure: avg_occpercentSite {
