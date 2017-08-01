@@ -40,7 +40,7 @@ view: occ_report_drill_down_site {
 
   set: occpercentSiteDetail {
     fields: [
-      avg_occpercentSite,
+      occ_report_drill_down_zone.avg_occpercentZone,
       enddate_time,
       occ_report_drill_down_zone.zoneid
     ]

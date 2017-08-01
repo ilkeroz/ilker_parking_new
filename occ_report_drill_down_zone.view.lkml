@@ -50,7 +50,7 @@ view: occ_report_drill_down_zone {
 
   set: occpercentZoneDetail {
     fields: [
-      avg_occpercentZone,
+      occ_report_drill_down_spot.avg_occpercentSpot,
       enddate_time,
       occ_report_drill_down_spot.parkingspotid
     ]
