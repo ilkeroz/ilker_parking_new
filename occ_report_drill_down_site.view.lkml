@@ -25,7 +25,7 @@ view: occ_report_drill_down_site {
 
   dimension: siteid {
     type: string
-   # primary_key: yes
+    primary_key: yes
   #  drill_fields: [zoneid]
     sql: ${TABLE}.siteid ;;
   }
