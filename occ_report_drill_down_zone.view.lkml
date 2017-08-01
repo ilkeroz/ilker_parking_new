@@ -35,11 +35,6 @@ view: occ_report_drill_down_zone {
     sql: ${TABLE}.zoneid ;;
   }
 
-  dimension: parkingspotid {
-    type: string
-    sql: ${TABLE}.parkingspotid ;;
-  }
-
   measure: avg_occpercentZone {
     type: average
     value_format: "##\%"

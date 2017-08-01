@@ -42,6 +42,7 @@ view: occ_report_drill_down_spot {
     type: average
     value_format: "##\%"
     label: "Average Occupancy Spot"
+    drill_fields: [occpercentSpotDetail*]
     sql: ${occpercent} ;;
   }
 
