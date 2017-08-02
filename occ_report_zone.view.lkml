@@ -39,7 +39,7 @@ view: occ_report_zone {
     sql: ${TABLE}.zoneid ;;
     link: {
       label: "See spots"
-      url: "/dashboards/44?site={{value | uri_encode}}"
+      url: "/dashboards/46?zone={{value | uri_encode}}"
     }
   }
 
