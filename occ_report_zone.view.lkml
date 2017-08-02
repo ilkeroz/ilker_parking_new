@@ -20,6 +20,7 @@ view: occ_report_zone {
     type: average
     value_format: "##\%"
     label: "Average Occupancy"
+    drill_fields: [zoneid]
     sql: ${occpercent} ;;
   }
 
