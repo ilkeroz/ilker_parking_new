@@ -1,9 +1,11 @@
 view: dwh_site {
   derived_table: {
     sql:
-    select distinct s.* from dwh_site s
-    JOIN   dwh_parking_group n ON n.siteid = s.siteid
+    select distinct s.*
+    from   dwh_netsensenext.dwh_site s
+    JOIN   dwh_netsensenext.dwh_parking_group n ON n.siteid = s.siteid
     ;;
+    sql_trigger_value: select date_format(current_timestamp,'%H') ;;
   }
 
   suggestions: yes

@@ -7,8 +7,10 @@ view: daily_parking_aggregates_spot {
              sum(spot.occduration/(1000000*60)) / case when sum(spot.turnovers)=0 then 1 else sum(spot.turnovers) end as daily_parking_minutes
       FROM   dwh_aggregation_parking_spot spot
       WHERE  spot.startday > date_format(date_add('day',-31,current_date), '%Y-%m-%d')
+    and spot.parkingspotid != 'F95AA0C3-D486-4982-BFF9-DEFADAD1FEA0'
       GROUP BY spot.siteid, spot.parkingspotid, spot.startday
       ;;
+      sql_trigger_value: select date_format(current_timestamp,'%d') ;;
   }
 
   suggestions: yes

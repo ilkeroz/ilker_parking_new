@@ -9,8 +9,10 @@ view: daily_parking_aggregates {
       JOIN   dwh_site site ON site.siteid = spot.siteid
       JOIN   dwh_customer cust ON cust.orgid = site.orgid
       WHERE  spot.startday > date_format(date_add('day',-31,current_date), '%Y-%m-%d')
+    and spot.parkingspotid != 'F95AA0C3-D486-4982-BFF9-DEFADAD1FEA0'
       GROUP BY spot.siteid, spot.startday, cust.name, site.name
       ;;
+      sql_trigger_value: select date_format(current_timestamp,'%d') ;;
   }
 
   suggestions: yes

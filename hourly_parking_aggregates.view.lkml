@@ -18,6 +18,7 @@ view: hourly_parking_aggregates {
              sum(turnovers) as hourly_parked_vehicles
       FROM   dwh_aggregation_parking_spot
       WHERE  startday > date_format(date_add('day',-31,current_date), '%Y-%m-%d')
+    and parkingspotid != 'F95AA0C3-D486-4982-BFF9-DEFADAD1FEA0'
       GROUP BY siteid, startday, starthr
       ) hist
       LEFT OUTER JOIN
@@ -28,6 +29,7 @@ view: hourly_parking_aggregates {
              avg(case occpercent when 200 then 100 else occpercent end) as hourly_occupancy_percent
       FROM   dwh_aggregation_parking_spot
       WHERE  startday > date_format(date_add('day',-8,current_date), '%Y-%m-%d')
+    and parkingspotid != 'F95AA0C3-D486-4982-BFF9-DEFADAD1FEA0'
       and    case date_format(date_parse(startday,'%Y-%m-%d'),'%W')
              when 'Monday' then 1
              when 'Tuesday' then 2
@@ -54,6 +56,7 @@ view: hourly_parking_aggregates {
       AND    hist.hour = week.hour
       ORDER  By hist.siteid, hist.startday, hist.hour
       ;;
+      sql_trigger_value: select date_format(current_timestamp,'%H') ;;
   }
 
   suggestions: yes
