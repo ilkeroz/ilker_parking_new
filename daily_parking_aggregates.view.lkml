@@ -5,9 +5,9 @@ view: daily_parking_aggregates {
       SELECT spot.siteid as siteid, spot.startday as startday, cust.name as customer_name, site.name as site_name,
              sum(spot.turnovers) as daily_turnovers,
              sum(spot.occduration/(1000000*60)) / case when sum(spot.turnovers)=0 then 1 else sum(spot.turnovers) end as daily_parking_minutes
-      FROM   dwh_aggregation_parking_spot spot
-      JOIN   dwh_site site ON site.siteid = spot.siteid
-      JOIN   dwh_customer cust ON cust.orgid = site.orgid
+      FROM   hive.{{ _user_attributes['platform'] }}.dwh_aggregation_parking_spot spot
+      JOIN   hive.{{ _user_attributes['platform'] }}.dwh_site site ON site.siteid = spot.siteid
+      JOIN   hive.{{ _user_attributes['platform'] }}.dwh_customer cust ON cust.orgid = site.orgid
       WHERE  spot.startday > date_format(date_add('day',-31,current_date), '%Y-%m-%d')
     and spot.parkingspotid != 'F95AA0C3-D486-4982-BFF9-DEFADAD1FEA0'
       GROUP BY spot.siteid, spot.startday, cust.name, site.name
