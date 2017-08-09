@@ -8,7 +8,7 @@ view: realtime_parking {
              since,
              siteid,
              case occupancy when true then 1 else 0 end as occupancy_01
-      FROM   hive.{{ _user_attributes['platform'] }}.dwh_parking_spot
+      FROM   hive.{{ _user_attributes['dwh_schema'] }}.dwh_parking_spot
       WHERE  lat1 != 0
       AND    lng1 != 0
       ;;
