@@ -1,5 +1,5 @@
 view: dwh_customer {
-  sql_table_name: dwh_customer ;;
+  sql_table_name: hive.{{ _user_attributes['platform'] }}.dwh_customer ;;
   suggestions: yes
 
   dimension: city {
