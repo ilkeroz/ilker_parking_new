@@ -34,7 +34,7 @@ view: occ_report_site {
     sql: ${TABLE}.siteid ;;
     link: {
       label: "See zones"
-      url: "/dashboards/45?site={{value | uri_encode}}"
+      url: "/dashboards/45?site={{value | url_encode}}&time={{_filters['occ_report_site.enddate_time'] | url_encode}}"
     }
 
   }

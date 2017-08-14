@@ -30,6 +30,40 @@ explore: occ_report_zone {}
 
 explore: occ_report_spot {}
 
+explore: occ_report_drill_down_site_micro {}
+
+explore: occ_report_drill_down_group_micro {}
+
+explore: occ_report_drill_down_spot_micro {}
+
+# agg report site/ group/ spot
+
+explore: agg_report_site {}
+
+explore: agg_report_site_day {}
+
+explore: agg_report_site_level_day {}
+
+explore: agg_report_site_level_hourly {}
+
+explore: agg_report_site_level_micro {}
+
+explore: agg_report_group {}
+
+explore: agg_report_group_level_day {}
+
+explore: agg_report_group_level_hourly {}
+
+explore: agg_report_group_level_micro {}
+
+explore: agg_report_spot {}
+
+explore: agg_report_spot_level_day {}
+
+explore: agg_report_spot_level_hourly {}
+
+explore: agg_report_spot_level_micro {}
+
 explore: realtime_parking {
 #   sql_always_where: lat1 != 0 ;;
 join: dwh_site {
@@ -72,13 +106,13 @@ explore: daily_parking_aggregates_spot {
   }
 }
 
-explore: occ_report_drill_down_site {
-  join: occ_report_drill_down_zone {
-    sql_on: ${occ_report_drill_down_site.siteid}=${occ_report_drill_down_zone.siteid} ;;
-    relationship: one_to_many
-  }
-  join: occ_report_drill_down_spot {
-    sql_on: ${occ_report_drill_down_zone.zoneid}=${occ_report_drill_down_spot.zoneid} ;;
-    relationship: one_to_many
-  }
-}
+# explore: occ_report_drill_down_site {
+#   join: occ_report_drill_down_zone {
+#     sql_on: ${occ_report_drill_down_site.siteid}=${occ_report_drill_down_zone.siteid} ;;
+#     relationship: one_to_many
+#   }
+#   join: occ_report_drill_down_spot {
+#     sql_on: ${occ_report_drill_down_zone.zoneid}=${occ_report_drill_down_spot.zoneid} ;;
+#     relationship: one_to_many
+#   }
+# }
