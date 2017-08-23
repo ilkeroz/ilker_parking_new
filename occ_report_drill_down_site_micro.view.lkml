@@ -23,7 +23,7 @@ view: occ_report_drill_down_site_micro {
     sql: ${TABLE}.sitename ;;
     link: {
       label: "See groups"
-      url: "/embed/dashboards/49?site={{value | url_encode}}&time={{_filters['occ_report_drill_down_site_micro.endtime_time'] | url_encode}}"
+      url: "/49?site={{value | url_encode}}&time={{_filters['occ_report_drill_down_site_micro.endtime_time'] | url_encode}}"
     }
   }
 
