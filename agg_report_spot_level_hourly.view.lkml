@@ -10,10 +10,12 @@ view: agg_report_spot_level_hourly {
         , parkingspotname as parkingspotname
         , formfactor as formfactor
         , handicapped as handicapped
+        , vehicleType as typeofvehicle
         , date_parse(starttime,'%Y-%m-%d %H:%i:%s') as starttime
         , date_parse(endtime,'%Y-%m-%d %H:%i:%s') as endtime
         , occupancy as occupancy
       FROM hive.dwh_qastage2.agg_report_spot_level_hourly
+      cross join UNNEST(typeovehicle) as t (vehicleType)
       ORDER BY starttime
       ;;
   }
@@ -86,11 +88,10 @@ view: agg_report_spot_level_hourly {
     sql: ${TABLE}.handicapped ;;
   }
 
-  filter: Handicapped {
-    description: "Handicapped"
-    type: yesno
-    hidden: no
-    sql: ${TABLE}.handicapped ;;
+  dimension: typeofvehicle {
+    description: "Type of vehicle"
+    type: string
+    sql: ${TABLE}.typeofvehicle ;;
   }
 
   dimension_group: starttime {
@@ -111,7 +112,7 @@ view: agg_report_spot_level_hourly {
     sql: ${TABLE}.occupancy ;;
     link: {
       label: "See occupancy % on 15min interval"
-      url: "/dashboards/67?site={{ sitename_hidden._value | url_encode}}&group={{ parkinggroupname_hidden._value | url_encode}}&spot={{parkingspotname_hidden._value}}&starttime=after+{{ starttime_time._value | url_encode }}&endtime=before+{{ endtime_time._value | url_encode }}"
+      url: "/dashboards/67?site={{ sitename_hidden._value | url_encode}}&group={{ parkinggroupname_hidden._value | url_encode}}&spot={{parkingspotname_hidden._value}}&handicapped={{ handicapped._value | url_encode}}&vehicleType={{ typeofvehicle._value | url_encode}}&FormFactor={{formfactor._value | url_encode}}&starttime=after+{{ starttime_time._value | url_encode }}&endtime=before+{{ endtime_time._value | url_encode }}"
     }
   }
 }

@@ -10,11 +10,12 @@ view: agg_report_spot_level_micro {
         , parkingspotname as parkingspotname
         , formfactor as formfactor
         , handicapped as handicapped
-        , array_join(typeovehicle,'|') as typeofvehicle
+        , vehicleType as typeofvehicle
         , date_parse(starttime,'%Y-%m-%d %H:%i:%s') as starttime
         , date_parse(endtime,'%Y-%m-%d %H:%i:%s') as endtime
         , occupancy as occupancy
       FROM hive.dwh_qastage2.agg_report_spot_level_micro
+      cross join UNNEST(typeovehicle) as t (vehicleType)
       ORDER BY starttime
       ;;
   }
@@ -72,6 +73,7 @@ view: agg_report_spot_level_micro {
     type: string
     sql: ${TABLE}.typeofvehicle ;;
   }
+
   dimension_group: starttime {
     description: "Start Time"
     type: time

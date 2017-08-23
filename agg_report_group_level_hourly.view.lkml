@@ -69,7 +69,7 @@ view: agg_report_group_level_hourly {
     type: average
     sql: ${TABLE}.occupancy ;;
     link: {
-      label: "See hourly occupancy %"
+      label: "See occupancy % on 15min interval"
       url: "/dashboards/62?site={{ sitename_hidden._value | url_encode}}&group={{ parkinggroupname_hidden._value | url_encode}}&starttime=after+{{ starttime_time._value | url_encode }}&endtime=before+{{ endtime_time._value | url_encode }}"
     }
   }

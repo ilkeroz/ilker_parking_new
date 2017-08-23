@@ -7,11 +7,13 @@ derived_table: {
         , parkinggroupname as parkinggroupname
         , parkingspotid as parkingspotid
         , parkingspotname as parkingspotname
+        , vehicleType as typeofvehicle
         , formfactor as formfactor
         , handicapped as handicapped
         , date_parse(endtime,'%Y-%m-%d %H:%i:%s') as endtime
         , occupancy as occupancy
       FROM hive.dwh_qastage2.agg_report_spot_level_micro
+      cross join UNNEST(typeovehicle) as t (vehicleType)
       ORDER BY endtime
       ;;
 }
@@ -60,8 +62,14 @@ dimension: formfactor {
 
 dimension: handicapped {
   description: "Handicapped"
-  type: string
+  type: yesno
   sql: ${TABLE}.handicapped ;;
+}
+
+dimension: typeofvehicle {
+  description: "Type of vehicle"
+  type: string
+  sql: ${TABLE}.typeofvehicle ;;
 }
 
 dimension_group: endtime {

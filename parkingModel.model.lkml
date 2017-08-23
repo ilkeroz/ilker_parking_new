@@ -6,6 +6,8 @@ include: "*.view"
 # include all the dashboards
 include: "*.dashboard"
 
+week_start_day: sunday
+
 explore:  dwh_site {}
 
 explore: daily_parking_aggregates {}
@@ -52,6 +54,8 @@ explore: agg_report_group {}
 
 explore: agg_report_group_level_day {}
 
+explore: report_group_level_day_parking {}
+
 explore: agg_report_group_level_hourly {}
 
 explore: agg_report_group_level_micro {}
@@ -63,6 +67,12 @@ explore: agg_report_spot_level_day {}
 explore: agg_report_spot_level_hourly {}
 
 explore: agg_report_spot_level_micro {}
+
+explore: agg_report_site_level_day_parking {}
+
+explore: agg_report_site_level_hourly_parking {}
+
+explore: test {}
 
 explore: realtime_parking {
 #   sql_always_where: lat1 != 0 ;;

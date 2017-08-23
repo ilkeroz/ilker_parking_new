@@ -50,7 +50,7 @@ view: agg_report_site_level_day {
     sql: ${TABLE}.occupancy ;;
     link: {
       label: "See hourly occupancy %"
-      url: "/dashboards/52?site={{ sitename_hidden._value | url_encode}}&time={{ starttime_date._value | url_encode }}"
+      url: "/dashboards/52?site={{ sitename_hidden._value | url_encode}}&Date={{ starttime_date._value | url_encode }}"
     }
   }
 }
