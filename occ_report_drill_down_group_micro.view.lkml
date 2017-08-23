@@ -36,7 +36,7 @@ view: occ_report_drill_down_group_micro {
     sql: TRIM(${TABLE}.parkinggroupname) ;;
     link: {
       label: "See Spots"
-      url: "/48?group={{value | url_encode}}&time={{_filters['occ_report_drill_down_group_micro.endtime_time'] | url_encode}}"
+      url: "/dashboards/48?group={{value | url_encode}}&time={{_filters['occ_report_drill_down_group_micro.endtime_time'] | url_encode}}"
     }
   }
 
