@@ -8,7 +8,16 @@ include: "*.dashboard"
 
 week_start_day: sunday
 
-explore:  dwh_site {}
+# explore: report_user {
+#   access_filter: {
+#     field: report_user.email
+#     user_attribute: email
+#   }
+# }
+
+explore: report_site {}
+
+explore: dwh_site {}
 
 explore: daily_parking_aggregates {}
 
@@ -54,7 +63,25 @@ explore: agg_report_group {}
 
 explore: agg_report_group_level_day {}
 
-explore: report_group_level_day_parking {}
+explore: report_group_level_day_parking {
+#   join: report_site {
+#     sql_on: ${report_group_level_day_parking.siteid}=${report_site.siteid} ;;
+#     relationship: many_to_one
+#     type: inner
+#   }
+#   join: dwh_customer {
+#     sql_on: ${report_site.orgid}=${dwh_customer.orgid} ;;
+#     relationship: many_to_one
+#     type: inner
+#   }
+#   join: report_user {
+#     sql_on: ${report_user.orgid}=${dwh_customer.orgid} ;;
+#     relationship: many_to_one
+#     type: inner
+#   }
+}
+
+explore: report_group_occupancy_parking{}
 
 explore: agg_report_group_level_hourly {}
 
@@ -73,6 +100,23 @@ explore: agg_report_site_level_day_parking {}
 explore: agg_report_site_level_hourly_parking {}
 
 explore: test {}
+
+# CITY OF MARIETTA
+explore: report_dwelltime_by_group {}
+
+explore: report_dwelltime_by_space {}
+
+explore: report_occupancy_by_group_and_interval {}
+
+explore: report_turnover_by_group {}
+
+explore: report_violations_by_group {}
+
+# explore: report_violations {}
+
+explore: report_metrics {}
+
+explore: report_metrics_with_filters {}
 
 explore: realtime_parking {
 #   sql_always_where: lat1 != 0 ;;

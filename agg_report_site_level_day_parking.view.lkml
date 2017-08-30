@@ -51,6 +51,11 @@ view: agg_report_site_level_day_parking {
     suggestions: ["Occupancy","Revenue","Turnover"]
   }
 
+  filter: Statistics {
+    label: "Metrics"
+    suggestions: ["Min","Max","Avg","Median"]
+  }
+
   measure: Minimum {
     type: number
     description: "Metric"

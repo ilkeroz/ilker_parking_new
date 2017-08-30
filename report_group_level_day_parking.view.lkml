@@ -2,10 +2,12 @@ view: report_group_level_day_parking {
   # Or, you could make this view a derived table, like this:
   derived_table: {
     sql: select group_level.occupancy as Group_Occupancy,
+    group_level.siteid as siteid,
     group_level.sitename as sitename,
     spot_level.occupancy as Spot_Occupancy,
     spot_level.handicapped as handicapped,
     spot_level.formfactor as formfactor,
+    vehicleType as typeofvehicle,
     spot_level.parkinggroupname as parkinggroupname,
     spot_level.parkinggroupid as parkinggroupid,
     spot_level.parkingspotname as parkingspotname,
@@ -13,10 +15,17 @@ view: report_group_level_day_parking {
 
     from hive.dwh_qastage2.agg_report_group_level_day group_level
     inner join hive.dwh_qastage2.agg_report_spot_level_day spot_level
+    cross join UNNEST(typeovehicle) as t (vehicleType)
     on group_level.siteid = spot_level.siteid
     and group_level.parkinggroupid = spot_level.parkinggroupid
     and group_level.starttime = spot_level.starttime
       ;;
+  }
+
+  dimension: siteid {
+    description: "Site ID"
+    type: string
+    sql: ${TABLE}.siteid ;;
   }
 
   dimension: sitename {
@@ -55,6 +64,12 @@ view: report_group_level_day_parking {
     sql: ${TABLE}.formfactor ;;
   }
 
+  dimension: typeofvehicle {
+    description: "Vehicle Type"
+    type: string
+    sql: ${TABLE}.typeofvehicle ;;
+  }
+
   measure: Occupancy {
     type: number
     description: "Occupancy"
@@ -62,7 +77,7 @@ view: report_group_level_day_parking {
             ${Avg_Spot_Occupancy}
          {% else %}
             ${Avg_Group_Occupancy}
-        {% endif %} ;;
+         {% endif %} ;;
 }
 
   dimension: Group_Occupancy {
