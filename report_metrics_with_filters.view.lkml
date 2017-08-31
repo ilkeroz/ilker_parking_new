@@ -1,53 +1,35 @@
 view: report_metrics_with_filters {
   derived_table: {
-    sql: select    avg(group_level.occupancy) as Group_Occupancy,
-          avg(group_level.avgrevenue) as Group_Revenue,
-          avg(group_level.turnover) as Group_Turnover,
-          avg(group_level.vacancy) as Group_Vacancy,
-          avg(group_level.avgdwelltime) as Group_Dwelltime,
+    sql: select group_level.occupancy as Group_Occupancy,
+          group_level.avgrevenue as Group_Revenue,
+          group_level.turnover as Group_Turnover,
+          group_level.vacancy as Group_Vacancy,
+          group_level.avgdwelltime as Group_Dwelltime,
           group_level.siteid as siteid,
           group_level.sitename as sitename,
-          avg(spot_level.occupancy) as Spot_Occupancy,
-          avg(spot_level.avgrevenue) as Spot_Revenue,
-          avg(spot_level.turnover) as Spot_Turnover,
-          avg(spot_level.vacancy) as Spot_Vacancy,
-          avg(spot_level.avgdwelltime) as Spot_Dwelltime,
+          spot_level.occupancy as Spot_Occupancy,
+          spot_level.avgrevenue as Spot_Revenue,
+          spot_level.turnover as Spot_Turnover,
+          spot_level.vacancy as Spot_Vacancy,
+          spot_level.avgdwelltime as Spot_Dwelltime,
           spot_level.handicapped as handicapped,
           spot_level.formfactor as formfactor,
           vehicleType as typeofvehicle,
-         avg(CAST(group_fine as DOUBLE)) as group_violationfees,
-          group_violation as group_violation,
-          avg(CAST(space_fine as DOUBLE)) as space_violationfees,
-          --space_violation as space_violation,
+          violation as violation,
           spot_level.parkinggroupname as parkinggroupname,
           spot_level.parkinggroupid as parkinggroupid,
           spot_level.parkingspotname as parkingspotname,
           date_parse(group_level.starttime,'%Y-%m-%d %H:%i:%s') as starttime
 
           from hive.dwh_qastage2.agg_report_group_level_micro group_level
-          cross join UNNEST(violationfinelist) as t (group_violationfine)
-          cross join UNNEST(split(group_violationfine.violationtype,'='),split(CAST(group_violationfine.fine as VARCHAR),'=')) as v (group_violation,group_fine)
           inner join hive.dwh_qastage2.agg_report_spot_level_micro spot_level
-          cross join UNNEST(violationfinelist) as t (space_violationfine)
-          cross join UNNEST(split(space_violationfine.violationtype,'='),split(CAST(space_violationfine.fine as VARCHAR),'=')) as v (space_violation,space_fine)
           cross join UNNEST(typeovehicle) as t (vehicleType)
+          cross join UNNEST(violationfinelist) as t (violationfine)
+          cross join UNNEST(split(violationfine.violationtype,'=')) as v (violation)
           on group_level.siteid = spot_level.siteid
           and group_level.parkinggroupid = spot_level.parkinggroupid
           and group_level.starttime = spot_level.starttime
-          group by
-          group_level.siteid,
-          group_level.sitename,
-          spot_level.handicapped,
-          spot_level.formfactor,
-          vehicleType,
-          group_violation,
-          --space_violation,
-          spot_level.parkinggroupname,
-          spot_level.parkinggroupid,
-          spot_level.parkingspotname,
-          group_level.starttime
           order by starttime ASC
-
       ;;
   }
 
@@ -102,7 +84,7 @@ view: report_metrics_with_filters {
   dimension: violation {
     description: "Violation"
     type: string
-    sql: ${TABLE}.group_violation ;;
+    sql: ${TABLE}.violation ;;
   }
 
   measure: Occupancy {
@@ -157,28 +139,6 @@ view: report_metrics_with_filters {
             ${Avg_Spot_Dwelltime}
          {% else %}
             ${Avg_Group_Dwelltime}
-         {% endif %} ;;
-  }
-
-  measure: ViolationFees{
-    type: number
-    description: "Violation Fees"
-    sql: {% if report_metrics_with_filters.handicapped._is_filtered or report_metrics_with_filters.formfactor._is_filtered
-      or report_metrics_with_filters.typeofvehicle._is_filtered or report_metrics_with_filters.violation._is_filtered  %}
-            ${Sum_Space_Violationfees}
-         {% else %}
-            ${Sum_Group_Violationfees}
-         {% endif %} ;;
-  }
-
-  measure: ViolationsCount{
-    type: number
-    description: "Violations Count"
-    sql: {% if report_metrics_with_filters.handicapped._is_filtered or report_metrics_with_filters.formfactor._is_filtered
-      or report_metrics_with_filters.typeofvehicle._is_filtered or report_metrics_with_filters.violation._is_filtered  %}
-            ${Number_Space_Violations}
-         {% else %}
-            ${Number_Group_Violations}
          {% endif %} ;;
   }
 
@@ -238,7 +198,7 @@ view: report_metrics_with_filters {
 
   measure: Avg_Group_Turnover {
     description: "Group Turnover"
-    type: average
+    type: sum
     sql: ${Group_Turnover} ;;
   }
 
@@ -250,7 +210,7 @@ view: report_metrics_with_filters {
 
   measure: Avg_Spot_Turnover {
     description: "Spot Turnover"
-    type: average
+    type: sum
     sql: ${Spot_Turnover} ;;
   }
 
@@ -300,54 +260,6 @@ view: report_metrics_with_filters {
     description: "Spot Dwell Time"
     type: average
     sql: ${Spot_Dwelltime} ;;
-  }
-
-  dimension: Group_Violationfees {
-    description: "Group Violation Fees"
-    type: number
-    sql: ${TABLE}.Group_Violationfees ;;
-  }
-
-  measure: Sum_Group_Violationfees {
-    description: "Group Violation Fees"
-    type: sum
-    sql: ${Group_Violationfees} ;;
-  }
-
-  dimension: Space_Violationfees {
-    description: "Space Violation Fees"
-    type: number
-    sql: ${TABLE}.Space_Violationfees ;;
-  }
-
-  measure: Sum_Space_Violationfees {
-    description: "Space Violation Fees"
-    type: sum
-    sql: ${Space_Violationfees} ;;
-  }
-
-  dimension: Group_Violation {
-    description: "Group Violation count"
-    type: string
-    sql: ${TABLE}.group_violation ;;
-  }
-
-  measure: Number_Group_Violations {
-    description: "Group Violations count"
-    type: count_distinct
-    sql: ${Group_Violation} ;;
-  }
-
-  dimension: Space_Violation {
-    description: "Space Violation count"
-    type: string
-    sql: ${TABLE}.space_violation ;;
-  }
-
-  measure: Number_Space_Violations {
-    description: "Space Violations count"
-    type: count_distinct
-    sql: ${Space_Violation} ;;
   }
 
 }
