@@ -4,7 +4,7 @@ view: realtime_parking {
     sql:
       SELECT parkingspotid,
              case lat2 when 0 then round(lat1,6) else round((round(lat1,6)+round(lat2,6)+round(lat3,6)+round(lat4,6))/4, 6) end as lat1,
-             case lng2 when 0 then round(lng2,6) else round((round(lng1,6)+round(lng2,6)+round(lng3,6)+round(lng4,6))/4, 6) end as lng1,
+             case lng2 when 0 then round(lng1,6) else round((round(lng1,6)+round(lng2,6)+round(lng3,6)+round(lng4,6))/4, 6) end as lng1,
              since,
              siteid,
              case occupancy when true then 1 else 0 end as occupancy_01
