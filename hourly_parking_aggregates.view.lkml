@@ -56,7 +56,7 @@ view: hourly_parking_aggregates {
       AND    hist.hour = week.hour
       ORDER  By hist.siteid, hist.startday, hist.hour
       ;;
-      sql_trigger_value: select date_format(current_timestamp,'%H') ;;
+      #sql_trigger_value: select date_format(current_timestamp,'%H') ;;
   }
 
   suggestions: yes
