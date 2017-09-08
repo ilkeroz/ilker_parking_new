@@ -21,8 +21,8 @@ view: report_group_occupancy_parking {
           spot_level.parkingspotname as parkingspotname,
           date_parse(group_level.starttime,'%Y-%m-%d %H:%i:%s') as starttime
 
-          from hive.dwh_qastage2.agg_report_group_level_day group_level
-          inner join hive.dwh_qastage2.agg_report_spot_level_day spot_level
+          from hive.dwh_qastage2.agg_report_group_level_day_demo group_level
+          inner join hive.dwh_qastage2.agg_report_spot_level_day_demo spot_level
           cross join UNNEST(typeovehicle) as t (vehicleType)
           on group_level.siteid = spot_level.siteid
           and group_level.parkinggroupid = spot_level.parkinggroupid

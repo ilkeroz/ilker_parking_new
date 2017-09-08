@@ -8,12 +8,12 @@ include: "*.dashboard"
 
 week_start_day: sunday
 
-# explore: report_user {
-#   access_filter: {
-#     field: report_user.email
-#     user_attribute: email
-#   }
-# }
+explore: report_user {
+  access_filter: {
+    field: report_user.email
+    user_attribute: email
+  }
+}
 
 explore: report_site {}
 
@@ -112,11 +112,36 @@ explore: report_turnover_by_group {}
 
 explore: report_violations_by_group {}
 
+# CITY OF MARIETTA VERSION 2
+explore: com_report_dwelltime_by_group {}
+
+explore: com_report_dwelltime_by_space {}
+
+explore: com_turnover_with_threshold_by_group {}
+
+explore: com_turnover_with_threshold_by_space {}
+
 # explore: report_violations {}
 
 explore: report_metrics {}
 
-explore: report_metrics_with_filters {}
+explore: report_metrics_with_filters {
+  join: report_site {
+    sql_on: ${report_metrics_with_filters.siteid}=${report_site.siteid} ;;
+    relationship: many_to_one
+    type: inner
+  }
+  join: dwh_customer {
+    sql_on: ${report_site.orgid}=${dwh_customer.orgid} ;;
+    relationship: many_to_one
+    type: inner
+  }
+  join: report_user {
+    sql_on: ${report_user.orgid}=${dwh_customer.orgid} ;;
+    relationship: many_to_one
+    type: inner
+  }
+}
 
 explore: realtime_parking {
 #   sql_always_where: lat1 != 0 ;;

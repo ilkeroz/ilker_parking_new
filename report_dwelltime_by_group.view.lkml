@@ -5,21 +5,21 @@ view: report_dwelltime_by_group {
           group_level.mindwelltime as groupMindwelltime,
           group_level.maxdwelltime as groupMaxdwelltime,
           group_level.medianfordwelltime as groupMediandwelltime,
-          group_level.siteid as siteId,
-          group_level.sitename as siteName,
+          group_level.parkingsiteid as siteId,
+          group_level.parkingsitename as siteName,
           spot_level.avgdwelltime as spotAvgDwelltime,
           spot_level.mindwelltime as spotMindwelltime,
           spot_level.maxdwelltime as spotMaxdwelltime,
-          spot_level.medianfordwelltime as spotMediandwelltime,
+          spot_level.mediandwelltime as spotMediandwelltime,
           spot_level.parkinggroupname as parkingGroupName,
           spot_level.parkinggroupid as parkingGroupId,
           spot_level.parkingspotid as parkingSpotId,
           spot_level.parkingspotname as parkingSpotName,
           date_parse(group_level.starttime,'%Y-%m-%d %H:%i:%s') as startTime
 
-          from hive.dwh_qastage2.agg_report_group_level_micro group_level
-          inner join hive.dwh_qastage2.agg_report_spot_level_micro spot_level
-          on group_level.siteid = spot_level.siteid
+          from hive.dwh_qastage2.agg_report_group_level_micro_demo group_level
+          inner join hive.dwh_qastage2.agg_report_spot_level_micro_demo spot_level
+          on group_level.parkingsiteid = spot_level.parkingsiteid
           and group_level.parkinggroupid = spot_level.parkinggroupid
           and group_level.starttime = spot_level.starttime
           order by starttime ASC
@@ -48,6 +48,12 @@ view: report_dwelltime_by_group {
     description: "Parking Spot Name"
     type: string
     sql: ${TABLE}.parkingSpotName ;;
+  }
+
+  dimension: parkingSpotId {
+    description: "Parking Spot Id"
+    type: string
+    sql: ${TABLE}.parkingSpotId ;;
   }
 
   dimension_group: startTime {
@@ -99,7 +105,7 @@ view: report_dwelltime_by_group {
   dimension: groupAvgDwelltime {
     description: "Group Avg Dwell Time"
     type: number
-    sql: ${TABLE}.groupAvgDwelltime ;;
+    sql: ${TABLE}.groupAvgDwelltime / 600000 ;;
   }
 
   measure: Avg_Group_Dwelltime {
@@ -111,7 +117,7 @@ view: report_dwelltime_by_group {
   dimension: spotAvgDwelltime {
     description: "Spot Avg Dwell Time"
     type: number
-    sql: ${TABLE}.spotAvgDwelltime ;;
+    sql: ${TABLE}.spotAvgDwelltime / 600000 ;;
   }
 
   measure: Avg_Spot_Dwelltime {
@@ -123,7 +129,7 @@ view: report_dwelltime_by_group {
   dimension: groupMindwelltime {
     description: "Group Min Dwell Time"
     type: number
-    sql: ${TABLE}.groupMindwelltime ;;
+    sql: ${TABLE}.groupMindwelltime / 600000 ;;
   }
 
   measure: Min_Group_Dwelltime {
@@ -135,7 +141,7 @@ view: report_dwelltime_by_group {
   dimension: spotMinDwelltime {
     description: "Spot Min Dwell Time"
     type: number
-    sql: ${TABLE}.spotMinDwelltime ;;
+    sql: ${TABLE}.spotMinDwelltime / 600000 ;;
   }
 
   measure: Min_Spot_Dwelltime {
@@ -147,7 +153,7 @@ view: report_dwelltime_by_group {
   dimension: groupMaxDwelltime {
     description: "Group Max Dwell Time"
     type: number
-    sql: ${TABLE}.groupMaxDwelltime ;;
+    sql: ${TABLE}.groupMaxDwelltime / 600000 ;;
   }
 
   measure: Max_Group_Dwelltime {
@@ -159,7 +165,7 @@ view: report_dwelltime_by_group {
   dimension: spotMaxDwelltime {
     description: "Spot Max Dwell Time"
     type: number
-    sql: ${TABLE}.spotMaxDwelltime ;;
+    sql: ${TABLE}.spotMaxDwelltime / 600000 ;;
   }
 
   measure: Max_Spot_Dwelltime {
@@ -171,7 +177,7 @@ view: report_dwelltime_by_group {
   dimension: groupMedianDwelltime {
     description: "Group Median Dwell Time"
     type: number
-    sql: ${TABLE}.groupMedianDwelltime ;;
+    sql: ${TABLE}.groupMedianDwelltime / 600000 ;;
   }
 
   measure: Median_Group_Dwelltime {
@@ -183,7 +189,7 @@ view: report_dwelltime_by_group {
   dimension: spotMedianDwelltime {
     description: "Spot Median Dwell Time"
     type: number
-    sql: ${TABLE}.spotMedianDwelltime ;;
+    sql: ${TABLE}.spotMedianDwelltime / 600000 ;;
   }
 
   measure: Median_Spot_Dwelltime {

@@ -1,8 +1,8 @@
 view: report_violations_by_group {
   derived_table: {
     sql: select
-          group_level.siteid as siteId,
-          group_level.sitename as siteName,
+          group_level.parkingsiteid as siteId,
+          group_level.parkingsitename as siteName,
          CAST(group_fine as DOUBLE) as group_violationFees,
           group_violation as groupViolation,
           CAST(space_fine as DOUBLE) as space_violationFees,
@@ -10,19 +10,32 @@ view: report_violations_by_group {
           spot_level.parkinggroupname as parkingGroupName,
           spot_level.parkinggroupid as parkingGroupId,
           spot_level.parkingspotname as parkingSpotName,
+          spot_level.parkingspotid as parkingSpotId,
           date_parse(group_level.starttime,'%Y-%m-%d %H:%i:%s') as startTime
 
-          from hive.dwh_qastage2.agg_report_group_level_micro group_level
-          cross join UNNEST(violationfinelist) as t (group_violationfine)
+          from hive.dwh_qastage2.agg_report_group_level_micro_demo group_level
+          cross join UNNEST(violationlist) as t (group_violationfine)
           cross join UNNEST(split(group_violationfine.violationtype,'='),split(CAST(group_violationfine.fine as VARCHAR),'=')) as v (group_violation,group_fine)
-          inner join hive.dwh_qastage2.agg_report_spot_level_micro spot_level
-          cross join UNNEST(violationfinelist) as t (space_violationfine)
+          inner join hive.dwh_qastage2.agg_report_spot_level_micro_demo spot_level
+          cross join UNNEST(violationlist) as t (space_violationfine)
           cross join UNNEST(split(space_violationfine.violationtype,'='),split(CAST(space_violationfine.fine as VARCHAR),'=')) as v (space_violation,space_fine)
-          on group_level.siteid = spot_level.siteid
+          on group_level.parkingsiteid = spot_level.parkingsiteid
           and group_level.parkinggroupid = spot_level.parkinggroupid
           and group_level.starttime = spot_level.starttime
           order by starttime ASC
       ;;
+  }
+
+  dimension: siteId {
+    description: "Site ID"
+    type: string
+    sql: ${TABLE}.siteId ;;
+  }
+
+  dimension: siteName {
+    description: "Site Name"
+    type: string
+    sql: ${TABLE}.siteName ;;
   }
 
   dimension: parkingGroupId {
@@ -41,6 +54,12 @@ view: report_violations_by_group {
     description: "Parking Spot Name"
     type: string
     sql: ${TABLE}.parkingSpotName ;;
+  }
+
+  dimension: parkingSpotId {
+    description: "Parking Spot Id"
+    type: string
+    sql: ${TABLE}.parkingSpotId ;;
   }
 
   dimension: violation {

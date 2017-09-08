@@ -5,28 +5,29 @@ view: report_metrics_with_filters {
           group_level.turnover as Group_Turnover,
           group_level.vacancy as Group_Vacancy,
           group_level.avgdwelltime as Group_Dwelltime,
-          group_level.siteid as siteid,
-          group_level.sitename as sitename,
+          group_level.parkingsiteid as siteid,
+          group_level.parkingsitename as sitename,
           spot_level.occupancy as Spot_Occupancy,
           spot_level.avgrevenue as Spot_Revenue,
           spot_level.turnover as Spot_Turnover,
           spot_level.vacancy as Spot_Vacancy,
           spot_level.avgdwelltime as Spot_Dwelltime,
-          spot_level.handicapped as handicapped,
+          spot_level.handicap as handicapped,
           spot_level.formfactor as formfactor,
-          vehicleType as typeofvehicle,
-          violation as violation,
+          --vehicleType as typeofvehicle,
+          --violation as violation,
           spot_level.parkinggroupname as parkinggroupname,
           spot_level.parkinggroupid as parkinggroupid,
           spot_level.parkingspotname as parkingspotname,
+          spot_level.parkingspotid as parkingspotid,
           date_parse(group_level.starttime,'%Y-%m-%d %H:%i:%s') as starttime
 
-          from hive.dwh_qastage2.agg_report_group_level_micro group_level
-          inner join hive.dwh_qastage2.agg_report_spot_level_micro spot_level
-          cross join UNNEST(typeovehicle) as t (vehicleType)
-          cross join UNNEST(violationfinelist) as t (violationfine)
-          cross join UNNEST(split(violationfine.violationtype,'=')) as v (violation)
-          on group_level.siteid = spot_level.siteid
+          from hive.dwh_qastage2.agg_report_group_level_micro_demo group_level
+          inner join hive.dwh_qastage2.agg_report_spot_level_micro_demo spot_level
+          --cross join UNNEST(typeovehicle) as t (vehicleType)
+          --cross join UNNEST(violationlist) as t (violationfine)
+          --cross join UNNEST(split(violationfine.violationtype,'=')) as v (violation)
+          on group_level.parkingsiteid = spot_level.parkingsiteid
           and group_level.parkinggroupid = spot_level.parkinggroupid
           and group_level.starttime = spot_level.starttime
           order by starttime ASC
@@ -51,10 +52,22 @@ view: report_metrics_with_filters {
     sql: ${TABLE}.parkinggroupname ;;
   }
 
+  dimension: parkinggroupid {
+    description: "Parking Group Id"
+    type: string
+    sql: ${TABLE}.parkinggroupid ;;
+  }
+
   dimension: parkingspotname {
     description: "Parking Spot Name"
     type: string
     sql: ${TABLE}.parkingspotname ;;
+  }
+
+  dimension: parkingspotid {
+    description: "Parking Spot Id"
+    type: string
+    sql: ${TABLE}.parkingspotid ;;
   }
 
   dimension_group: starttime {
@@ -75,23 +88,23 @@ view: report_metrics_with_filters {
     sql: ${TABLE}.formfactor ;;
   }
 
-  dimension: typeofvehicle {
-    description: "Vehicle Type"
-    type: string
-    sql: ${TABLE}.typeofvehicle ;;
-  }
-
-  dimension: violation {
-    description: "Violation"
-    type: string
-    sql: ${TABLE}.violation ;;
-  }
+#   dimension: typeofvehicle {
+#     description: "Vehicle Type"
+#     type: string
+#     sql: ${TABLE}.typeofvehicle ;;
+#   }
+#
+#   dimension: violation {
+#     description: "Violation"
+#     type: string
+#     sql: ${TABLE}.violation ;;
+#   }
 
   measure: Occupancy {
     type: number
     description: "Occupancy"
     sql: {% if report_metrics_with_filters.handicapped._is_filtered or report_metrics_with_filters.formfactor._is_filtered
-      or report_metrics_with_filters.typeofvehicle._is_filtered or report_metrics_with_filters.violation._is_filtered %}
+       %}
             ${Avg_Spot_Occupancy}
          {% else %}
             ${Avg_Group_Occupancy}
@@ -101,8 +114,7 @@ view: report_metrics_with_filters {
   measure: Revenue {
     type: number
     description: "Revenue"
-    sql: {% if report_metrics_with_filters.handicapped._is_filtered or report_metrics_with_filters.formfactor._is_filtered
-      or report_metrics_with_filters.typeofvehicle._is_filtered or report_metrics_with_filters.violation._is_filtered  %}
+    sql: {% if report_metrics_with_filters.handicapped._is_filtered or report_metrics_with_filters.formfactor._is_filtered %}
             ${Avg_Spot_Revenue}
          {% else %}
             ${Avg_Group_Revenue}
@@ -112,8 +124,7 @@ view: report_metrics_with_filters {
   measure: Turnover {
     type: number
     description: "Turnover"
-    sql: {% if report_metrics_with_filters.handicapped._is_filtered or report_metrics_with_filters.formfactor._is_filtered
-      or report_metrics_with_filters.typeofvehicle._is_filtered or report_metrics_with_filters.violation._is_filtered  %}
+    sql: {% if report_metrics_with_filters.handicapped._is_filtered or report_metrics_with_filters.formfactor._is_filtered  %}
             ${Avg_Spot_Turnover}
          {% else %}
             ${Avg_Group_Turnover}
@@ -123,8 +134,7 @@ view: report_metrics_with_filters {
   measure: Vacancy {
     type: number
     description: "Vacancy"
-    sql: {% if report_metrics_with_filters.handicapped._is_filtered or report_metrics_with_filters.formfactor._is_filtered
-      or report_metrics_with_filters.typeofvehicle._is_filtered or report_metrics_with_filters.violation._is_filtered  %}
+    sql: {% if report_metrics_with_filters.handicapped._is_filtered or report_metrics_with_filters.formfactor._is_filtered %}
             ${Avg_Spot_Vacancy}
          {% else %}
             ${Avg_Group_Vacancy}
@@ -134,8 +144,7 @@ view: report_metrics_with_filters {
   measure: DwellTime{
     type: number
     description: "DwellTime"
-    sql: {% if report_metrics_with_filters.handicapped._is_filtered or report_metrics_with_filters.formfactor._is_filtered
-      or report_metrics_with_filters.typeofvehicle._is_filtered or report_metrics_with_filters.violation._is_filtered  %}
+    sql: {% if report_metrics_with_filters.handicapped._is_filtered or report_metrics_with_filters.formfactor._is_filtered %}
             ${Avg_Spot_Dwelltime}
          {% else %}
             ${Avg_Group_Dwelltime}
@@ -241,7 +250,7 @@ view: report_metrics_with_filters {
   dimension: Group_Dwelltime {
     description: "Group Dwell Time"
     type: number
-    sql: ${TABLE}.Group_Dwelltime ;;
+    sql: ${TABLE}.Group_Dwelltime / 600000000 ;;
   }
 
   measure: Avg_Group_Dwelltime {
@@ -253,7 +262,7 @@ view: report_metrics_with_filters {
   dimension: Spot_Dwelltime {
     description: "Spot Dwell Time"
     type: number
-    sql: ${TABLE}.Spot_Dwelltime ;;
+    sql: ${TABLE}.Spot_Dwelltime / 600000000 ;;
   }
 
   measure: Avg_Spot_Dwelltime {

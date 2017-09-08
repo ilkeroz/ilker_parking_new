@@ -2,8 +2,8 @@ view: report_turnover_by_group {
   derived_table: {
     sql: select
           group_level.turnover as groupTurnover,
-          group_level.siteid as siteId,
-          group_level.sitename as siteName,
+          group_level.parkingsiteid as siteId,
+          group_level.parkingsitename as siteName,
           spot_level.turnover as spotTurnover,
           spot_level.parkinggroupname as parkingGroupName,
           spot_level.parkinggroupid as parkingGroupId,
@@ -11,9 +11,9 @@ view: report_turnover_by_group {
           spot_level.parkingspotname as parkingSpotName,
           date_parse(group_level.starttime,'%Y-%m-%d %H:%i:%s') as startTime
 
-          from hive.dwh_qastage2.agg_report_group_level_micro group_level
-          inner join hive.dwh_qastage2.agg_report_spot_level_micro spot_level
-          on group_level.siteid = spot_level.siteid
+          from hive.dwh_qastage2.agg_report_group_level_micro_demo group_level
+          inner join hive.dwh_qastage2.agg_report_spot_level_micro_demo spot_level
+          on group_level.parkingsiteid = spot_level.parkingsiteid
           and group_level.parkinggroupid = spot_level.parkinggroupid
           and group_level.starttime = spot_level.starttime
           order by starttime ASC
@@ -42,6 +42,12 @@ view: report_turnover_by_group {
     description: "Parking Spot Name"
     type: string
     sql: ${TABLE}.parkingSpotName ;;
+  }
+
+  dimension: parkingSpotId {
+    description: "Parking Spot Id"
+    type: string
+    sql: ${TABLE}.parkingSpotId ;;
   }
 
   dimension_group: startTime {

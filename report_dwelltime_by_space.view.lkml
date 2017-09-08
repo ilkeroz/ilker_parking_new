@@ -8,7 +8,7 @@ view: report_dwelltime_by_space {
         , maxdwelltime as maxdwelltime
         , avgdwelltime as avgdwelltime
         , medianfordwelltime as medianfordwelltime
-      FROM hive.dwh_qastage2.agg_report_spot_level_micro
+      FROM hive.dwh_qastage2.agg_report_spot_level_micro_demo
       ORDER BY starttime
       ;;
   }
