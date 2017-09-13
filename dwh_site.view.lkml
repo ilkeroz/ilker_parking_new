@@ -3,7 +3,7 @@ view: dwh_site {
     sql:
     select distinct s.*
     from   hive.{{ _user_attributes['platform'] }}.dwh_site s
-    JOIN   hive.{{ _user_attributes['platform'] }}.dwh_parking_group n ON n.siteid = s.siteid
+    JOIN   hive.{{ _user_attributes['platform'] }}.dwh_parking_zone_status n ON n.siteid = s.siteid
     ;;
     # sql_trigger_value: select date_format(current_timestamp,'%H') ;;
   }
