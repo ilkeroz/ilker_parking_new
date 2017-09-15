@@ -113,6 +113,32 @@ explore: report_turnover_by_group {}
 explore: report_violations_by_group {}
 
 # CITY OF MARIETTA VERSION 2
+## Dwell time by group and space
+explore: com_report_dwelltime_by_group_yearly {}
+
+explore: com_report_dwelltime_by_space_yearly {}
+
+explore: com_report_dwelltime_by_group_monthly {}
+
+explore: com_report_dwelltime_by_space_monthly {}
+
+explore: com_report_dwelltime_by_group_weekly {}
+
+explore: com_report_dwelltime_by_space_weekly {}
+
+explore: com_report_dwelltime_by_group_day {}
+
+explore: com_report_dwelltime_by_space_day {}
+
+explore: com_report_dwelltime_by_group_hourly {}
+
+explore: com_report_dwelltime_by_space_hourly {}
+## Occupancy by group and space
+
+explore: com_report_occupancy_by_group_micro {}
+
+explore: com_report_occupancy_by_space_micro {}
+
 explore: com_report_dwelltime_by_group {}
 
 explore: com_report_dwelltime_by_space {}
@@ -120,6 +146,28 @@ explore: com_report_dwelltime_by_space {}
 explore: com_turnover_with_threshold_by_group {}
 
 explore: com_turnover_with_threshold_by_space {}
+
+explore: com_report_violations_count_by_group_yearly {}
+
+explore: com_report_violations_count_by_group_monthly {}
+
+explore: com_report_violations_count_by_group_weekly {}
+
+explore: com_report_violations_count_by_group_day {}
+
+explore: com_report_violations_count_by_group_hourly {}
+
+explore: com_report_violations_count_by_group {}
+
+explore: com_report_violations_count_by_space {}
+
+explore: com_report_turnover_by_space {}
+
+explore: com_report_turnover_by_group {}
+
+explore: com_report_violations_revenue_by_group {}
+
+explore: com_report_violations_revenue_by_space {}
 
 # explore: report_violations {}
 

@@ -1,4 +1,4 @@
-view: com_report_dwelltime_by_space {
+view: com_report_dwelltime_by_space_hourly {
   derived_table: {
     sql: select
           spot_level.parkingsiteid as siteId,
@@ -75,10 +75,15 @@ view: com_report_dwelltime_by_space {
     type: number
     description: "Dwell Time"
     value_format: "0.00"
-    sql: CASE WHEN {% condition Statistics %} 'Average' {% endcondition %} THEN ${com_report_dwelltime_by_space.Avg_Spot_Dwelltime}
-      WHEN {% condition Statistics %} 'Minimum' {% endcondition %} THEN ${com_report_dwelltime_by_space.Min_Spot_Dwelltime}
-      WHEN {% condition Statistics %} 'Maximum' {% endcondition %} THEN ${com_report_dwelltime_by_space.Max_Spot_Dwelltime}
+    sql: CASE WHEN {% condition Statistics %} 'Average' {% endcondition %} THEN ${com_report_dwelltime_by_space_hourly.Avg_Spot_Dwelltime}
+      WHEN {% condition Statistics %} 'Minimum' {% endcondition %} THEN ${com_report_dwelltime_by_space_hourly.Min_Spot_Dwelltime}
+      WHEN {% condition Statistics %} 'Maximum' {% endcondition %} THEN ${com_report_dwelltime_by_space_hourly.Max_Spot_Dwelltime}
       END ;;
+    link: {
+      # group micro dashboard
+      label: "See Spots - Dwelltime on 15min interval"
+      url: "/dashboards/62?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Space={{ parkingSpotId_hidden._value | url_encode}}&starttime=after+{{ startTime_time._value | url_encode }}&endtime=before+{{ endTime_time._value | url_encode }},{{ endTime_time._value | url_encode }}&Statistics={{_filters['com_report_dwelltime_by_space_hourly.Statistics']}}"
+    }
   }
 
   measure: Avg_Spot_Dwelltime {

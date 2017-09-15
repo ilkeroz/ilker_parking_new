@@ -1,6 +1,6 @@
 view: com_turnover_with_threshold_by_space {
   derived_table: {
-    sql: SELECT distinct(objectid) as objectid, parkingspotid,parkinggroupid,
+    sql: SELECT distinct(objectid) as objectid, siteid, sitename, parkingspotid,parkinggroupid,
       date_diff('hour',from_unixtime(starttimestamp/1000000),from_unixtime(endtimestamp/1000000)) as duration,
       from_unixtime(starttimestamp/1000000)  as startTime,
       from_unixtime(endtimestamp/1000000)  as endTime
@@ -8,8 +8,6 @@ view: com_turnover_with_threshold_by_space {
       order by startTime
        ;;
   }
-
-  suggestions: no
 
   measure: count {
     type: count_distinct
@@ -19,6 +17,21 @@ view: com_turnover_with_threshold_by_space {
   dimension: objectid {
     type: string
     sql: ${TABLE}.objectid ;;
+  }
+
+  dimension: siteid {
+    type: string
+    sql: ${TABLE}.siteid ;;
+  }
+
+  dimension: siteid_hidden {
+    type: string
+    sql: ${TABLE}.siteid ;;
+  }
+
+  dimension: sitename {
+    type: string
+    sql: ${TABLE}.sitename ;;
   }
 
   dimension: parkingspotid {
