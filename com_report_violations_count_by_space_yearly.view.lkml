@@ -1,4 +1,4 @@
-view: com_report_violations_count_by_group_yearly {
+view: com_report_violations_count_by_space_yearly {
  derived_table: {
   sql: select objectid,
           siteid,
@@ -6,6 +6,7 @@ view: com_report_violations_count_by_group_yearly {
           violationlist,
           violation,
           parkinggroupid,
+          parkingspotid,
           starttimestamp,
           endtimestamp,
           from_unixtime(starttimestamp/1000000) as startTime,
@@ -35,23 +36,11 @@ dimension: parkinggroupid {
   type: string
   sql: ${TABLE}.parkinggroupid ;;
 }
-#
-#   dimension: parkinggroupname {
-#     description: "Parking Group Name"
-#     type: string
-#     sql: ${TABLE}.parkinggroupname ;;
-#   }
 
-dimension: sitename_hidden {
+dimension: parkingspotid {
+  description: "Parking Spot Id"
   type: string
-  hidden: yes
-  sql: ${TABLE}.sitename ;;
-}
-
-dimension: parkinggroupid_hidden {
-  type: string
-  hidden: yes
-  sql: ${TABLE}.parkinggroupid ;;
+  sql: ${TABLE}.parkingspotid ;;
 }
 
 dimension: violation {
@@ -60,11 +49,23 @@ dimension: violation {
   sql: ${TABLE}.violation ;;
 }
 
-dimension: violation_hidden {
-  description: "Violation"
-  type: string
-  sql: ${TABLE}.violation ;;
-}
+  dimension: sitename_hidden {
+    type: string
+    hidden: yes
+    sql: ${TABLE}.sitename ;;
+  }
+
+  dimension: violation_hidden {
+    description: "Violation"
+    type: string
+    sql: ${TABLE}.violation ;;
+  }
+
+  dimension: parkinggroupid_hidden {
+    type: string
+    hidden: yes
+    sql: ${TABLE}.parkinggroupName ;;
+  }
 
 dimension_group: startTime {
   description: "Time"
@@ -72,19 +73,19 @@ dimension_group: startTime {
   sql: ${TABLE}.startTime ;;
 }
 
+  measure: startTime_measure {
+    description: "Start Time"
+    type: string
+    sql: ${startTime_year} ;;
+  }
+
 measure: count {
   type: count
 #   sql:${violation};;
   link: {
-    label: "See Group Violations count - monthly"
-    url: "/dashboards/109?Group={{ parkinggroupid_hidden._value | url_encode}}&Site={{sitename_hidden._value | url_encode }}&Violation={{violation_hidden._value | url_encode}}&Time={{startTime_year._value | url_encode }}"
+    # spots monthly dashboard
+    label: "See Spots - Violations count on monthly"
+    url: "/dashboards/133?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Space={{ parkingSpotId._value | url_encode}}&Violation={{violation_hidden._value | url_encode}}&Time={{ startTime_measure._value | url_encode }}"
   }
-
-  link: {
-    label: "See Spots Violations count - yearly"
-    url: "/dashboards/109?Group={{ parkinggroupid_hidden._value | url_encode}}&Site={{sitename_hidden._value | url_encode }}&Violation={{violation_hidden._value | url_encode}}&Time={{startTime_year._value | url_encode }}"
-  }
-
 }
-
 }

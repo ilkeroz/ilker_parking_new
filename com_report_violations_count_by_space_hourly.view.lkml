@@ -1,4 +1,4 @@
-view: com_report_violations_count_by_group {
+view: com_report_violations_count_by_space_hourly {
   derived_table: {
     sql: select objectid,
           siteid,
@@ -6,11 +6,11 @@ view: com_report_violations_count_by_group {
           violationlist,
           violation,
           parkinggroupid,
+          parkingspotid,
           starttimestamp,
           endtimestamp,
           from_unixtime(starttimestamp/1000000) as startTime,
-          date_add('minute',15,from_unixtime(starttimestamp/1000000)) as endTime
-          --,from_unixtime(endtimestamp/1000000) as endTime
+          from_unixtime(endtimestamp/1000000) as endTime
           from hive.dwh_qastage1.dwh_parking_spot_report
           cross join UNNEST(violationlist) as t (group_violation)
           cross join UNNEST(split(group_violation.violationtype,'=')) as v (violation)
@@ -37,16 +37,10 @@ view: com_report_violations_count_by_group {
     sql: ${TABLE}.parkinggroupid ;;
   }
 
-  dimension: sitename_hidden {
+  dimension: parkingspotid {
+    description: "Parking Spot Id"
     type: string
-    hidden: yes
-    sql: ${TABLE}.sitename ;;
-  }
-
-  dimension: parkinggroupid_hidden {
-    type: string
-    hidden: yes
-    sql: ${TABLE}.parkinggroupid ;;
+    sql: ${TABLE}.parkingspotid ;;
   }
 
   dimension: violation {
@@ -55,42 +49,15 @@ view: com_report_violations_count_by_group {
     sql: ${TABLE}.violation ;;
   }
 
-  dimension: violation_hidden {
-    description: "Violation"
-    type: string
-    sql: ${TABLE}.violation ;;
-  }
-
   dimension_group: startTime {
     description: "Time"
     type: time
-     timeframes: [minute15]
     sql: ${TABLE}.startTime ;;
   }
 
-  dimension_group: endTime {
-    description: "Time"
-    type: time
-    timeframes: [minute15]
-    sql: ${TABLE}.endTime ;;
-  }
-
-#   dimension_group: startTimeStamp {
-#     description: "Time"
-#     type: time
-#     sql: ${TABLE}.startTimeStamp ;;
-#   }
-
-
-
   measure: count {
-    type: count
-#     sql:${violation};;
-    link: {
-      label: "See Spots Violations count"
-      url: "/dashboards/88?Group={{ parkinggroupid_hidden._value | url_encode}}&Site={{sitename_hidden._value | url_encode }}&Violation={{violation_hidden._value | url_encode}}&Time={{startTimeStamp_date._value | url_encode }}"
-    }
+    type: count_distinct
+    sql:${violation};;
 
   }
-
 }
