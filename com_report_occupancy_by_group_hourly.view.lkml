@@ -6,8 +6,9 @@ view: com_report_occupancy_by_group_hourly {
           group_level.parkingsitename as siteName,
           group_level.parkinggroupid as parkingGroupId,
           group_level.parkinggroupname as parkingGroupName,
-          date_parse(group_level.starttime,'%Y-%m-%d %H:%i:%s') as startTime
-          from hive.dwh_qastage2.agg_report_group_level_hourly_demo group_level
+          date_parse(group_level.starttime,'%Y-%m-%d %H:%i:%s') as startTime,
+          date_parse(group_level.endtime,'%Y-%m-%d %H:%i:%s') as endTime
+          from hive.dwh_qastage1.agg_report_group_level_hourly group_level
           order by starttime DESC
       ;;
   }
@@ -41,7 +42,7 @@ view: com_report_occupancy_by_group_hourly {
     description: "Parking Group Name"
     type: string
     hidden: yes
-    sql: ${TABLE}.parkingGroupId ;;
+    sql: ${TABLE}.parkingGroupName ;;
   }
 
   dimension: parkingGroupId {
@@ -56,11 +57,16 @@ view: com_report_occupancy_by_group_hourly {
     sql: ${TABLE}.startTime ;;
   }
 
+  dimension_group: endTime {
+    description: "End Time"
+    type: time
+    sql: ${TABLE}.endTime ;;
+  }
+
   dimension: groupOccupancy {
     description: "Group Occupancy"
     type: number
     sql: ${TABLE}.groupOccupancy ;;
-
   }
 
   measure: Avg_Group_Occupancy {
@@ -68,13 +74,13 @@ view: com_report_occupancy_by_group_hourly {
     type: average
     sql: ${groupOccupancy} ;;
     link: {
-      label: "See Spots - Occupancy"
-      url: "/dashboards/102?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&starttime={{startTime_time._value | url_encode }}&endtime={{ endTime_time._value | url_encode }}"
+      label: "See Spots - Occupancy on hourly"
+      url: "/dashboards/136?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Starttime=after+{{startTime_time._value | url_encode }}&Endtime=before+{{ endTime_time._value | url_encode }},{{ endTime_time._value | url_encode }}"
     }
     link: {
       # group micro dashboard
       label: "See Group - Occupancy on 15min interval"
-      url: "/dashboards/62?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&starttime=after+{{ startTime_time._value | url_encode }}&endtime=before+{{ endTime_time._value | url_encode }},{{ endTime_time._value | url_encode }}"
+      url: "/dashboards/131?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Starttime=after+{{ startTime_time._value | url_encode }}&Endtime=before+{{ endTime_time._value | url_encode }},{{ endTime_time._value | url_encode }}"
     }
   }
 

@@ -10,7 +10,7 @@ view: com_report_violations_count_by_group_yearly {
           endtimestamp,
           from_unixtime(starttimestamp/1000000) as startTime,
           from_unixtime(endtimestamp/1000000) as endTime
-          from hive.dwh_qastage2.dwh_parking_spot_report
+          from hive.dwh_qastage1.dwh_parking_spot_report
           cross join UNNEST(violationlist) as t (group_violation)
           cross join UNNEST(split(group_violation.violationtype,'=')) as v (violation)
           where cardinality(violationlist) != 0
@@ -35,6 +35,12 @@ dimension: parkinggroupid {
   type: string
   sql: ${TABLE}.parkinggroupid ;;
 }
+#
+#   dimension: parkinggroupname {
+#     description: "Parking Group Name"
+#     type: string
+#     sql: ${TABLE}.parkinggroupname ;;
+#   }
 
 dimension: sitename_hidden {
   type: string
@@ -67,8 +73,8 @@ dimension_group: startTime {
 }
 
 measure: count {
-  type: count_distinct
-  sql:${violation};;
+  type: count
+#   sql:${violation};;
   link: {
     label: "See Group Violations count - monthly"
     url: "/dashboards/109?Group={{ parkinggroupid_hidden._value | url_encode}}&Site={{sitename_hidden._value | url_encode }}&Violation={{violation_hidden._value | url_encode}}&Time={{startTime_year._value | url_encode }}"

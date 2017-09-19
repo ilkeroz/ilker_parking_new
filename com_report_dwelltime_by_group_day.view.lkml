@@ -4,13 +4,13 @@ derived_table: {
           group_level.avgdwelltime as groupAvgDwelltime,
           group_level.mindwelltime as groupMinDwelltime,
           group_level.maxdwelltime as groupMaxDwelltime,
-          group_level.medianfordwelltime as groupMedianDwelltime,
+          group_level.mediandwelltime as groupMedianDwelltime,
           group_level.parkingsiteid as siteId,
           group_level.parkingsitename as siteName,
           group_level.parkinggroupid as parkingGroupId,
           group_level.parkinggroupname as parkingGroupName,
           date_parse(group_level.starttime,'%Y-%m-%d %H:%i:%s') as startTime
-          from hive.dwh_qastage2.agg_report_group_level_micro_demo group_level
+          from hive.dwh_qastage1.agg_report_group_level_day group_level
           order by starttime DESC
       ;;
 }
@@ -44,7 +44,7 @@ dimension: parkingGroupId_hidden {
   description: "Parking Group Id"
   type: string
   hidden: yes
-  sql: ${TABLE}.parkingGroupId ;;
+  sql: ${TABLE}.parkingGroupName ;;
 }
 
 dimension: parkingGroupId {
@@ -62,7 +62,7 @@ dimension_group: startTime {
 dimension: groupAvgDwelltime {
   description: "Group Avg Dwell Time"
   type: number
-  sql: ${TABLE}.groupAvgDwelltime / 600000 ;;
+  sql: ${TABLE}.groupAvgDwelltime;;
 
 }
 
@@ -78,11 +78,11 @@ measure: DwellTime {
       WHEN {% condition Statistics %} 'Minimum' {% endcondition %} THEN ${com_report_dwelltime_by_group_day.Min_Group_Dwelltime}
       WHEN {% condition Statistics %} 'Maximum' {% endcondition %} THEN ${com_report_dwelltime_by_group_day.Max_Group_Dwelltime}
       END ;;
-#   link: {
-#     # spots day dashboard
-#     label: "See Spots - Dwelltime on daily"
-#     url: "/dashboards/83?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{startTime_date._value | url_encode }}&Statistics={{_filters['com_report_dwelltime_by_group_day.Statistics']}}"
-#   }
+  link: {
+    # spots day dashboard
+    label: "See Spots - Dwelltime on daily"
+    url: "/dashboards/123?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{startTime_date._value | url_encode }}&Statistics={{_filters['com_report_dwelltime_by_group_day.Statistics']}}"
+  }
   link: {
     # group hourly dashboard
     label: "See Group - Dwelltime on hourly"
@@ -101,7 +101,7 @@ measure: Avg_Group_Dwelltime {
 dimension: groupMindwelltime {
   description: "Group Min Dwell Time"
   type: number
-  sql: ${TABLE}.groupMindwelltime / 600000 ;;
+  sql: ${TABLE}.groupMindwelltime  ;;
 }
 
 measure: Min_Group_Dwelltime {
@@ -114,7 +114,7 @@ measure: Min_Group_Dwelltime {
 dimension: groupMaxDwelltime {
   description: "Group Max Dwell Time"
   type: number
-  sql: ${TABLE}.groupMaxDwelltime / 600000 ;;
+  sql: ${TABLE}.groupMaxDwelltime ;;
 }
 
 measure: Max_Group_Dwelltime {
@@ -127,7 +127,7 @@ measure: Max_Group_Dwelltime {
 dimension: groupMedianDwelltime {
   description: "Group Median Dwell Time"
   type: number
-  sql: ${TABLE}.groupMedianDwelltime / 600000 ;;
+  sql: ${TABLE}.groupMedianDwelltime ;;
 }
 
 measure: Median_Group_Dwelltime {

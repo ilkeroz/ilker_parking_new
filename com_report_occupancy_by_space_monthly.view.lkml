@@ -1,9 +1,9 @@
-view: com_report_occupancy_by_space_day {
+view: com_report_occupancy_by_space_monthly {
   derived_table: {
     sql: select
           spot_level.parkingsiteid as siteId,
           spot_level.parkingsitename as siteName,
-          spot_level.occupancy as spotOccupancy,
+          spot_level.occupancy as spotAvgOccupancy,
           spot_level.parkinggroupname as parkingGroupName,
           spot_level.parkinggroupid as parkingGroupId,
           spot_level.parkingspotid as parkingSpotId,
@@ -65,6 +65,12 @@ view: com_report_occupancy_by_space_day {
     sql: ${TABLE}.parkingSpotId ;;
   }
 
+#   dimension: parkingSpotId_hidden {
+#     description: "Parking Spot Id"
+#     type: string
+#     sql: ${TABLE}.parkingSpotId ;;
+#   }
+
   dimension_group: startTime {
     description: "Start Time"
     type: time
@@ -74,23 +80,24 @@ view: com_report_occupancy_by_space_day {
   measure: startTime_measure {
     description: "Start Time"
     type: string
-    sql: ${startTime_date} ;;
+    sql: ${startTime_month} ;;
   }
 
-  dimension: spotOccupancy {
-    type: number
-    sql: ${TABLE}.spotOccupancy ;;
-  }
-
-  measure: Avg_Spot_Occupancy {
+  dimension: spotAvgOccupancy {
     description: "Spot Avg Occupancy"
+    type: number
+    sql: ${TABLE}.spotAvgOccupancy ;;
+  }
+
+  measure: Occupancy {
     type: average
-    sql: ${spotOccupancy} ;;
+    description: "Occupancy"
+    value_format: "0.00"
+    sql: ${spotAvgOccupancy} ;;
     link: {
-      # group hourly dashboard
-      label: "See Spots - Occupancy on hourly"
-      url: "/dashboards/136?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Space={{ parkingSpotId._value | url_encode}}&Time={{ startTime_date._value | url_encode }}"
+      # spots weekly dashboard
+      label: "See Spots - Occupancy on weekly"
+      url: "/dashboards/134?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Space={{ parkingSpotId._value | url_encode}}&Time={{ startTime_measure._value | url_encode }}"
     }
   }
-
 }

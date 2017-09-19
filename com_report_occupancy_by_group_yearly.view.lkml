@@ -1,7 +1,7 @@
-view: com_report_occupancy_by_group_day {
+view: com_report_occupancy_by_group_yearly {
   derived_table: {
     sql: select
-          group_level.occupancy as groupOccupancy,
+          group_level.occupancy as groupAvgOccupancy,
           group_level.parkingsiteid as siteId,
           group_level.parkingsitename as siteName,
           group_level.parkinggroupid as parkingGroupId,
@@ -38,7 +38,7 @@ view: com_report_occupancy_by_group_day {
   }
 
   dimension: parkingGroupId_hidden {
-    description: "Parking Group Name"
+    description: "Parking Group Id"
     type: string
     hidden: yes
     sql: ${TABLE}.parkingGroupName ;;
@@ -56,25 +56,26 @@ view: com_report_occupancy_by_group_day {
     sql: ${TABLE}.startTime ;;
   }
 
-  dimension: groupOccupancy {
-    description: "Group Occupancy"
+  dimension: groupAvgOccupancy {
+    description: "Group Avg Occupancy"
     type: number
-    sql: ${TABLE}.groupOccupancy ;;
+    sql: ${TABLE}.groupAvgOccupancy ;;
 
   }
 
-  measure: Avg_Group_Occupancy {
-    description: "Group Avg Occupancy"
+  measure: Occupancy {
     type: average
-    sql: ${groupOccupancy} ;;
+    description: "Occupancy"
+    sql: ${groupAvgOccupancy};;
     link: {
-      label: "See Spots - Occupancy on daily"
-      url: "/dashboards/135?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{startTime_date._value | url_encode }}"
+      # spots day dashboard
+      label: "See Spots - Occupancy on yearly"
+      url: "/dashboards/132?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{startTime_year._value | url_encode }}"
     }
     link: {
       # group hourly dashboard
-      label: "See Group - Occupancy on hourly"
-      url: "/dashboards/130?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{ startTime_date._value | url_encode }}"
+      label: "See Group - Occupancy on monthly"
+      url: "/dashboards/127?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{ startTime_year._value | url_encode }}"
     }
   }
 

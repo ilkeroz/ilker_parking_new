@@ -13,7 +13,7 @@ view: com_report_dwelltime_by_space_day {
           spot_level.parkingspotname as parkingSpotName,
           date_parse(spot_level.starttime,'%Y-%m-%d %H:%i:%s') as startTime
 
-          from hive.dwh_qastage2.agg_report_spot_level_micro_demo spot_level
+          from hive.dwh_qastage1.agg_report_spot_level_day spot_level
           order by starttime ASC
       ;;
   }
@@ -27,6 +27,13 @@ view: com_report_dwelltime_by_space_day {
   dimension: siteName {
     description: "Site Name"
     type: string
+    sql: ${TABLE}.siteName ;;
+  }
+
+  dimension: siteName_hidden {
+    description: "Site Name"
+    type: string
+    hidden: yes
     sql: ${TABLE}.siteName ;;
   }
 
@@ -52,7 +59,7 @@ view: com_report_dwelltime_by_space_day {
     description: "Parking Group Id"
     type: string
     hidden: yes
-    sql: ${TABLE}.parkingGroupId ;;
+    sql: ${TABLE}.parkingGroupName ;;
   }
 
   dimension: parkingSpotId {
@@ -61,11 +68,11 @@ view: com_report_dwelltime_by_space_day {
     sql: ${TABLE}.parkingSpotId ;;
   }
 
-  dimension: parkingSpotId_hidden {
-    description: "Parking Spot Id"
-    type: string
-    sql: ${TABLE}.parkingSpotId ;;
-  }
+#   dimension: parkingSpotId_hidden {
+#     description: "Parking Spot Id"
+#     type: string
+#     sql: ${TABLE}.parkingSpotId ;;
+#   }
 
   dimension_group: startTime {
     description: "Start Time"
@@ -73,10 +80,16 @@ view: com_report_dwelltime_by_space_day {
     sql: ${TABLE}.startTime ;;
   }
 
+  measure: startTime_measure {
+    description: "Start Time"
+    type: string
+    sql: ${startTime_date} ;;
+  }
+
   dimension: spotAvgDwelltime {
     description: "Spot Avg Dwell Time"
     type: number
-    sql: ${TABLE}.spotAvgDwelltime / 600000 ;;
+    sql: ${TABLE}.spotAvgDwelltime  ;;
   }
 
   filter: Statistics {
@@ -95,7 +108,7 @@ view: com_report_dwelltime_by_space_day {
     link: {
       # group hourly dashboard
       label: "See Spots - Dwelltime on hourly"
-      url: "/dashboards/54?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Space={{ parkingSpotId_hidden._value | url_encode}}&Time={{ startTime_date._value | url_encode }}&Statistics={{_filters['com_report_dwelltime_by_space_day.Statistics']}}"
+      url: "/dashboards/124?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Space={{ parkingSpotId._value | url_encode}}&Time={{ startTime_measure._value | url_encode }}&Statistics={{_filters['com_report_dwelltime_by_space_day.Statistics']}}"
     }
   }
 
@@ -108,7 +121,7 @@ view: com_report_dwelltime_by_space_day {
   dimension: spotMinDwelltime {
     description: "Spot Min Dwell Time"
     type: number
-    sql: ${TABLE}.spotMinDwelltime / 600000 ;;
+    sql: ${TABLE}.spotMinDwelltime  ;;
 
   }
 
@@ -121,7 +134,7 @@ view: com_report_dwelltime_by_space_day {
   dimension: spotMaxDwelltime {
     description: "Spot Max Dwell Time"
     type: number
-    sql: ${TABLE}.spotMaxDwelltime / 600000 ;;
+    sql: ${TABLE}.spotMaxDwelltime  ;;
   }
 
   measure: Max_Spot_Dwelltime {
@@ -133,7 +146,7 @@ view: com_report_dwelltime_by_space_day {
   dimension: spotMedianDwelltime {
     description: "Spot Median Dwell Time"
     type: number
-    sql: ${TABLE}.spotMedianDwelltime / 600000 ;;
+    sql: ${TABLE}.spotMedianDwelltime  ;;
   }
 
   measure: Median_Spot_Dwelltime {

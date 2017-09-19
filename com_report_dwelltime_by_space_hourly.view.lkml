@@ -11,9 +11,10 @@ view: com_report_dwelltime_by_space_hourly {
           spot_level.parkinggroupid as parkingGroupId,
           spot_level.parkingspotid as parkingSpotId,
           spot_level.parkingspotname as parkingSpotName,
-          date_parse(spot_level.starttime,'%Y-%m-%d %H:%i:%s') as startTime
+          date_parse(spot_level.starttime,'%Y-%m-%d %H:%i:%s') as startTime,
+          date_parse(spot_level.endtime,'%Y-%m-%d %H:%i:%s') as endTime
 
-          from hive.dwh_qastage2.agg_report_spot_level_micro_demo spot_level
+          from hive.dwh_qastage1.agg_report_spot_level_hourly spot_level
           order by starttime ASC
       ;;
   }
@@ -27,6 +28,13 @@ view: com_report_dwelltime_by_space_hourly {
   dimension: siteName {
     description: "Site Name"
     type: string
+    sql: ${TABLE}.siteName ;;
+  }
+
+  dimension: siteName_hidden {
+    description: "Site Name"
+    type: string
+    hidden: yes
     sql: ${TABLE}.siteName ;;
   }
 
@@ -48,11 +56,24 @@ view: com_report_dwelltime_by_space_hourly {
     sql: ${TABLE}.parkingGroupId ;;
   }
 
+  dimension: parkingGroupId_hidden {
+    description: "Parking Group Id"
+    type: string
+    hidden: yes
+    sql: ${TABLE}.parkingGroupName ;;
+  }
+
   dimension: parkingSpotId {
     description: "Parking Spot Id"
     type: string
     sql: ${TABLE}.parkingSpotId ;;
   }
+
+#   dimension: parkingSpotId_hidden {
+#     description: "Parking Spot Id"
+#     type: string
+#     sql: ${TABLE}.parkingSpotId ;;
+#   }
 
   dimension_group: startTime {
     description: "Start Time"
@@ -60,10 +81,28 @@ view: com_report_dwelltime_by_space_hourly {
     sql: ${TABLE}.startTime ;;
   }
 
+  dimension_group: endTime {
+    description: "End Time"
+    type: time
+    sql: ${TABLE}.endTime ;;
+  }
+
+  measure: startTime_measure {
+    description: "Start Time"
+    type: string
+    sql: ${startTime_time} ;;
+  }
+
+  measure: endTime_measure {
+    description: "End Time"
+    type: string
+    sql: ${endTime_time};;
+  }
+
   dimension: spotAvgDwelltime {
     description: "Spot Avg Dwell Time"
     type: number
-    sql: ${TABLE}.spotAvgDwelltime / 600000 ;;
+    sql: ${TABLE}.spotAvgDwelltime  ;;
   }
 
   filter: Statistics {
@@ -80,9 +119,9 @@ view: com_report_dwelltime_by_space_hourly {
       WHEN {% condition Statistics %} 'Maximum' {% endcondition %} THEN ${com_report_dwelltime_by_space_hourly.Max_Spot_Dwelltime}
       END ;;
     link: {
-      # group micro dashboard
+      # spots micro dashboard
       label: "See Spots - Dwelltime on 15min interval"
-      url: "/dashboards/62?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Space={{ parkingSpotId_hidden._value | url_encode}}&starttime=after+{{ startTime_time._value | url_encode }}&endtime=before+{{ endTime_time._value | url_encode }},{{ endTime_time._value | url_encode }}&Statistics={{_filters['com_report_dwelltime_by_space_hourly.Statistics']}}"
+      url: "/dashboards/125?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Space={{ parkingSpotId._value | url_encode}}&Starttime=after+{{ startTime_measure._value | url_encode }}&Endtime={{ startTime_measure._value | url_encode }}+for+1+hour&Statistics={{_filters['com_report_dwelltime_by_space_hourly.Statistics']}}"
     }
   }
 
@@ -95,7 +134,7 @@ view: com_report_dwelltime_by_space_hourly {
   dimension: spotMinDwelltime {
     description: "Spot Min Dwell Time"
     type: number
-    sql: ${TABLE}.spotMinDwelltime / 600000 ;;
+    sql: ${TABLE}.spotMinDwelltime  ;;
 
   }
 
@@ -108,7 +147,7 @@ view: com_report_dwelltime_by_space_hourly {
   dimension: spotMaxDwelltime {
     description: "Spot Max Dwell Time"
     type: number
-    sql: ${TABLE}.spotMaxDwelltime / 600000 ;;
+    sql: ${TABLE}.spotMaxDwelltime  ;;
   }
 
   measure: Max_Spot_Dwelltime {
@@ -120,7 +159,7 @@ view: com_report_dwelltime_by_space_hourly {
   dimension: spotMedianDwelltime {
     description: "Spot Median Dwell Time"
     type: number
-    sql: ${TABLE}.spotMedianDwelltime / 600000 ;;
+    sql: ${TABLE}.spotMedianDwelltime  ;;
   }
 
   measure: Median_Spot_Dwelltime {

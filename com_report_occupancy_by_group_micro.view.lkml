@@ -8,7 +8,7 @@ view: com_report_occupancy_by_group_micro {
           group_level.parkinggroupname as parkingGroupName,
           date_parse(group_level.starttime,'%Y-%m-%d %H:%i:%s') as startTime,
           date_parse(group_level.endtime,'%Y-%m-%d %H:%i:%s') as endTime
-          from hive.dwh_qastage2.agg_report_group_level_micro_demo group_level
+          from hive.dwh_qastage1.agg_report_group_level_micro group_level
           order by starttime DESC
       ;;
   }
@@ -42,7 +42,7 @@ view: com_report_occupancy_by_group_micro {
     description: "Parking Group Name"
     type: string
     hidden: yes
-    sql: ${TABLE}.parkingGroupId ;;
+    sql: ${TABLE}.parkingGroupName ;;
   }
 
   dimension: parkingGroupId {
@@ -76,7 +76,7 @@ view: com_report_occupancy_by_group_micro {
     sql: ${groupOccupancy} ;;
     link: {
       label: "See Spots - Occupancy on 15min interval"
-      url: "/dashboards/102?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Starttime={{startTime_time._value | url_encode }}&Endtime={{ endTime_time._value | url_encode }}"
+      url: "/dashboards/137?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Starttime=after+{{startTime_time._value | url_encode }}&Endtime=before+{{ endTime_time._value | url_encode }},{{ endTime_time._value | url_encode }}"
     }
   }
 

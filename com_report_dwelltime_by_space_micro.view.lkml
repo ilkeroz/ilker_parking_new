@@ -14,7 +14,7 @@ view: com_report_dwelltime_by_space {
           date_parse(spot_level.starttime,'%Y-%m-%d %H:%i:%s') as startTime,
           date_parse(spot_level.endtime,'%Y-%m-%d %H:%i:%s') as endTime
 
-          from hive.dwh_qastage2.agg_report_spot_level_micro_demo spot_level
+          from hive.dwh_qastage1.agg_report_spot_level_micro spot_level
           order by starttime ASC
       ;;
   }
@@ -70,7 +70,7 @@ view: com_report_dwelltime_by_space {
   dimension: spotAvgDwelltime {
     description: "Spot Avg Dwell Time"
     type: number
-    sql: ${TABLE}.spotAvgDwelltime / 600000 ;;
+    sql: ${TABLE}.spotAvgDwelltime ;;
   }
 
   filter: Statistics {
@@ -97,7 +97,7 @@ view: com_report_dwelltime_by_space {
   dimension: spotMinDwelltime {
     description: "Spot Min Dwell Time"
     type: number
-    sql: ${TABLE}.spotMinDwelltime / 600000 ;;
+    sql: ${TABLE}.spotMinDwelltime  ;;
 
   }
 
@@ -110,7 +110,7 @@ view: com_report_dwelltime_by_space {
   dimension: spotMaxDwelltime {
     description: "Spot Max Dwell Time"
     type: number
-    sql: ${TABLE}.spotMaxDwelltime / 600000 ;;
+    sql: ${TABLE}.spotMaxDwelltime ;;
   }
 
   measure: Max_Spot_Dwelltime {
@@ -122,7 +122,7 @@ view: com_report_dwelltime_by_space {
   dimension: spotMedianDwelltime {
     description: "Spot Median Dwell Time"
     type: number
-    sql: ${TABLE}.spotMedianDwelltime / 600000 ;;
+    sql: ${TABLE}.spotMedianDwelltime ;;
   }
 
   measure: Median_Spot_Dwelltime {

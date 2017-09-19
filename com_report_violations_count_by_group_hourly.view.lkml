@@ -10,7 +10,7 @@ view: com_report_violations_count_by_group_hourly {
           endtimestamp,
           from_unixtime(starttimestamp/1000000) as startTime,
           date_add('hour',1,from_unixtime(starttimestamp/1000000)) as endTime
-          from hive.dwh_qastage2.dwh_parking_spot_report
+          from hive.dwh_qastage1.dwh_parking_spot_report
           cross join UNNEST(violationlist) as t (group_violation)
           cross join UNNEST(split(group_violation.violationtype,'=')) as v (violation)
           where cardinality(violationlist) != 0
@@ -81,16 +81,16 @@ dimension_group: startTime {
   dimension: endFullHour {
     description: "Time"
     type: string
-    sql:CONCAT(${endTime_hour}, ':00:00')  ;;
+    sql:CONCAT(${endTime_hour}, ':00:01')  ;;
   }
 
 measure: count {
-  type: count_distinct
-  sql:${violation};;
-#   link: {
-#     label: "See Group Violations count on 15min interval"
-#     url: "/dashboards/90?Group={{ parkinggroupid_hidden._value | url_encode}}&Site={{sitename_hidden._value | url_encode }}&Violation={{violation_hidden._value | url_encode}}&Starttime=after+{{startFullHour | url_encode}}&Endtime=before+{{endFullHour | url_encode}},{{endFullHour | url_encode}}"
-#   }
+  type: count
+#   sql:${violation};;
+  link: {
+    label: "See Group Violations count on 15min interval"
+    url: "/dashboards/90?Group={{ parkinggroupid_hidden._value | url_encode}}&Site={{sitename_hidden._value | url_encode }}&Violation={{violation_hidden._value | url_encode}}&Starttime=after+{{startFullHour | url_encode}}&Endtime=before+{{endFullHour | url_encode}}"
+  }
 
 }
 
