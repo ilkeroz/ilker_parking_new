@@ -86,11 +86,11 @@ view: com_report_occupancy_by_space_day {
     description: "Spot Avg Occupancy"
     type: average
     sql: ${spotOccupancy} ;;
-    link: {
-      # group hourly dashboard
-      label: "See Spots - Occupancy on hourly"
-      url: "/dashboards/136?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Space={{ parkingSpotId._value | url_encode}}&Time={{ startTime_date._value | url_encode }}"
-    }
+#     link: {
+#       # group hourly dashboard
+#       label: "See Spots - Occupancy on hourly"
+#       url: "/dashboards/136?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Space={{ parkingSpotId._value | url_encode}}&Time={{ startTime_date._value | url_encode }}"
+#     }
   }
 
 }

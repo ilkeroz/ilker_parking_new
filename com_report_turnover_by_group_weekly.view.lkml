@@ -1,69 +1,88 @@
 view: com_report_turnover_by_group_weekly {
-  # # You can specify the table name if it's different from the view name:
-  # sql_table_name: my_schema_name.tester ;;
-  #
-  # # Define your dimensions and measures here, like this:
-  # dimension: user_id {
-  #   description: "Unique ID for each user that has ordered"
-  #   type: number
-  #   sql: ${TABLE}.user_id ;;
-  # }
-  #
-  # dimension: lifetime_orders {
-  #   description: "The total number of orders for each user"
-  #   type: number
-  #   sql: ${TABLE}.lifetime_orders ;;
-  # }
-  #
-  # dimension_group: most_recent_purchase {
-  #   description: "The date when each user last ordered"
-  #   type: time
-  #   timeframes: [date, week, month, year]
-  #   sql: ${TABLE}.most_recent_purchase_at ;;
-  # }
-  #
-  # measure: total_lifetime_orders {
-  #   description: "Use this for counting lifetime orders across many users"
-  #   type: sum
-  #   sql: ${lifetime_orders} ;;
-  # }
-}
+  derived_table: {
+    sql: select
+          group_level.turnover as groupTurnover,
+          group_level.parkingsiteid as siteId,
+          group_level.parkingsitename as siteName,
+          group_level.parkinggroupid as parkingGroupId,
+          group_level.parkinggroupname as parkingGroupName,
+          date_parse(group_level.starttime,'%Y-%m-%d %H:%i:%s') as startTime,
+          date_parse(group_level.endtime,'%Y-%m-%d %H:%i:%s') as endTime
+          from hive.dwh_qastage1.agg_report_group_level_day group_level
+          order by starttime DESC
+      ;;
+  }
 
-# view: com_report_turnover_by_group_weekly {
-#   # Or, you could make this view a derived table, like this:
-#   derived_table: {
-#     sql: SELECT
-#         user_id as user_id
-#         , COUNT(*) as lifetime_orders
-#         , MAX(orders.created_at) as most_recent_purchase_at
-#       FROM orders
-#       GROUP BY user_id
-#       ;;
-#   }
-#
-#   # Define your dimensions and measures here, like this:
-#   dimension: user_id {
-#     description: "Unique ID for each user that has ordered"
-#     type: number
-#     sql: ${TABLE}.user_id ;;
-#   }
-#
-#   dimension: lifetime_orders {
-#     description: "The total number of orders for each user"
-#     type: number
-#     sql: ${TABLE}.lifetime_orders ;;
-#   }
-#
-#   dimension_group: most_recent_purchase {
-#     description: "The date when each user last ordered"
-#     type: time
-#     timeframes: [date, week, month, year]
-#     sql: ${TABLE}.most_recent_purchase_at ;;
-#   }
-#
-#   measure: total_lifetime_orders {
-#     description: "Use this for counting lifetime orders across many users"
-#     type: sum
-#     sql: ${lifetime_orders} ;;
-#   }
-# }
+  dimension: siteId {
+    description: "Site ID"
+    type: string
+    sql: ${TABLE}.siteId ;;
+  }
+
+  dimension: siteName {
+    description: "Site Name"
+    type: string
+    sql: ${TABLE}.siteName ;;
+  }
+
+  dimension: parkingGroupName {
+    description: "Parking Group Name"
+    type: string
+    sql: ${TABLE}.parkingGroupName ;;
+  }
+
+  dimension: siteName_hidden {
+    description: "Site Name"
+    type: string
+    hidden: yes
+    sql: ${TABLE}.siteName ;;
+  }
+
+  dimension: parkingGroupId_hidden {
+    description: "Parking Group Name"
+    type: string
+    hidden: yes
+    sql: ${TABLE}.parkingGroupName ;;
+  }
+
+  dimension: parkingGroupId {
+    description: "Parking Group Id"
+    type: string
+    sql: ${TABLE}.parkingGroupId ;;
+  }
+
+  dimension_group: startTime {
+    description: "Start Time"
+    type: time
+    sql: ${TABLE}.startTime ;;
+  }
+
+  dimension_group: endTime {
+    description: "End Time"
+    type: time
+    sql: ${TABLE}.endTime ;;
+  }
+
+  dimension: groupTurnover {
+    description: "Group Turnover"
+    type: number
+    sql: ${TABLE}.groupTurnover ;;
+
+  }
+
+  measure: Group_Turnover {
+    description: "Group Turnover"
+    type: sum
+    sql: ${groupTurnover} ;;
+    link: {
+      label: "See Spots - Turnover on weekly"
+      url: "/dashboards/146?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{startTime_week._value | url_encode }}+for+7+days"
+    }
+    link: {
+      # group hourly dashboard
+      label: "See Group - Turnover on day"
+      url: "/dashboards/141?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{ startTime_week._value | url_encode }}+for+7+days"
+    }
+  }
+
+}

@@ -158,6 +158,38 @@ explore: com_report_occupancy_by_space_hourly {}
 
 explore: com_report_occupancy_by_space_micro {}
 
+explore: com_report_turnover_by_group_yearly {}
+
+explore: com_report_turnover_by_group_monthly {}
+
+explore: com_report_turnover_by_group_weekly {}
+
+explore: com_report_turnover_by_group_day {}
+
+explore: com_report_turnover_by_group_hourly {}
+
+explore: com_report_turnover_by_space_yearly {}
+
+explore: com_report_turnover_by_space_monthly {}
+
+explore: com_report_turnover_by_space_weekly {}
+
+explore: com_report_turnover_by_space_day {}
+
+explore: com_report_turnover_by_space_hourly {}
+
+explore: com_turnover_with_threshold_by_group_yearly {}
+
+explore: com_turnover_with_threshold_by_group_monthly {}
+
+explore: com_turnover_with_threshold_by_group_weekly {}
+
+explore: com_turnover_with_threshold_by_group_day {}
+
+explore: com_turnover_with_threshold_by_group_hourly {}
+
+explore: com_turnover_with_threshold_by_group_micro {}
+
 explore: com_report_dwelltime_by_group {}
 
 explore: com_report_dwelltime_by_space {}

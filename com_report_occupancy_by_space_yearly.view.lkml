@@ -94,11 +94,11 @@ view: com_report_occupancy_by_space_yearly {
     description: "Occupancy"
     value_format: "0.00"
     sql: ${spotAvgOccupancy} ;;
-    link: {
-      # spots monthly dashboard
-      label: "See Spots - Occupancy on monthly"
-      url: "/dashboards/133?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Space={{ parkingSpotId._value | url_encode}}&Time={{ startTime_measure._value | url_encode }}"
-    }
+#     link: {
+#       # spots monthly dashboard
+#       label: "See Spots - Occupancy on monthly"
+#       url: "/dashboards/133?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Space={{ parkingSpotId._value | url_encode}}&Time={{ startTime_measure._value | url_encode }}"
+#     }
   }
 
 }

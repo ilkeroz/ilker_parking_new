@@ -105,11 +105,11 @@ measure: DwellTime {
       WHEN {% condition Statistics %} 'Minimum' {% endcondition %} THEN ${com_report_dwelltime_by_space_monthly.Min_Spot_Dwelltime}
       WHEN {% condition Statistics %} 'Maximum' {% endcondition %} THEN ${com_report_dwelltime_by_space_monthly.Max_Spot_Dwelltime}
       END ;;
-  link: {
-    # spots weekly dashboard
-    label: "See Spots - Dwelltime on weekly"
-    url: "/dashboards/122?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Space={{ parkingSpotId._value | url_encode}}&Time={{ startTime_measure._value | url_encode }}&Statistics={{_filters['com_report_dwelltime_by_space_monthly.Statistics']}}"
-  }
+#   link: {
+#     # spots weekly dashboard
+#     label: "See Spots - Dwelltime on weekly"
+#     url: "/dashboards/122?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Space={{ parkingSpotId._value | url_encode}}&Time={{ startTime_measure._value | url_encode }}&Statistics={{_filters['com_report_dwelltime_by_space_monthly.Statistics']}}"
+#   }
 }
 
 measure: Avg_Spot_Dwelltime {

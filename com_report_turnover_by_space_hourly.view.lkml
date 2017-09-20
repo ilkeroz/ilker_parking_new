@@ -11,7 +11,7 @@ view: com_report_turnover_by_space_hourly {
           date_parse(spot_level.starttime,'%Y-%m-%d %H:%i:%s') as startTime,
           date_parse(spot_level.endtime,'%Y-%m-%d %H:%i:%s') as endTime
 
-          from hive.dwh_qastage2.agg_report_spot_level_hourly_demo spot_level
+          from hive.dwh_qastage1.agg_report_spot_level_hourly spot_level
           order by starttime ASC
       ;;
   }
@@ -73,11 +73,11 @@ view: com_report_turnover_by_space_hourly {
     description: "Spot Avg Turnover"
     type: average
     sql: ${spotTurnover} ;;
-    link: {
-      # group micro dashboard
-      label: "See Spots - Turnover on 15min interval"
-      url: "/dashboards/62?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Space={{ parkingSpotId_hidden._value | url_encode}}&starttime=after+{{ startTime_time._value | url_encode }}&endtime=before+{{ endTime_time._value | url_encode }},{{ endTime_time._value | url_encode }}"
-    }
+#     link: {
+#       # group micro dashboard
+#       label: "See Spots - Turnover on 15min interval"
+#       url: "/dashboards/62?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Space={{ parkingSpotId_hidden._value | url_encode}}&starttime=after+{{ startTime_time._value | url_encode }}&endtime=before+{{ endTime_time._value | url_encode }},{{ endTime_time._value | url_encode }}"
+#     }
   }
 
 }

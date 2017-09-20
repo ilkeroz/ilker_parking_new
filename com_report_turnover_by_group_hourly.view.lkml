@@ -8,7 +8,7 @@ view: com_report_turnover_by_group_hourly {
           group_level.parkinggroupname as parkingGroupName,
           date_parse(group_level.starttime,'%Y-%m-%d %H:%i:%s') as startTime,
           date_parse(group_level.endtime,'%Y-%m-%d %H:%i:%s') as endTime
-          from hive.dwh_qastage2.agg_report_group_level_hourly_demo group_level
+          from hive.dwh_qastage1.agg_report_group_level_hourly group_level
           order by starttime DESC
       ;;
   }
@@ -42,7 +42,7 @@ view: com_report_turnover_by_group_hourly {
     description: "Parking Group Name"
     type: string
     hidden: yes
-    sql: ${TABLE}.parkingGroupId ;;
+    sql: ${TABLE}.parkingGroupName ;;
   }
 
   dimension: parkingGroupId {
@@ -70,18 +70,18 @@ view: com_report_turnover_by_group_hourly {
 
   }
 
-  measure: Avg_Group_Turnover {
-    description: "Group Avg Turnover"
-    type: average
+  measure: Group_Turnover {
+    description: "Group Turnover"
+    type: sum
     sql: ${groupTurnover} ;;
     link: {
-      label: "See Spots - Turnover"
-      url: "/dashboards/104?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Starttime={{startTime_time._value | url_encode }}&Endtime={{ endTime_time._value | url_encode }}"
+      label: "See Spots - Turnover on hourly"
+      url: "/dashboards/148?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{startTime_time._value | url_encode }}"
     }
     link: {
       # group micro dashboard
-      label: "See Group - Occupancy on 15min interval"
-      url: "/dashboards/62?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Starttime=after+{{ startTime_time._value | url_encode }}&Endtime=before+{{ endTime_time._value | url_encode }},{{ endTime_time._value | url_encode }}"
+      label: "See Group - Turnover on 15min interval"
+      url: "/dashboards/143?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Starttime=after+{{ startTime_time._value | url_encode }}&Endtime=before+{{ endTime_time._value | url_encode }},{{ endTime_time._value | url_encode }}"
     }
   }
 

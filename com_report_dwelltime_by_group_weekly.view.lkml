@@ -80,8 +80,8 @@ measure: DwellTime {
       END ;;
     link: {
       # spots day dashboard
-      label: "See Spots - Dwelltime on daily"
-      url: "/dashboards/122?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{startTime_week._value | url_encode }}&Statistics={{_filters['com_report_dwelltime_by_group_weekly.Statistics']}}"
+      label: "See Spots - Dwelltime on weekly"
+      url: "/dashboards/122?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{startTime_week._value | url_encode }}+for+7+days&Statistics={{_filters['com_report_dwelltime_by_group_weekly.Statistics']}}"
     }
     link: {
       # group hourly dashboard

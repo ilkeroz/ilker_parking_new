@@ -118,11 +118,11 @@ view: com_report_dwelltime_by_space_hourly {
       WHEN {% condition Statistics %} 'Minimum' {% endcondition %} THEN ${com_report_dwelltime_by_space_hourly.Min_Spot_Dwelltime}
       WHEN {% condition Statistics %} 'Maximum' {% endcondition %} THEN ${com_report_dwelltime_by_space_hourly.Max_Spot_Dwelltime}
       END ;;
-    link: {
-      # spots micro dashboard
-      label: "See Spots - Dwelltime on 15min interval"
-      url: "/dashboards/125?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Space={{ parkingSpotId._value | url_encode}}&Starttime=after+{{ startTime_measure._value | url_encode }}&Endtime={{ startTime_measure._value | url_encode }}+for+1+hour&Statistics={{_filters['com_report_dwelltime_by_space_hourly.Statistics']}}"
-    }
+#     link: {
+#       # spots micro dashboard
+#       label: "See Spots - Dwelltime on 15min interval"
+#       url: "/dashboards/125?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Space={{ parkingSpotId._value | url_encode}}&Starttime=after+{{ startTime_measure._value | url_encode }}&Endtime={{ startTime_measure._value | url_encode }}+for+1+hour&Statistics={{_filters['com_report_dwelltime_by_space_hourly.Statistics']}}"
+#     }
   }
 
   measure: Avg_Spot_Dwelltime {

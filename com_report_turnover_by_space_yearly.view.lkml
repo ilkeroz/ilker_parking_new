@@ -1,69 +1,83 @@
 view: com_report_turnover_by_space_yearly {
-  # # You can specify the table name if it's different from the view name:
-  # sql_table_name: my_schema_name.tester ;;
-  #
-  # # Define your dimensions and measures here, like this:
-  # dimension: user_id {
-  #   description: "Unique ID for each user that has ordered"
-  #   type: number
-  #   sql: ${TABLE}.user_id ;;
-  # }
-  #
-  # dimension: lifetime_orders {
-  #   description: "The total number of orders for each user"
-  #   type: number
-  #   sql: ${TABLE}.lifetime_orders ;;
-  # }
-  #
-  # dimension_group: most_recent_purchase {
-  #   description: "The date when each user last ordered"
-  #   type: time
-  #   timeframes: [date, week, month, year]
-  #   sql: ${TABLE}.most_recent_purchase_at ;;
-  # }
-  #
-  # measure: total_lifetime_orders {
-  #   description: "Use this for counting lifetime orders across many users"
-  #   type: sum
-  #   sql: ${lifetime_orders} ;;
-  # }
-}
+  derived_table: {
+    sql: select
+          spot_level.parkingsiteid as siteId,
+          spot_level.parkingsitename as siteName,
+          spot_level.turnover as spotTurnover,
+          spot_level.parkinggroupname as parkingGroupName,
+          spot_level.parkinggroupid as parkingGroupId,
+          spot_level.parkingspotid as parkingSpotId,
+          spot_level.parkingspotname as parkingSpotName,
+          date_parse(spot_level.starttime,'%Y-%m-%d %H:%i:%s') as startTime,
+          date_parse(spot_level.endtime,'%Y-%m-%d %H:%i:%s') as endTime
 
-# view: com_report_turnover_by_space_yearly {
-#   # Or, you could make this view a derived table, like this:
-#   derived_table: {
-#     sql: SELECT
-#         user_id as user_id
-#         , COUNT(*) as lifetime_orders
-#         , MAX(orders.created_at) as most_recent_purchase_at
-#       FROM orders
-#       GROUP BY user_id
-#       ;;
-#   }
-#
-#   # Define your dimensions and measures here, like this:
-#   dimension: user_id {
-#     description: "Unique ID for each user that has ordered"
-#     type: number
-#     sql: ${TABLE}.user_id ;;
-#   }
-#
-#   dimension: lifetime_orders {
-#     description: "The total number of orders for each user"
-#     type: number
-#     sql: ${TABLE}.lifetime_orders ;;
-#   }
-#
-#   dimension_group: most_recent_purchase {
-#     description: "The date when each user last ordered"
-#     type: time
-#     timeframes: [date, week, month, year]
-#     sql: ${TABLE}.most_recent_purchase_at ;;
-#   }
-#
-#   measure: total_lifetime_orders {
-#     description: "Use this for counting lifetime orders across many users"
-#     type: sum
-#     sql: ${lifetime_orders} ;;
-#   }
-# }
+          from hive.dwh_qastage1.agg_report_spot_level_day spot_level
+          order by starttime ASC
+      ;;
+  }
+
+  dimension: siteId {
+    description: "Site ID"
+    type: string
+    sql: ${TABLE}.siteId ;;
+  }
+
+  dimension: siteName {
+    description: "Site Name"
+    type: string
+    sql: ${TABLE}.siteName ;;
+  }
+
+  dimension: parkingGroupName {
+    description: "Parking Group Name"
+    type: string
+    sql: ${TABLE}.parkingGroupName ;;
+  }
+
+  dimension: parkingSpotName {
+    description: "Parking Spot Name"
+    type: string
+    sql: ${TABLE}.parkingSpotName ;;
+  }
+
+  dimension: parkingGroupId {
+    description: "Parking Group Id"
+    type: string
+    sql: ${TABLE}.parkingGroupId ;;
+  }
+
+  dimension: parkingSpotId {
+    description: "Parking Spot Id"
+    type: string
+    sql: ${TABLE}.parkingSpotId ;;
+  }
+
+  dimension_group: startTime {
+    description: "Start Time"
+    type: time
+    sql: ${TABLE}.startTime ;;
+  }
+
+  dimension_group: endTime {
+    description: "End Time"
+    type: time
+    sql: ${TABLE}.endTime ;;
+  }
+
+  dimension: spotTurnover {
+    type: number
+    sql: ${TABLE}.spotTurnover ;;
+  }
+
+  measure: Spot_Turnover {
+    description: "Spot Turnover"
+    type: sum
+    sql: ${spotTurnover} ;;
+#     link: {
+#       # group hourly dashboard
+#       label: "See Spots - Turnover on hourly"
+#       url: "/dashboards/54?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Space={{ parkingSpotId_hidden._value | url_encode}}&Time={{ startTime_date._value | url_encode }}"
+#     }
+  }
+
+}

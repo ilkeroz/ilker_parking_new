@@ -11,7 +11,7 @@ view: com_report_turnover_by_space {
           date_parse(spot_level.starttime,'%Y-%m-%d %H:%i:%s') as startTime,
           date_parse(spot_level.endtime,'%Y-%m-%d %H:%i:%s') as endTime
 
-          from hive.dwh_qastage2.agg_report_spot_level_micro_demo spot_level
+          from hive.dwh_qastage1.agg_report_spot_level_micro spot_level
           order by starttime ASC
       ;;
   }
@@ -71,7 +71,7 @@ view: com_report_turnover_by_space {
 
   measure: Avg_Spot_Turnover {
     description: "Spot Avg Turnover"
-    type: average
+    type: sum
     sql: ${spotTurnover} ;;
   }
 

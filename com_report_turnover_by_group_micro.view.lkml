@@ -8,7 +8,7 @@ view: com_report_turnover_by_group {
           group_level.parkinggroupname as parkingGroupName,
           date_parse(group_level.starttime,'%Y-%m-%d %H:%i:%s') as startTime,
           date_parse(group_level.endtime,'%Y-%m-%d %H:%i:%s') as endTime
-          from hive.dwh_qastage2.agg_report_group_level_micro_demo group_level
+          from hive.dwh_qastage1.agg_report_group_level_micro group_level
           order by starttime DESC
       ;;
 }
@@ -70,13 +70,13 @@ dimension: groupTurnover {
 
 }
 
-measure: Avg_Group_Turnover {
-  description: "Group Avg Turnover"
-  type: average
+measure: Group_Turnover {
+  description: "Group Turnover"
+  type: sum
   sql: ${groupTurnover} ;;
     link: {
-      label: "See Spots - Turnover"
-      url: "/dashboards/104?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Starttime={{startTime_time._value | url_encode }}&Endtime={{ endTime_time._value | url_encode }}"
+      label: "See Spots - Turnover on 15min interval"
+      url: "/dashboards/149?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Starttime={{startTime_time._value | url_encode }}&Endtime={{ endTime_time._value | url_encode }}"
     }
 }
 
