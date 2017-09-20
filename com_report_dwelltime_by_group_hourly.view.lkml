@@ -87,13 +87,13 @@ view: com_report_dwelltime_by_group_hourly {
       END ;;
     link: {
       label: "See Spots - Dwelltime on hourly"
-      url: "/dashboards/124?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Starttime=after+{{ startTime_time._value | url_encode }}&Endtime=before+{{ endTime_time._value | url_encode }},{{ endTime_time._value | url_encode }}&Statistics={{_filters['com_report_dwelltime_by_group.Statistics']}}"
+      url: "/dashboards/124?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Starttime=after+{{ startTime_time._value | url_encode }}&Endtime=before+{{ endTime_time._value | url_encode }},{{ endTime_time._value | url_encode }}&Statistics={{_filters['com_report_dwelltime_by_group_hourly.Statistics']}}"
     }
 
     link: {
       # group hourly dashboard
       label: "See Group - Dwelltime on 15min interval"
-      url: "/dashboards/118?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Starttime=after+{{ startTime_time._value | url_encode }}&Endtime=before+{{ endTime_time._value | url_encode }},{{ endTime_time._value | url_encode }}&Statistics={{_filters['com_report_dwelltime_by_group_day.Statistics']}}"
+      url: "/dashboards/118?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Starttime=after+{{ startTime_time._value | url_encode }}&Endtime=before+{{ endTime_time._value | url_encode }},{{ endTime_time._value | url_encode }}&Statistics={{_filters['com_report_dwelltime_by_group_hourly.Statistics']}}"
     }
   }
 
