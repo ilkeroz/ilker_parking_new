@@ -69,8 +69,8 @@ view: com_report_occupancy_by_group_weekly {
     sql: ${groupAvgOccupancy};;
     link: {
       # spots day dashboard
-      label: "See Spots - Dwelltime on daily"
-      url: "/dashboards/134?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{startTime_week._value | url_encode }}"
+      label: "See Spots - Dwelltime on weekly"
+      url: "/dashboards/134?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{startTime_week._value | url_encode }}+for+7+days"
     }
     link: {
       # group hourly dashboard
