@@ -83,6 +83,9 @@ view: com_report_occupancy_by_space_weekly {
     sql: ${startTime_week} ;;
   }
 
+
+
+
   dimension: spotAvgOccupancy {
     description: "Spot Avg Occupancy"
   }
