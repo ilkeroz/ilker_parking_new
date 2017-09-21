@@ -14,9 +14,13 @@ measure: count {
   type: count_distinct
   sql:${objectid};;
   link: {
-    label: "See Spots - Turnover on weekly"
-    url: "/dashboards/159?Site={{ sitename_hidden._value | url_encode}}&Group={{ parkinggroupid_hidden._value | url_encode}}&Time={{endTime_week._value | url_encode }}+for+7+days&Threshold={{_filters['com_turnover_with_threshold_by_group_weekly.duration'] }}"
+    label: "See Spots - Turnover on day"
+    url: "/dashboards/160?Site={{ sitename_hidden._value | url_encode}}&Group={{ parkinggroupid_hidden._value | url_encode}}&Time={{endTime_week._value | url_encode }}+for+7+days&Threshold={{_filters['com_turnover_with_threshold_by_group_weekly.duration'] }}"
   }
+#   link: {
+#     label: "See Spots - Turnover on weekly"
+#     url: "/dashboards/159?Site={{ sitename_hidden._value | url_encode}}&Group={{ parkinggroupid_hidden._value | url_encode}}&Time={{endTime_week._value | url_encode }}+for+7+days&Threshold={{_filters['com_turnover_with_threshold_by_group_weekly.duration'] }}"
+#   }
   link: {
     # group monthly dashboard
     label: "See Group - Turnover on day"

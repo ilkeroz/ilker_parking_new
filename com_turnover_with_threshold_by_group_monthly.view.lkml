@@ -14,9 +14,13 @@ view: com_turnover_with_threshold_by_group_monthly {
     type: count_distinct
     sql:${objectid};;
     link: {
-      label: "See Spots - Turnover on monthly"
-      url: "/dashboards/158?Site={{ sitename_hidden._value | url_encode}}&Group={{ parkinggroupid_hidden._value | url_encode}}&Time={{endTime_month._value | url_encode }}&Threshold={{_filters['com_turnover_with_threshold_by_group_monthly.duration'] }}"
+      label: "See Spots - Turnover on weekly"
+      url: "/dashboards/159?Site={{ sitename_hidden._value | url_encode}}&Group={{ parkinggroupid_hidden._value | url_encode}}&Time={{endTime_month._value | url_encode }}&Threshold={{_filters['com_turnover_with_threshold_by_group_monthly.duration'] }}"
     }
+#     link: {
+#       label: "See Spots - Turnover on monthly"
+#       url: "/dashboards/158?Site={{ sitename_hidden._value | url_encode}}&Group={{ parkinggroupid_hidden._value | url_encode}}&Time={{endTime_month._value | url_encode }}&Threshold={{_filters['com_turnover_with_threshold_by_group_monthly.duration'] }}"
+#     }
     link: {
       # group monthly dashboard
       label: "See Group - Turnover on weekly"

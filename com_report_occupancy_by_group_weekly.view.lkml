@@ -80,7 +80,7 @@ view: com_report_occupancy_by_group_weekly {
 #     }
     link: {
       # group hourly dashboard
-      label: "See Group - Dwelltime on day"
+      label: "See Group - Occupancy on day"
       url: "/dashboards/129?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{ startTime_week._value | url_encode }}+for+7+days"
     }
   }
