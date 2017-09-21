@@ -12,6 +12,7 @@ view: com_turnover_with_threshold_by_group_day {
 
   measure: count {
     type: count_distinct
+    description: "Turnover"
     sql:${objectid};;
     link: {
       label: "See Spots - Turnover on hourly"

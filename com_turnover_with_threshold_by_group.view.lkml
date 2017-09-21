@@ -10,6 +10,7 @@ view: com_turnover_with_threshold_by_group {
   }
 
   measure: count {
+    description: "Turnover"
     type: count_distinct
     sql:${objectid};;
     link: {

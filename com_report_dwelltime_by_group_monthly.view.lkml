@@ -74,6 +74,7 @@ filter: Statistics {
 measure: DwellTime {
   type: number
   description: "Dwell Time"
+  value_format: "0.00"
   sql: CASE WHEN {% condition Statistics %} 'Average' {% endcondition %} THEN ${com_report_dwelltime_by_group_monthly.Avg_Group_Dwelltime}
       WHEN {% condition Statistics %} 'Minimum' {% endcondition %} THEN ${com_report_dwelltime_by_group_monthly.Min_Group_Dwelltime}
       WHEN {% condition Statistics %} 'Maximum' {% endcondition %} THEN ${com_report_dwelltime_by_group_monthly.Max_Group_Dwelltime}

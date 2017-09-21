@@ -81,6 +81,7 @@ view: com_report_dwelltime_by_group_hourly {
   measure: DwellTime {
     type: number
     description: "Dwell Time"
+    value_format: "0.00"
     sql: CASE WHEN {% condition Statistics %} 'Average' {% endcondition %} THEN ${com_report_dwelltime_by_group_hourly.Avg_Group_Dwelltime}
       WHEN {% condition Statistics %} 'Minimum' {% endcondition %} THEN ${com_report_dwelltime_by_group_hourly.Min_Group_Dwelltime}
       WHEN {% condition Statistics %} 'Maximum' {% endcondition %} THEN ${com_report_dwelltime_by_group_hourly.Max_Group_Dwelltime}
