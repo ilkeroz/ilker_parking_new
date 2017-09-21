@@ -73,10 +73,16 @@ view: com_report_occupancy_by_group_hourly {
     description: "Group Avg Occupancy"
     type: average
     sql: ${groupOccupancy} ;;
-    link: {
-      label: "See Spots - Occupancy on hourly"
-      url: "/dashboards/136?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Starttime=after+{{startTime_time._value | url_encode }}&Endtime=before+{{ endTime_time._value | url_encode }},{{ endTime_time._value | url_encode }}"
+    value_format_name: decimal_2
+        link: {
+      # spots micro dashboard
+      label: "See Spots - Occupancy on 15min interval"
+      url: "/dashboards/137?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Starttime=after+{{ startTime_time._value | url_encode }}&Endtime=before+{{ endTime_time._value | url_encode }},{{ endTime_time._value | url_encode }}"
     }
+#     link: {
+#       label: "See Spots - Occupancy on hourly"
+#       url: "/dashboards/136?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Starttime=after+{{startTime_time._value | url_encode }}&Endtime=before+{{ endTime_time._value | url_encode }},{{ endTime_time._value | url_encode }}"
+#     }
     link: {
       # group micro dashboard
       label: "See Group - Occupancy on 15min interval"

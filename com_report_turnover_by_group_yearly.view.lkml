@@ -75,9 +75,14 @@ view: com_report_turnover_by_group_yearly {
     type: sum
     sql: ${groupTurnover} ;;
     link: {
-      label: "See Spots - Turnover on yearly"
-      url: "/dashboards/144?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{startTime_year._value | url_encode }}"
+      # group hourly dashboard
+      label: "See Spots - Turnover on monthly"
+      url: "/dashboards/145?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{ startTime_year._value | url_encode }}"
     }
+#     link: {
+#       label: "See Spots - Turnover on yearly"
+#       url: "/dashboards/144?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{startTime_year._value | url_encode }}"
+#     }
     link: {
       # group hourly dashboard
       label: "See Group - Turnover on monthly"

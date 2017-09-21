@@ -73,6 +73,7 @@ measure: Avg_Spot_Occupancy {
   description: "Spot Avg Occupancy"
   type: average
   sql: ${spotOccupancy} ;;
+  value_format_name: decimal_2
 }
 
 }

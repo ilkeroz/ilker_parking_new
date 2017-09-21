@@ -92,8 +92,8 @@ view: com_report_occupancy_by_space_yearly {
   measure: Occupancy {
     type: average
     description: "Occupancy"
-    value_format: "0.00"
     sql: ${spotAvgOccupancy} ;;
+    value_format_name: decimal_2
 #     link: {
 #       # spots monthly dashboard
 #       label: "See Spots - Occupancy on monthly"

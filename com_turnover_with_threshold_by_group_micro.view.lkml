@@ -13,10 +13,10 @@ view: com_turnover_with_threshold_by_group_micro {
   measure: count {
     type: count_distinct
     sql:${objectid};;
-#     link: {
-#       label: "See Spots - Turnover on 15min interval"
-#       url: "/dashboards/144?Site={{ sitename_hidden._value | url_encode}}&Group={{ parkinggroupid_hidden._value | url_encode}}&Time={{startTime_year._value | url_encode }}&Duration={{_filters['com_turnover_with_threshold_by_group_micro.duration'] }}"
-#     }
+    link: {
+      label: "See Spots - Turnover on 15min interval"
+      url: "/dashboards/162?Site={{ sitename_hidden._value | url_encode}}&Group={{ parkinggroupid_hidden._value | url_encode}}&Time={{endTime_minute15._value | url_encode }}&Duration={{_filters['com_turnover_with_threshold_by_group_micro.duration'] }}"
+    }
   }
 
   dimension: objectid {

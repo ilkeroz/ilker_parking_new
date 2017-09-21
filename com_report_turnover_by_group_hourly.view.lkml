@@ -75,9 +75,13 @@ view: com_report_turnover_by_group_hourly {
     type: sum
     sql: ${groupTurnover} ;;
     link: {
-      label: "See Spots - Turnover on hourly"
-      url: "/dashboards/148?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{startTime_time._value | url_encode }}"
+      label: "See Spots - Turnover on 15min interval"
+      url: "/dashboards/149?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Starttime=after+{{startTime_time._value | url_encode }}&Endtime=before+{{ endTime_time._value | url_encode }},{{ endTime_time._value | url_encode }}"
     }
+#     link: {
+#       label: "See Spots - Turnover on hourly"
+#       url: "/dashboards/148?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{startTime_time._value | url_encode }}"
+#     }
     link: {
       # group micro dashboard
       label: "See Group - Turnover on 15min interval"

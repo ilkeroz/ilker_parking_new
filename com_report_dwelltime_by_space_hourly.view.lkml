@@ -129,6 +129,7 @@ view: com_report_dwelltime_by_space_hourly {
     description: "Spot Avg Dwell Time"
     type: average
     sql: ${spotAvgDwelltime} ;;
+    value_format_name: decimal_2
   }
 
   dimension: spotMinDwelltime {
@@ -142,6 +143,7 @@ view: com_report_dwelltime_by_space_hourly {
     description: "Spot Min Dwell Time"
     type: min
     sql: ${spotMinDwelltime} ;;
+    value_format_name: decimal_2
   }
 
   dimension: spotMaxDwelltime {
@@ -154,6 +156,7 @@ view: com_report_dwelltime_by_space_hourly {
     description: "Spot Avg Dwell Time"
     type: max
     sql: ${spotMaxDwelltime} ;;
+    value_format_name: decimal_2
   }
 
   dimension: spotMedianDwelltime {
@@ -166,6 +169,7 @@ view: com_report_dwelltime_by_space_hourly {
     description: "Spot Median Dwell Time"
     type: median
     sql: ${spotMedianDwelltime} ;;
+    value_format_name: decimal_2
   }
 
 }

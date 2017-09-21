@@ -78,11 +78,17 @@ measure: DwellTime {
       WHEN {% condition Statistics %} 'Minimum' {% endcondition %} THEN ${com_report_dwelltime_by_group_monthly.Min_Group_Dwelltime}
       WHEN {% condition Statistics %} 'Maximum' {% endcondition %} THEN ${com_report_dwelltime_by_group_monthly.Max_Group_Dwelltime}
       END ;;
-    link: {
-      # spots day dashboard
-      label: "See Spots - Dwelltime on monthly"
-      url: "/dashboards/121?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{startTime_month._value | url_encode }}&Statistics={{_filters['com_report_dwelltime_by_group_monthly.Statistics']}}"
-    }
+
+      link: {
+    # spots weekly dashboard
+    label: "See Spots - Dwelltime on weekly"
+    url: "/dashboards/122?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{ startTime_month._value | url_encode }}&Statistics={{_filters['com_report_dwelltime_by_group_monthly.Statistics']}}"
+  }
+#     link: {
+#       # spots day dashboard
+#       label: "See Spots - Dwelltime on monthly"
+#       url: "/dashboards/121?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{startTime_month._value | url_encode }}&Statistics={{_filters['com_report_dwelltime_by_group_monthly.Statistics']}}"
+#     }
     link: {
       # group hourly dashboard
       label: "See Group - Dwelltime on weekly"

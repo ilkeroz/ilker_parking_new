@@ -75,9 +75,13 @@ measure: Group_Turnover {
   type: sum
   sql: ${groupTurnover} ;;
   link: {
-    label: "See Spots - Turnover on day"
-    url: "/dashboards/147?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{startTime_date._value | url_encode }}"
+    label: "See Spots - Turnover on hourly"
+    url: "/dashboards/148?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{startTime_date._value | url_encode }}"
   }
+#   link: {
+#     label: "See Spots - Turnover on day"
+#     url: "/dashboards/147?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{startTime_date._value | url_encode }}"
+#   }
   link: {
     # group hourly dashboard
     label: "See Group - Turnover on hourly"

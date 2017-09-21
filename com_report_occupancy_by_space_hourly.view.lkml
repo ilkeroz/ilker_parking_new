@@ -99,6 +99,7 @@ view: com_report_occupancy_by_space_hourly {
     description: "Spot Avg Occupancy"
     type: average
     sql: ${spotOccupancy} ;;
+    value_format_name: decimal_2
 #     link: {
 #       # spots micro dashboard
 #       label: "See Spots - Occupancy on 15min interval"

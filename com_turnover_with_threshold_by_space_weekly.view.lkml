@@ -1,69 +1,79 @@
 view: com_turnover_with_threshold_by_space_weekly {
-  # # You can specify the table name if it's different from the view name:
-  # sql_table_name: my_schema_name.tester ;;
-  #
-  # # Define your dimensions and measures here, like this:
-  # dimension: user_id {
-  #   description: "Unique ID for each user that has ordered"
-  #   type: number
-  #   sql: ${TABLE}.user_id ;;
-  # }
-  #
-  # dimension: lifetime_orders {
-  #   description: "The total number of orders for each user"
-  #   type: number
-  #   sql: ${TABLE}.lifetime_orders ;;
-  # }
-  #
-  # dimension_group: most_recent_purchase {
-  #   description: "The date when each user last ordered"
-  #   type: time
-  #   timeframes: [date, week, month, year]
-  #   sql: ${TABLE}.most_recent_purchase_at ;;
-  # }
-  #
-  # measure: total_lifetime_orders {
-  #   description: "Use this for counting lifetime orders across many users"
-  #   type: sum
-  #   sql: ${lifetime_orders} ;;
-  # }
-}
+  derived_table: {
+    sql: SELECT distinct(objectid) as objectid, siteid, sitename, parkinggroupid, parkingspotid,
+      date_diff('hour',from_unixtime(starttimestamp/1000000),from_unixtime(endtimestamp/1000000)) as duration,
+      from_unixtime(starttimestamp/1000000)  as startTime,
+      from_unixtime(endtimestamp/1000000)  as endTime
+      FROM hive.dwh_qastage1.dwh_parking_spot_report
+      where endtimestamp != 0 and objectid != ''  and parkingspotid != ''
+      order by startTime
+ ;;
+  }
 
-# view: com_turnover_with_threshold_by_space_weekly {
-#   # Or, you could make this view a derived table, like this:
-#   derived_table: {
-#     sql: SELECT
-#         user_id as user_id
-#         , COUNT(*) as lifetime_orders
-#         , MAX(orders.created_at) as most_recent_purchase_at
-#       FROM orders
-#       GROUP BY user_id
-#       ;;
+  measure: count {
+    type: count_distinct
+    sql:${objectid};;
+#   link: {
+#     label: "See Spots - Turnover on weekly"
+#     url: "/dashboards/144?Site={{ sitename_hidden._value | url_encode}}&Group={{ parkinggroupid_hidden._value | url_encode}}&Time={{startTime_week._value | url_encode }}+for+7+days&Duration={{_filters['com_turnover_with_threshold_by_group_weekly.duration'] }}"
 #   }
-#
-#   # Define your dimensions and measures here, like this:
-#   dimension: user_id {
-#     description: "Unique ID for each user that has ordered"
-#     type: number
-#     sql: ${TABLE}.user_id ;;
-#   }
-#
-#   dimension: lifetime_orders {
-#     description: "The total number of orders for each user"
-#     type: number
-#     sql: ${TABLE}.lifetime_orders ;;
-#   }
-#
-#   dimension_group: most_recent_purchase {
-#     description: "The date when each user last ordered"
-#     type: time
-#     timeframes: [date, week, month, year]
-#     sql: ${TABLE}.most_recent_purchase_at ;;
-#   }
-#
-#   measure: total_lifetime_orders {
-#     description: "Use this for counting lifetime orders across many users"
-#     type: sum
-#     sql: ${lifetime_orders} ;;
-#   }
-# }
+#     link: {
+#       # group monthly dashboard
+#       label: "See Group - Turnover on day"
+#       url: "/dashboards/154?Site={{ sitename_hidden._value | url_encode}}&Group={{ parkinggroupid_hidden._value | url_encode}}&Time={{ endTime_week._value | url_encode }}+for+7+days&Threshold={{_filters['com_turnover_with_threshold_by_group_weekly.duration'] }}"
+#     }
+  }
+
+  dimension: objectid {
+    type: string
+    sql: ${TABLE}.objectid ;;
+  }
+
+  dimension: parkinggroupid {
+    type: string
+    sql: ${TABLE}.parkinggroupid ;;
+  }
+
+  dimension: siteid {
+    type: string
+    sql: ${TABLE}.siteid ;;
+  }
+
+  dimension: sitename_hidden {
+    type: string
+    hidden: yes
+    sql: ${TABLE}.sitename ;;
+  }
+
+  dimension: sitename {
+    type: string
+    sql: ${TABLE}.sitename ;;
+  }
+
+  dimension: parkinggroupid_hidden {
+    type: string
+    hidden: yes
+    sql: ${TABLE}.parkinggroupid ;;
+  }
+
+  dimension: parkingspotid {
+    type: string
+    sql: ${TABLE}.parkingspotid ;;
+  }
+
+  dimension: duration {
+    type: number
+    sql: ${TABLE}.duration ;;
+  }
+
+  dimension_group: startTime {
+    type: time
+    sql: ${TABLE}.startTime ;;
+  }
+
+  dimension_group: endTime {
+    type: time
+    sql: ${TABLE}.endTime ;;
+  }
+
+}

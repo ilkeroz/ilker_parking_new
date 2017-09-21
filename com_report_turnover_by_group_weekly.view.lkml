@@ -75,9 +75,13 @@ view: com_report_turnover_by_group_weekly {
     type: sum
     sql: ${groupTurnover} ;;
     link: {
-      label: "See Spots - Turnover on weekly"
-      url: "/dashboards/146?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{startTime_week._value | url_encode }}+for+7+days"
+      label: "See Spots - Turnover on day"
+      url: "/dashboards/147?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{ startTime_week._value | url_encode }}+for+7+days"
     }
+#     link: {
+#       label: "See Spots - Turnover on weekly"
+#       url: "/dashboards/146?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{startTime_week._value | url_encode }}+for+7+days"
+#     }
     link: {
       # group hourly dashboard
       label: "See Group - Turnover on day"

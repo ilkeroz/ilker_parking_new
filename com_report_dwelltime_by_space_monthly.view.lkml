@@ -116,6 +116,7 @@ measure: Avg_Spot_Dwelltime {
   description: "Spot Avg Dwell Time"
   type: average
   sql: ${spotAvgDwelltime} ;;
+  value_format_name: decimal_2
 }
 
 dimension: spotMinDwelltime {
@@ -129,6 +130,7 @@ measure: Min_Spot_Dwelltime {
   description: "Spot Min Dwell Time"
   type: min
   sql: ${spotMinDwelltime} ;;
+  value_format_name: decimal_2
 }
 
 dimension: spotMaxDwelltime {
@@ -141,6 +143,7 @@ measure: Max_Spot_Dwelltime {
   description: "Spot Avg Dwell Time"
   type: max
   sql: ${spotMaxDwelltime} ;;
+  value_format_name: decimal_2
 }
 
 dimension: spotMedianDwelltime {
@@ -153,6 +156,7 @@ measure: Median_Spot_Dwelltime {
   description: "Spot Median Dwell Time"
   type: median
   sql: ${spotMedianDwelltime} ;;
+  value_format_name: decimal_2
 }
 
 }

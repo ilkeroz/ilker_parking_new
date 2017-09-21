@@ -67,11 +67,17 @@ view: com_report_occupancy_by_group_weekly {
     type: average
     description: "Occupancy"
     sql: ${groupAvgOccupancy};;
-    link: {
-      # spots day dashboard
-      label: "See Spots - Dwelltime on weekly"
-      url: "/dashboards/134?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{startTime_week._value | url_encode }}+for+7+days"
+    value_format_name: decimal_2
+        link: {
+      # group hourly dashboard
+      label: "See Spots - Occupancy on day"
+      url: "/dashboards/135?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{ startTime_week._value | url_encode }}+for+7+days"
     }
+#     link: {
+#       # spots day dashboard
+#       label: "See Spots - Dwelltime on weekly"
+#       url: "/dashboards/134?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{startTime_week._value | url_encode }}+for+7+days"
+#     }
     link: {
       # group hourly dashboard
       label: "See Group - Dwelltime on day"

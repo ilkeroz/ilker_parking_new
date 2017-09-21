@@ -86,6 +86,7 @@ view: com_report_occupancy_by_space_day {
     description: "Spot Avg Occupancy"
     type: average
     sql: ${spotOccupancy} ;;
+    value_format_name: decimal_2
 #     link: {
 #       # group hourly dashboard
 #       label: "See Spots - Occupancy on hourly"

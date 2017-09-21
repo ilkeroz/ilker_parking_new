@@ -1,6 +1,6 @@
 view: com_turnover_with_threshold_by_group_yearly {
   derived_table: {
-    sql: SELECT distinct(objectid) as objectid, siteid, sitename, parkinggroupid,
+    sql: SELECT objectid, siteid, sitename, parkinggroupid,
       date_diff('hour',from_unixtime(starttimestamp/1000000),from_unixtime(endtimestamp/1000000)) as duration,
       from_unixtime(starttimestamp/1000000)  as startTime,
       from_unixtime(endtimestamp/1000000)  as endTime
@@ -15,12 +15,12 @@ view: com_turnover_with_threshold_by_group_yearly {
     sql:${objectid};;
     link: {
       label: "See Spots - Turnover on yearly"
-      url: "/dashboards/144?Site={{ sitename_hidden._value | url_encode}}&Group={{ parkinggroupid_hidden._value | url_encode}}&Time={{startTime_year._value | url_encode }}&Duration={{_filters['com_turnover_with_threshold_by_group_yearly.duration'] }}"
+      url: "/dashboards/157?Site={{ sitename_hidden._value | url_encode}}&Group={{ parkinggroupid_hidden._value | url_encode}}&Time={{endTime_year._value | url_encode }}&Threshold={{_filters['com_turnover_with_threshold_by_group_yearly.duration'] }}"
     }
     link: {
-      # group hourly dashboard
+      # group monthly dashboard
       label: "See Group - Turnover on monthly"
-      url: "/dashboards/139?Site={{ sitename_hidden._value | url_encode}}&Group={{ parkinggroupid_hidden._value | url_encode}}&Time={{ startTime_year._value | url_encode }}&Duration={{_filters['com_turnover_with_threshold_by_group_yearly.duration'] }}"
+      url: "/dashboards/152?Site={{ sitename_hidden._value | url_encode}}&Group={{ parkinggroupid_hidden._value | url_encode}}&Time={{ endTime_year._value | url_encode }}&Threshold={{_filters['com_turnover_with_threshold_by_group_yearly.duration'] }}"
     }
   }
 
