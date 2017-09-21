@@ -11,7 +11,7 @@ view: com_report_violations_count_by_space {
           endtimestamp,
           from_unixtime(starttimestamp/1000000) as startTime,
           from_unixtime(endtimestamp/1000000) as endTime
-          from hive.dwh_qastage2.dwh_parking_spot_report
+          from hive.dwh_qastage1.dwh_parking_spot_report
           cross join UNNEST(violationlist) as t (group_violation)
           cross join UNNEST(split(group_violation.violationtype,'=')) as v (violation)
           where cardinality(violationlist) != 0
@@ -53,11 +53,12 @@ view: com_report_violations_count_by_space {
     description: "Time"
     type: time
     sql: ${TABLE}.startTime ;;
+    timeframes: [minute15]
   }
 
   measure: count {
-    type: count_distinct
-    sql:${violation};;
+    type: count
+#     sql:${violation};;
 
   }
 }

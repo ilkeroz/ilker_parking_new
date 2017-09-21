@@ -73,19 +73,19 @@ view: com_report_violations_count_by_space_day {
     sql: ${TABLE}.startTime ;;
   }
 
-  measure: startTime_measure {
-    description: "Start Time"
-    type: string
-    sql: ${startTime_date} ;;
-  }
+#   measure: startTime_measure {
+#     description: "Start Time"
+#     type: string
+#     sql: ${startTime_date} ;;
+#   }
 
   measure: count {
     type: count
 #   sql:${violation};;
-    link: {
-      # spots monthly dashboard
-      label: "See Spots - Violations count on monthly"
-      url: "/dashboards/133?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Space={{ parkingSpotId._value | url_encode}}&Violation={{violation_hidden._value | url_encode}}&Time={{ startTime_measure._value | url_encode }}"
-    }
+#     link: {
+#       # spots monthly dashboard
+#       label: "See Spots - Violations count on monthly"
+#       url: "/dashboards/133?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Space={{ parkingSpotId._value | url_encode}}&Violation={{violation_hidden._value | url_encode}}&Time={{ startTime_measure._value | url_encode }}"
+#     }
   }
 }

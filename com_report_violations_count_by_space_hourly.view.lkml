@@ -54,10 +54,26 @@ view: com_report_violations_count_by_space_hourly {
     type: time
     sql: ${TABLE}.startTime ;;
   }
+  dimension_group: endTime {
+    type: time
+    sql: ${TABLE}.endTime ;;
+#     timeframes: [hour]
+  }
 
+  dimension: startFullHour {
+    description: "Time"
+    type: string
+    sql:CONCAT(${startTime_hour}, ':00:00')  ;;
+  }
+
+  dimension: endFullHour {
+    description: "Time"
+    type: string
+    sql:CONCAT(${endTime_hour}, ':00:00')  ;;
+  }
   measure: count {
-    type: count_distinct
-    sql:${violation};;
+    type: count
+#     sql:${violation};;
 
   }
 }

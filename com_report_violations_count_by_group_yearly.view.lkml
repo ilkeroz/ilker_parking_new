@@ -81,8 +81,8 @@ measure: count {
   }
 
   link: {
-    label: "See Spots Violations count - yearly"
-    url: "/dashboards/109?Group={{ parkinggroupid_hidden._value | url_encode}}&Site={{sitename_hidden._value | url_encode }}&Violation={{violation_hidden._value | url_encode}}&Time={{startTime_year._value | url_encode }}"
+    label: "See Spots Violations count - monthly"
+    url: "/dashboards/164?Group={{ parkinggroupid_hidden._value | url_encode}}&Site={{sitename_hidden._value | url_encode }}&Violation={{violation_hidden._value | url_encode}}&Time={{startTime_year._value | url_encode }}"
   }
 
 }

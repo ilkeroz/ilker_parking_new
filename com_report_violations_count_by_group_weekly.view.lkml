@@ -74,6 +74,10 @@ view: com_report_violations_count_by_group_weekly {
       url: "/dashboards/111?Group={{ parkinggroupid_hidden._value | url_encode}}&Site={{sitename_hidden._value | url_encode }}&Violation={{violation_hidden._value | url_encode}}&Time={{startTime_week._value | url_encode }}+for+7+days"
     }
 
+    link: {
+      label: "See Spots Violations count - daily"
+      url: "/dashboards/166?Group={{ parkinggroupid_hidden._value | url_encode}}&Site={{sitename_hidden._value | url_encode }}&Violation={{violation_hidden._value | url_encode}}&Time={{startTime_week._value | url_encode }}+for+7+days"
+    }
   }
 
 }
