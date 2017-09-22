@@ -1,19 +1,19 @@
 view: com_turnover_with_threshold_by_group_hourly {
   derived_table: {
-    sql: SELECT distinct(objectid) as objectid, siteid, sitename, parkinggroupid,
+    sql: SELECT objectid, siteid, sitename, parkinggroupid,
       date_diff('hour',from_unixtime(starttimestamp/1000000),from_unixtime(endtimestamp/1000000)) as duration,
       from_unixtime(starttimestamp/1000000)  as startTime,
       from_unixtime(endtimestamp/1000000)  as endTime
       FROM hive.dwh_qastage1.dwh_parking_spot_report
-      where endtimestamp != 0 and objectid != ''
+      where endtimestamp != 0  and parkingspotid != ''
       order by startTime
  ;;
   }
 
   measure: count {
-    type: count_distinct
+    type: count
     description: "Turnover"
-    sql:${objectid};;
+#     sql:${objectid};;
     link: {
       label: "See Spots - Turnover on 15min interval"
       url: "/dashboards/162?Site={{ sitename_hidden._value | url_encode}}&Group={{ parkinggroupid_hidden._value | url_encode}}&Time={{endFullHour._value | url_encode }}+for+1+hour&Duration={{_filters['com_turnover_with_threshold_by_group_micro.duration'] }}"

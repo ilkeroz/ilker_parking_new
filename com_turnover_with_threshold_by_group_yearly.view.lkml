@@ -5,15 +5,15 @@ view: com_turnover_with_threshold_by_group_yearly {
       from_unixtime(starttimestamp/1000000)  as startTime,
       from_unixtime(endtimestamp/1000000)  as endTime
       FROM hive.dwh_qastage1.dwh_parking_spot_report
-      where endtimestamp != 0 and objectid != ''
+      where endtimestamp != 0  and parkingspotid != ''
       order by startTime
  ;;
   }
 
   measure: count {
-    type: count_distinct
+    type: count
     description: "Turnover"
-    sql:${objectid};;
+#     sql:${objectid};;
     link: {
       label: "See Spots - Turnover on monthly"
       url: "/dashboards/158?Site={{ sitename_hidden._value | url_encode}}&Group={{ parkinggroupid_hidden._value | url_encode}}&Time={{endTime_year._value | url_encode }}&Threshold={{_filters['com_turnover_with_threshold_by_group_yearly.duration'] }}"
