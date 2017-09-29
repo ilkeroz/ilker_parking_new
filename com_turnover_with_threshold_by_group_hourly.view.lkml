@@ -6,7 +6,7 @@ view: com_turnover_with_threshold_by_group_hourly {
       from_unixtime(endtimestamp/1000000)  as endTime
       FROM hive.dwh_qastage1.dwh_parking_spot_report
       where endtimestamp != 0  and parkingspotid != ''
-      order by startTime ASC
+      order by startTime
  ;;
   }
 
