@@ -9,7 +9,7 @@ view: com_report_dwelltime_by_group_day {
           group_level.parkingsitename as siteName,
           group_level.parkinggroupid as parkingGroupId,
           group_level.parkinggroupname as parkingGroupName,
-          date_parse(group_level.starttime,'%Y-%m-%d %H:%i:%s') as startTime
+          date_parse(group_level.endtime,'%Y-%m-%d %H:%i:%s') as startTime
           from hive.dwh_qastage1.agg_report_group_level_day group_level
           order by starttime DESC
       ;;

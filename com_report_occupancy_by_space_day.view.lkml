@@ -8,7 +8,7 @@ view: com_report_occupancy_by_space_day {
           spot_level.parkinggroupid as parkingGroupId,
           spot_level.parkingspotid as parkingSpotId,
           spot_level.parkingspotname as parkingSpotName,
-          date_parse(spot_level.starttime,'%Y-%m-%d %H:%i:%s') as startTime
+          date_parse(spot_level.endtime,'%Y-%m-%d %H:%i:%s') as startTime
 
           from hive.dwh_qastage1.agg_report_spot_level_day spot_level
           order by starttime ASC
