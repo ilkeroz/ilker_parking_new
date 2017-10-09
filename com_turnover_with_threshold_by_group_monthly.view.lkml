@@ -1,6 +1,6 @@
 view: com_turnover_with_threshold_by_group_monthly {
   derived_table: {
-    sql: SELECT objectid, siteid, sitename, parkinggroupid, parkinggroupname
+    sql: SELECT objectid, siteid, sitename, parkinggroupid, parkinggroupname,
       date_diff('hour',from_unixtime(starttimestamp/1000000),from_unixtime(endtimestamp/1000000)) as duration,
       from_unixtime(starttimestamp/1000000)  as startTime,
       from_unixtime(endtimestamp/1000000)  as endTime
