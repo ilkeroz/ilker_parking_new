@@ -28,11 +28,11 @@ dimension: objectid {
   type: string
   sql: ${TABLE}.objectid ;;
 }
-
   dimension: parkinggroupid {
     type: string
     sql: ${TABLE}.parkinggroupid ;;
   }
+
   dimension: parkingspotid {
     type: string
     sql: ${TABLE}.parkingspotid ;;
