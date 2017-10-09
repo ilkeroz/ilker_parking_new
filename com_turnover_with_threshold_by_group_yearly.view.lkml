@@ -1,6 +1,6 @@
 view: com_turnover_with_threshold_by_group_yearly {
   derived_table: {
-    sql: SELECT objectid, siteid, sitename, parkinggroupid, parkingroupname,
+    sql: SELECT objectid, siteid, sitename, parkinggroupid,
       date_diff('hour',from_unixtime(starttimestamp/1000000),from_unixtime(endtimestamp/1000000)) as duration,
       from_unixtime(starttimestamp/1000000)  as startTime,
       from_unixtime(endtimestamp/1000000)  as endTime
@@ -37,11 +37,6 @@ view: com_turnover_with_threshold_by_group_yearly {
   dimension: parkinggroupid {
     type: string
     sql: ${TABLE}.parkinggroupid ;;
-  }
-
-  dimension: parkinggroupname {
-    type: string
-    sql: ${TABLE}.parkinggroupname ;;
   }
 
   dimension: siteid {
