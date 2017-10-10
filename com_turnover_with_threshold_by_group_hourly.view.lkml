@@ -16,7 +16,7 @@ view: com_turnover_with_threshold_by_group_hourly {
 #     sql:${objectid};;
     link: {
       label: "See Spots - Turnover on 15min interval"
-      url: "/dashboards/162?Site={{ sitename_hidden._value | url_encode}}&Group={{ parkinggroupid_hidden._value | url_encode}}&Time={{endFullHour._value | url_encode }}+for+1+hour&Duration={{_filters['com_turnover_with_threshold_by_group_micro.duration'] }}"
+      url: "/dashboards/162?Site={{ sitename_hidden._value | url_encode}}&Group={{ parkinggroupname_hidden._value | url_encode}}&Time={{endFullHour._value | url_encode }}+for+1+hour&Duration={{_filters['com_turnover_with_threshold_by_group_micro.duration'] }}"
     }
 #     link: {
 #       label: "See Spots - Turnover on hourly"
@@ -25,7 +25,7 @@ view: com_turnover_with_threshold_by_group_hourly {
     link: {
       # group monthly dashboard
       label: "See Group - Turnover on 15min interval"
-      url: "/dashboards/156?Site={{ sitename_hidden._value | url_encode}}&Group={{ parkinggroupid_hidden._value | url_encode}}&Time={{ endFullHour._value | url_encode }}+for+1+hour&Threshold={{_filters['com_turnover_with_threshold_by_group_hourly.duration'] }}"
+      url: "/dashboards/156?Site={{ sitename_hidden._value | url_encode}}&Group={{ parkinggroupname_hidden._value | url_encode}}&Time={{ endFullHour._value | url_encode }}+for+1+hour&Threshold={{_filters['com_turnover_with_threshold_by_group_hourly.duration'] }}"
     }
   }
 
@@ -41,6 +41,12 @@ view: com_turnover_with_threshold_by_group_hourly {
 
   dimension: parkinggroupname {
     type: string
+    sql: ${TABLE}.parkinggroupname ;;
+  }
+
+  dimension: parkinggroupname_hidden {
+    type: string
+    hidden: yes
     sql: ${TABLE}.parkinggroupname ;;
   }
 

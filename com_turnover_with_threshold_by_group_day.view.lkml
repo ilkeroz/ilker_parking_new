@@ -25,7 +25,7 @@ view: com_turnover_with_threshold_by_group_day {
     link: {
       # group monthly dashboard
       label: "See Group - Turnover on hourly"
-      url: "/dashboards/155?Site={{ sitename_hidden._value | url_encode}}&Group={{ parkinggroupid_hidden._value | url_encode}}&Time={{ endTime_date._value | url_encode }}&Threshold={{_filters['com_turnover_with_threshold_by_group_day.duration'] }}"
+      url: "/dashboards/155?Site={{ sitename_hidden._value | url_encode}}&Group={{ parkinggroupname_hidden._value | url_encode}}&Time={{ endTime_date._value | url_encode }}&Threshold={{_filters['com_turnover_with_threshold_by_group_day.duration'] }}"
     }
   }
 
@@ -42,6 +42,12 @@ view: com_turnover_with_threshold_by_group_day {
 
   dimension: parkinggroupname {
     type: string
+    sql: ${TABLE}.parkinggroupname ;;
+  }
+
+  dimension: parkinggroupname_hidden {
+    type: string
+    hidden: yes
     sql: ${TABLE}.parkinggroupname ;;
   }
 

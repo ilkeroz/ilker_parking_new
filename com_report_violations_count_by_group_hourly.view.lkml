@@ -43,6 +43,13 @@ dimension: parkinggroupid {
     sql: ${TABLE}.parkinggroupname ;;
   }
 
+  dimension: parkinggroupname_hidden {
+    description: "Parking Group Name"
+    type: string
+    hidden: yes
+    sql: ${TABLE}.parkinggroupname ;;
+  }
+
 dimension: sitename_hidden {
   type: string
   hidden: yes
@@ -96,12 +103,12 @@ measure: count {
 #   sql:${violation};;
   link: {
     label: "See Group Violations count on 15min interval"
-    url: "/dashboards/90?Group={{ parkinggroupid_hidden._value | url_encode}}&Site={{sitename_hidden._value | url_encode }}&Violation={{violation_hidden._value | url_encode}}&Time={{startFullHour | url_encode}}+for+1+hour"
+    url: "/dashboards/90?Group={{ parkinggroupname_hidden._value | url_encode}}&Site={{sitename_hidden._value | url_encode }}&Violation={{violation_hidden._value | url_encode}}&Time={{startFullHour | url_encode}}+for+1+hour"
   }
 
   link: {
     label: "See Spots Violations count on 15min interval"
-    url: "/dashboards/168?Group={{ parkinggroupid_hidden._value | url_encode}}&Site={{sitename_hidden._value | url_encode }}&Violation={{violation_hidden._value | url_encode}}&Time={{startFullHour._value | url_encode }}+for+1+hour"
+    url: "/dashboards/168?Group={{ parkinggroupname_hidden._value | url_encode}}&Site={{sitename_hidden._value | url_encode }}&Violation={{violation_hidden._value | url_encode}}&Time={{startFullHour._value | url_encode }}+for+1+hour"
   }
 
 }
