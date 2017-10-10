@@ -78,4 +78,9 @@ dimension_group: endTime {
   timeframes: [minute15]
 }
 
+  dimension_group: endTime_time {
+    type: time
+    sql: ${TABLE}.endTime ;;
+  }
+
 }
