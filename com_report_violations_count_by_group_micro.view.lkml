@@ -71,7 +71,7 @@ view: com_report_violations_count_by_group {
   dimension_group: startTime {
     description: "Time"
     type: time
-     timeframes: [minute15]
+    timeframes: [minute15]
     sql: ${TABLE}.startTime ;;
   }
 
