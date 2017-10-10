@@ -57,12 +57,14 @@ view: com_report_dwelltime_by_group {
   dimension_group: startTime {
     description: "Start Time"
     type: time
+    timeframes: [minute15]
     sql: ${TABLE}.startTime ;;
   }
 
   dimension_group: endTime {
     description: "End Time"
     type: time
+    timeframes: [minute15]
     sql: ${TABLE}.endTime ;;
   }
 
