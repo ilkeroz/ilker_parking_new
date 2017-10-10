@@ -59,10 +59,22 @@ view: com_report_turnover_by_space {
     sql: ${TABLE}.startTime ;;
   }
 
+  dimension_group: startTime_time {
+    description: "Start Time"
+    type: time
+    sql: ${TABLE}.startTime ;;
+  }
+
   dimension_group: endTime {
     description: "End Time"
     type: time
     timeframes: [minute15]
+    sql: ${TABLE}.endTime ;;
+  }
+
+  dimension_group: endTime_time {
+    description: "End Time"
+    type: time
     sql: ${TABLE}.endTime ;;
   }
 
