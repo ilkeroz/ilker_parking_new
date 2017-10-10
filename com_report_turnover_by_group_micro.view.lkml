@@ -54,12 +54,14 @@ dimension: parkingGroupId {
 dimension_group: startTime {
   description: "Start Time"
   type: time
+  timeframes: [minute15]
   sql: ${TABLE}.startTime ;;
 }
 
   dimension_group: endTime {
     description: "End Time"
     type: time
+    timeframes: [minute15]
     sql: ${TABLE}.endTime ;;
   }
 
@@ -76,7 +78,7 @@ measure: Group_Turnover {
   sql: ${groupTurnover} ;;
     link: {
       label: "See Spots - Turnover on 15min interval"
-      url: "/dashboards/149?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Starttime=after+{{startTime_time._value | url_encode }}&Endtime=before+{{ endTime_time._value | url_encode }},{{ endTime_time._value | url_encode }}"
+      url: "/dashboards/149?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Starttime=after+{{startTime_minute15._value | url_encode }}&Endtime=before+{{ endTime_minute15._value | url_encode }},{{ endTime_minute15._value | url_encode }}"
     }
 }
 
