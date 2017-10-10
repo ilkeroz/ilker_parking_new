@@ -80,4 +80,9 @@ view: com_turnover_with_threshold_by_group_micro {
     timeframes: [minute15]
   }
 
+  dimension_group: startTime_time {
+    type: time
+    sql: ${TABLE}.startTime ;;
+  }
+
 }
