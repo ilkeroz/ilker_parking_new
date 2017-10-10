@@ -2,6 +2,7 @@ view: com_report_violations_count_by_group_hourly {
  derived_table: {
   sql: select objectid,
           siteid,
+          parkinggroupname,
           sitename,
           violationlist,
           violation,
@@ -35,6 +36,12 @@ dimension: parkinggroupid {
   type: string
   sql: ${TABLE}.parkinggroupid ;;
 }
+
+  dimension: parkinggroupname {
+    description: "Parking Group Name"
+    type: string
+    sql: ${TABLE}.parkinggroupname ;;
+  }
 
 dimension: sitename_hidden {
   type: string
