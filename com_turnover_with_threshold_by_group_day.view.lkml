@@ -16,7 +16,7 @@ view: com_turnover_with_threshold_by_group_day {
 #     sql:${objectid};;
     link: {
       label: "See Spots - Turnover on hourly"
-      url: "/dashboards/161?Site={{ sitename_hidden._value | url_encode}}&Group={{ parkinggroupid_hidden._value | url_encode}}&Time={{endTime_date._value | url_encode }}&Threshold={{_filters['com_turnover_with_threshold_by_group_hourly.duration'] }}"
+      url: "/dashboards/161?Site={{ sitename_hidden._value | url_encode}}&Group={{ parkinggroupname_hidden._value | url_encode}}&Time={{endTime_date._value | url_encode }}&Threshold={{_filters['com_turnover_with_threshold_by_group_hourly.duration'] }}"
     }
 #     link: {
 #       label: "See Spots - Turnover on day"
