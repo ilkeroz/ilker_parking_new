@@ -89,10 +89,9 @@ view: com_report_violations_count_by_group {
     sql: ${TABLE}.endTime ;;
   }
 
-  dimension_group: endTime_time {
+  dimension: endTime_time {
     description: "Time"
-    type: time
-    hidden: yes
+    type: date_time
     sql: ${TABLE}.endTime ;;
   }
 
