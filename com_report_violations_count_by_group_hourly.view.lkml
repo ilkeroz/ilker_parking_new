@@ -86,17 +86,17 @@ dimension_group: startTime {
     sql: ${TABLE}.endTime ;;
   }
 
-  dimension: startFullHour {
-    description: "Time"
-    type: string
-    sql:CONCAT(${startTime_hour}, ':00:00')  ;;
-  }
-
-  dimension: endFullHour {
-    description: "Time"
-    type: string
-    sql:CONCAT(${endTime_hour}, ':00:00')  ;;
-  }
+#   dimension: startFullHour {
+#     description: "Time"
+#     type: string
+#     sql:CONCAT(${startTime_hour}, ':00:00')  ;;
+#   }
+#
+#   dimension: endFullHour {
+#     description: "Time"
+#     type: string
+#     sql:CONCAT(${endTime_hour}, ':00:00')  ;;
+#   }
 
 measure: count {
   type: count
