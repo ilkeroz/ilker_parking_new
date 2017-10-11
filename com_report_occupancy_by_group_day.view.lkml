@@ -56,6 +56,12 @@ view: com_report_occupancy_by_group_day {
     sql: ${TABLE}.startTime ;;
   }
 
+  dimension_group: endTime {
+    description: "End Time"
+    type: time
+    sql: ${TABLE}.endTime ;;
+  }
+
   dimension: groupOccupancy {
     description: "Group Occupancy"
     type: number
@@ -71,7 +77,7 @@ view: com_report_occupancy_by_group_day {
         link: {
       # group hourly dashboard
       label: "See Spots - Occupancy on hourly"
-      url: "/dashboards/136?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{ startTime_date._value | url_encode }}"
+      url: "/dashboards/136?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{ endTime_date._value | url_encode }}"
     }
 #     link: {
 #       label: "See Spots - Occupancy on daily"
@@ -80,7 +86,7 @@ view: com_report_occupancy_by_group_day {
     link: {
       # group hourly dashboard
       label: "See Group - Occupancy on hourly"
-      url: "/dashboards/130?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{ startTime_date._value | url_encode }}"
+      url: "/dashboards/130?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{ endTime_date._value | url_encode }}"
     }
   }
 
