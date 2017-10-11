@@ -59,6 +59,12 @@ view: com_report_dwelltime_by_group_day {
     sql: ${TABLE}.startTime ;;
   }
 
+  dimension_group: endTime {
+    description: "End Time"
+    type: time
+    sql: ${TABLE}.endTime ;;
+  }
+
   dimension: groupAvgDwelltime {
     description: "Group Avg Dwell Time"
     type: number
@@ -82,7 +88,7 @@ view: com_report_dwelltime_by_group_day {
     link: {
       # group hourly dashboard
       label: "See Spots - Dwelltime on hourly"
-      url: "/dashboards/124?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{ startTime_date._value | url_encode }}&Statistics={{_filters['com_report_dwelltime_by_group_day.Statistics']}}"
+      url: "/dashboards/124?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{ endTime_date._value | url_encode }}&Statistics={{_filters['com_report_dwelltime_by_group_day.Statistics']}}"
     }
 #   link: {
 #     # spots day dashboard
@@ -92,7 +98,7 @@ view: com_report_dwelltime_by_group_day {
     link: {
       # group hourly dashboard
       label: "See Group - Dwelltime on hourly"
-      url: "/dashboards/117?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{ startTime_date._value | url_encode }}&Statistics={{_filters['com_report_dwelltime_by_group_day.Statistics']}}"
+      url: "/dashboards/117?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{ endTime_date._value | url_encode }}&Statistics={{_filters['com_report_dwelltime_by_group_day.Statistics']}}"
     }
   }
 
