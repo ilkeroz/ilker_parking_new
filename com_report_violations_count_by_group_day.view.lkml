@@ -2,6 +2,7 @@ view: com_report_violations_count_by_group_day {
   derived_table: {
     sql: select objectid,
           siteid,
+          parkinggroupname,
           sitename,
           violationlist,
           violation,
@@ -36,6 +37,19 @@ view: com_report_violations_count_by_group_day {
     sql: ${TABLE}.parkinggroupid ;;
   }
 
+  dimension: parkinggroupname {
+    description: "Parking Group Name"
+    type: string
+    sql: ${TABLE}.parkinggroupname ;;
+  }
+
+  dimension: parkinggroupname_hidden {
+    description: "Parking Group Name"
+    type: string
+    hidden: yes
+    sql: ${TABLE}.parkinggroupname ;;
+  }
+
   dimension: sitename_hidden {
     type: string
     hidden: yes
@@ -66,12 +80,23 @@ view: com_report_violations_count_by_group_day {
     sql: ${TABLE}.startTime ;;
   }
 
+  dimension_group: endTime {
+    description: "Time"
+    type: time
+    sql: ${TABLE}.endTime ;;
+  }
+
   measure: count {
     type: count
 #     sql:${violation};;
     link: {
       label: "See Group Violations count - hourly"
-      url: "/dashboards/112?Group={{ parkinggroupid_hidden._value | url_encode}}&Site={{sitename_hidden._value | url_encode }}&Violation={{violation_hidden._value | url_encode}}&Time={{startTime_date._value | url_encode }}"
+      url: "/dashboards/112?Group={{ parkinggroupname_hidden._value | url_encode}}&Site={{sitename_hidden._value | url_encode }}&Violation={{violation_hidden._value | url_encode}}&Time={{endTime_date._value | url_encode }}"
+    }
+
+    link: {
+      label: "See Spots Violations count - hourly"
+      url: "/dashboards/167?Group={{ parkinggroupname_hidden._value | url_encode}}&Site={{sitename_hidden._value | url_encode }}&Violation={{violation_hidden._value | url_encode}}&Time={{endTime_date._value | url_encode }}"
     }
 
   }

@@ -1,7 +1,7 @@
 view: com_turnover_with_threshold_by_group {
   derived_table: {
     sql: SELECT distinct(objectid) as objectid, siteid, sitename, parkinggroupid,
-      date_diff('hour',from_unixtime(starttimestamp/1000000),from_unixtime(endtimestamp/1000000)) as duration,
+      date_diff('minute',from_unixtime(starttimestamp/1000000),from_unixtime(endtimestamp/1000000)) as duration,
       from_unixtime(starttimestamp/1000000)  as startTime,
       from_unixtime(endtimestamp/1000000)  as endTime
       FROM hive.dwh_qastage2.dwh_parking_spot_report
@@ -10,6 +10,7 @@ view: com_turnover_with_threshold_by_group {
   }
 
   measure: count {
+    description: "Turnover"
     type: count_distinct
     sql:${objectid};;
     link: {

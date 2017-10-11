@@ -1,4 +1,4 @@
-view: com_report_violations_count_by_group_weekly {
+view: com_report_violations_count_by_space_hourly {
   derived_table: {
     sql: select objectid,
           siteid,
@@ -7,6 +7,7 @@ view: com_report_violations_count_by_group_weekly {
           violationlist,
           violation,
           parkinggroupid,
+          parkingspotid,
           starttimestamp,
           endtimestamp,
           from_unixtime(starttimestamp/1000000) as startTime,
@@ -43,25 +44,13 @@ view: com_report_violations_count_by_group_weekly {
     sql: ${TABLE}.parkinggroupname ;;
   }
 
-  dimension: sitename_hidden {
+  dimension: parkingspotid {
+    description: "Parking Spot Id"
     type: string
-    hidden: yes
-    sql: ${TABLE}.sitename ;;
-  }
-
-  dimension: parkinggroupid_hidden {
-    type: string
-    hidden: yes
-    sql: ${TABLE}.parkinggroupid ;;
+    sql: ${TABLE}.parkingspotid ;;
   }
 
   dimension: violation {
-    description: "Violation"
-    type: string
-    sql: ${TABLE}.violation ;;
-  }
-
-  dimension: violation_hidden {
     description: "Violation"
     type: string
     sql: ${TABLE}.violation ;;
@@ -72,19 +61,26 @@ view: com_report_violations_count_by_group_weekly {
     type: time
     sql: ${TABLE}.startTime ;;
   }
+  dimension_group: endTime {
+    type: time
+    sql: ${TABLE}.endTime ;;
+#     timeframes: [hour]
+  }
 
+  dimension: startFullHour {
+    description: "Time"
+    type: string
+    sql:CONCAT(${startTime_hour}, ':00:00')  ;;
+  }
+
+  dimension: endFullHour {
+    description: "Time"
+    type: string
+    sql:CONCAT(${endTime_hour}, ':00:00')  ;;
+  }
   measure: count {
     type: count
 #     sql:${violation};;
-    link: {
-      label: "See Group Violations count - daily"
-      url: "/dashboards/111?Group={{ parkinggroupid_hidden._value | url_encode}}&Site={{sitename_hidden._value | url_encode }}&Violation={{violation_hidden._value | url_encode}}&Time={{startTime_week._value | url_encode }}+for+7+days"
-    }
 
-    link: {
-      label: "See Spots Violations count - daily"
-      url: "/dashboards/166?Group={{ parkinggroupid_hidden._value | url_encode}}&Site={{sitename_hidden._value | url_encode }}&Violation={{violation_hidden._value | url_encode}}&Time={{startTime_week._value | url_encode }}+for+7+days"
-    }
   }
-
 }

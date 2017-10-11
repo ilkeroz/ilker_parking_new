@@ -8,7 +8,7 @@ derived_table: {
           group_level.parkinggroupname as parkingGroupName,
           date_parse(group_level.starttime,'%Y-%m-%d %H:%i:%s') as startTime,
           date_parse(group_level.endtime,'%Y-%m-%d %H:%i:%s') as endTime
-          from hive.dwh_qastage2.agg_report_group_level_day_demo group_level
+          from hive.dwh_qastage1.agg_report_group_level_day group_level
           order by starttime DESC
       ;;
 }
@@ -42,7 +42,7 @@ dimension: parkingGroupId_hidden {
   description: "Parking Group Name"
   type: string
   hidden: yes
-  sql: ${TABLE}.parkingGroupId ;;
+  sql: ${TABLE}.parkingGroupName ;;
 }
 
 dimension: parkingGroupId {
@@ -70,18 +70,22 @@ dimension: groupTurnover {
 
 }
 
-measure: Avg_Group_Turnover {
-  description: "Group Avg Turnover"
-  type: average
+measure: Group_Turnover {
+  description: "Group Turnover"
+  type: sum
   sql: ${groupTurnover} ;;
   link: {
-    label: "See Spots - Turnover"
-    url: "/dashboards/104?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Starttime={{startTime_time._value | url_encode }}&Endtime={{ endTime_time._value | url_encode }}"
+    label: "See Spots - Turnover on hourly"
+    url: "/dashboards/148?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{startTime_date._value | url_encode }}"
   }
+#   link: {
+#     label: "See Spots - Turnover on day"
+#     url: "/dashboards/147?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{startTime_date._value | url_encode }}"
+#   }
   link: {
     # group hourly dashboard
-    label: "See Group - Occupancy on hourly"
-    url: "/dashboards/54?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{ startTime_date._value | url_encode }}"
+    label: "See Group - Turnover on hourly"
+    url: "/dashboards/142?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{ startTime_date._value | url_encode }}"
   }
 }
 

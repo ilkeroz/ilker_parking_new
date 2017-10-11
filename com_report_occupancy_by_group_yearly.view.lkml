@@ -67,11 +67,17 @@ view: com_report_occupancy_by_group_yearly {
     type: average
     description: "Occupancy"
     sql: ${groupAvgOccupancy};;
-    link: {
-      # spots day dashboard
-      label: "See Spots - Occupancy on yearly"
-      url: "/dashboards/132?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{startTime_year._value | url_encode }}"
+    value_format_name: decimal_2
+        link: {
+      # spots monthly dashboard
+      label: "See Spots - Occupancy on monthly"
+      url: "/dashboards/133?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{ startTime_year._value | url_encode }}"
     }
+#     link: {
+#       # spots day dashboard
+#       label: "See Spots - Occupancy on yearly"
+#       url: "/dashboards/132?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{startTime_year._value | url_encode }}"
+#     }
     link: {
       # group hourly dashboard
       label: "See Group - Occupancy on monthly"

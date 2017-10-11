@@ -83,6 +83,9 @@ view: com_report_occupancy_by_space_weekly {
     sql: ${startTime_week} ;;
   }
 
+
+
+
   dimension: spotAvgOccupancy {
     description: "Spot Avg Occupancy"
   }
@@ -90,13 +93,13 @@ view: com_report_occupancy_by_space_weekly {
   measure: Occupancy {
     type: average
     description: "Occupancy"
-    value_format: "0.00"
     sql: ${spotAvgOccupancy} ;;
-    link: {
-      # group hourly dashboard
-      label: "See Spots - Occupancy on day"
-      url: "/dashboards/135?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Space={{ parkingSpotId._value | url_encode}}&Time={{ startTime_measure._value | url_encode }}+for+7+days"
-    }
+    value_format_name: decimal_2
+#     link: {
+#       # group hourly dashboard
+#       label: "See Spots - Occupancy on day"
+#       url: "/dashboards/135?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Space={{ parkingSpotId._value | url_encode}}&Time={{ startTime_measure._value | url_encode }}+for+7+days"
+#     }
   }
 
 }

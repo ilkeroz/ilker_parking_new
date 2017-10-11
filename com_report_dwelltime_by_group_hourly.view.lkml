@@ -81,19 +81,25 @@ view: com_report_dwelltime_by_group_hourly {
   measure: DwellTime {
     type: number
     description: "Dwell Time"
+    value_format: "0.00"
     sql: CASE WHEN {% condition Statistics %} 'Average' {% endcondition %} THEN ${com_report_dwelltime_by_group_hourly.Avg_Group_Dwelltime}
       WHEN {% condition Statistics %} 'Minimum' {% endcondition %} THEN ${com_report_dwelltime_by_group_hourly.Min_Group_Dwelltime}
       WHEN {% condition Statistics %} 'Maximum' {% endcondition %} THEN ${com_report_dwelltime_by_group_hourly.Max_Group_Dwelltime}
       END ;;
-    link: {
-      label: "See Spots - Dwelltime on hourly"
-      url: "/dashboards/125?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Starttime=after+{{ startTime_time._value | url_encode }}&Endtime=before+{{ endTime_time._value | url_encode }},{{ endTime_time._value | url_encode }}&Statistics={{_filters['com_report_dwelltime_by_group.Statistics']}}"
+          link: {
+      # spots micro dashboard
+      label: "See Spots - Dwelltime on 15min interval"
+      url: "/dashboards/125?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{ startTime_time._value | url_encode }}+for+1+hour&Statistics={{_filters['com_report_dwelltime_by_group_hourly.Statistics']}}"
     }
+#     link: {
+#       label: "See Spots - Dwelltime on hourly"
+#       url: "/dashboards/124?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Starttime=after+{{ startTime_time._value | url_encode }}&Endtime=before+{{ endTime_time._value | url_encode }},{{ endTime_time._value | url_encode }}&Statistics={{_filters['com_report_dwelltime_by_group_hourly.Statistics']}}"
+#     }
 
     link: {
       # group hourly dashboard
       label: "See Group - Dwelltime on 15min interval"
-      url: "/dashboards/117?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Starttime=after+{{ startTime_time._value | url_encode }}&Endtime=before+{{ endTime_time._value | url_encode }},{{ endTime_time._value | url_encode }}&Statistics={{_filters['com_report_dwelltime_by_group_day.Statistics']}}"
+      url: "/dashboards/118?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{ startTime_time._value | url_encode }}+for+1+hour&Statistics={{_filters['com_report_dwelltime_by_group_hourly.Statistics']}}"
     }
   }
 

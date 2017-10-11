@@ -105,17 +105,18 @@ measure: DwellTime {
       WHEN {% condition Statistics %} 'Minimum' {% endcondition %} THEN ${com_report_dwelltime_by_space_yearly.Min_Spot_Dwelltime}
       WHEN {% condition Statistics %} 'Maximum' {% endcondition %} THEN ${com_report_dwelltime_by_space_yearly.Max_Spot_Dwelltime}
       END ;;
-  link: {
-    # spots monthly dashboard
-    label: "See Spots - Dwelltime on monthly"
-    url: "/dashboards/121?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Space={{ parkingSpotId._value | url_encode}}&Time={{ startTime_measure._value | url_encode }}&Statistics={{_filters['com_report_dwelltime_by_space_yearly.Statistics']}}"
-  }
+#   link: {
+#     # spots monthly dashboard
+#     label: "See Spots - Dwelltime on monthly"
+#     url: "/dashboards/121?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Space={{ parkingSpotId._value | url_encode}}&Time={{ startTime_measure._value | url_encode }}&Statistics={{_filters['com_report_dwelltime_by_space_yearly.Statistics']}}"
+#   }
 }
 
 measure: Avg_Spot_Dwelltime {
   description: "Spot Avg Dwell Time"
   type: average
   sql: ${spotAvgDwelltime} ;;
+  value_format_name: decimal_2
 }
 
 dimension: spotMinDwelltime {
@@ -129,6 +130,7 @@ measure: Min_Spot_Dwelltime {
   description: "Spot Min Dwell Time"
   type: min
   sql: ${spotMinDwelltime} ;;
+  value_format_name: decimal_2
 }
 
 dimension: spotMaxDwelltime {
@@ -141,6 +143,7 @@ measure: Max_Spot_Dwelltime {
   description: "Spot Avg Dwell Time"
   type: max
   sql: ${spotMaxDwelltime} ;;
+  value_format_name: decimal_2
 }
 
 dimension: spotMedianDwelltime {
@@ -153,6 +156,7 @@ measure: Median_Spot_Dwelltime {
   description: "Spot Median Dwell Time"
   type: median
   sql: ${spotMedianDwelltime} ;;
+  value_format_name: decimal_2
 }
 
 }

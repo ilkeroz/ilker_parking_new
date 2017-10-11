@@ -58,10 +58,24 @@ view: com_report_dwelltime_by_space {
   dimension_group: startTime {
     description: "Start Time"
     type: time
+    timeframes: [minute15]
+    sql: ${TABLE}.startTime ;;
+  }
+
+  dimension_group: startTime_time {
+    description: "Start Time"
+    type: time
     sql: ${TABLE}.startTime ;;
   }
 
   dimension_group: endTime {
+    description: "End Time"
+    type: time
+    timeframes: [minute15]
+    sql: ${TABLE}.endTime ;;
+  }
+
+  dimension_group: endTime_time {
     description: "End Time"
     type: time
     sql: ${TABLE}.endTime ;;
@@ -92,6 +106,7 @@ view: com_report_dwelltime_by_space {
     description: "Spot Avg Dwell Time"
     type: average
     sql: ${spotAvgDwelltime} ;;
+    value_format_name: decimal_2
   }
 
   dimension: spotMinDwelltime {
@@ -105,6 +120,7 @@ view: com_report_dwelltime_by_space {
     description: "Spot Min Dwell Time"
     type: min
     sql: ${spotMinDwelltime} ;;
+    value_format_name: decimal_2
   }
 
   dimension: spotMaxDwelltime {
@@ -117,6 +133,7 @@ view: com_report_dwelltime_by_space {
     description: "Spot Avg Dwell Time"
     type: max
     sql: ${spotMaxDwelltime} ;;
+    value_format_name: decimal_2
   }
 
   dimension: spotMedianDwelltime {
@@ -129,6 +146,7 @@ view: com_report_dwelltime_by_space {
     description: "Spot Median Dwell Time"
     type: median
     sql: ${spotMedianDwelltime} ;;
+    value_format_name: decimal_2
   }
 
 }

@@ -8,7 +8,7 @@ view: com_report_occupancy_by_space_day {
           spot_level.parkinggroupid as parkingGroupId,
           spot_level.parkingspotid as parkingSpotId,
           spot_level.parkingspotname as parkingSpotName,
-          date_parse(spot_level.starttime,'%Y-%m-%d %H:%i:%s') as startTime
+          date_parse(spot_level.endtime,'%Y-%m-%d %H:%i:%s') as startTime
 
           from hive.dwh_qastage1.agg_report_spot_level_day spot_level
           order by starttime ASC
@@ -86,11 +86,12 @@ view: com_report_occupancy_by_space_day {
     description: "Spot Avg Occupancy"
     type: average
     sql: ${spotOccupancy} ;;
-    link: {
-      # group hourly dashboard
-      label: "See Spots - Occupancy on hourly"
-      url: "/dashboards/136?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Space={{ parkingSpotId._value | url_encode}}&Time={{ startTime_date._value | url_encode }}"
-    }
+    value_format_name: decimal_2
+#     link: {
+#       # group hourly dashboard
+#       label: "See Spots - Occupancy on hourly"
+#       url: "/dashboards/136?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Space={{ parkingSpotId._value | url_encode}}&Time={{ startTime_date._value | url_encode }}"
+#     }
   }
 
 }

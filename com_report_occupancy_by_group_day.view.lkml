@@ -6,7 +6,8 @@ view: com_report_occupancy_by_group_day {
           group_level.parkingsitename as siteName,
           group_level.parkinggroupid as parkingGroupId,
           group_level.parkinggroupname as parkingGroupName,
-          date_parse(group_level.starttime,'%Y-%m-%d %H:%i:%s') as startTime
+          date_parse(group_level.startTime,'%Y-%m-%d %H:%i:%s') as startTime,
+          date_parse(group_level.endTime,'%Y-%m-%d %H:%i:%s') as endTime
           from hive.dwh_qastage1.agg_report_group_level_day group_level
           order by starttime DESC
       ;;
@@ -56,6 +57,12 @@ view: com_report_occupancy_by_group_day {
     sql: ${TABLE}.startTime ;;
   }
 
+  dimension_group: endTime {
+    description: "End Time"
+    type: time
+    sql: ${TABLE}.endTime ;;
+  }
+
   dimension: groupOccupancy {
     description: "Group Occupancy"
     type: number
@@ -67,14 +74,20 @@ view: com_report_occupancy_by_group_day {
     description: "Group Avg Occupancy"
     type: average
     sql: ${groupOccupancy} ;;
-    link: {
-      label: "See Spots - Occupancy on daily"
-      url: "/dashboards/135?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{startTime_date._value | url_encode }}"
+    value_format_name: decimal_2
+        link: {
+      # group hourly dashboard
+      label: "See Spots - Occupancy on hourly"
+      url: "/dashboards/136?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{ endTime_date._value | url_encode }}"
     }
+#     link: {
+#       label: "See Spots - Occupancy on daily"
+#       url: "/dashboards/135?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{startTime_date._value | url_encode }}"
+#     }
     link: {
       # group hourly dashboard
       label: "See Group - Occupancy on hourly"
-      url: "/dashboards/130?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{ startTime_date._value | url_encode }}"
+      url: "/dashboards/130?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{ endTime_date._value | url_encode }}"
     }
   }
 

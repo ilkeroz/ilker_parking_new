@@ -54,10 +54,24 @@ view: com_report_occupancy_by_group_micro {
   dimension_group: startTime {
     description: "Start Time"
     type: time
+    timeframes: [minute15]
+    sql: ${TABLE}.startTime ;;
+  }
+
+  dimension_group: startTime_time {
+    description: "Start Time"
+    type: time
     sql: ${TABLE}.startTime ;;
   }
 
   dimension_group: endTime {
+    description: "End Time"
+    type: time
+    timeframes: [minute15]
+    sql: ${TABLE}.endTime ;;
+  }
+
+  dimension_group: endTime_time {
     description: "End Time"
     type: time
     sql: ${TABLE}.endTime ;;
@@ -74,9 +88,10 @@ view: com_report_occupancy_by_group_micro {
     description: "Group Avg Occupancy"
     type: average
     sql: ${groupOccupancy} ;;
+    value_format_name: decimal_2
     link: {
       label: "See Spots - Occupancy on 15min interval"
-      url: "/dashboards/137?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Starttime=after+{{startTime_time._value | url_encode }}&Endtime=before+{{ endTime_time._value | url_encode }},{{ endTime_time._value | url_encode }}"
+      url: "/dashboards/137?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&&Time={{ endTime_time_time._value | url_encode }}+for+1+hour"
     }
   }
 

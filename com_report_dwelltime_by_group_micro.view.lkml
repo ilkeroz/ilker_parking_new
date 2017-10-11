@@ -57,10 +57,24 @@ view: com_report_dwelltime_by_group {
   dimension_group: startTime {
     description: "Start Time"
     type: time
+    timeframes: [minute15]
+    sql: ${TABLE}.startTime ;;
+  }
+
+  dimension_group: startTime_time {
+    description: "Start Time"
+    type: time
     sql: ${TABLE}.startTime ;;
   }
 
   dimension_group: endTime {
+    description: "End Time"
+    type: time
+    timeframes: [minute15]
+    sql: ${TABLE}.endTime ;;
+  }
+
+  dimension_group: endTime_time {
     description: "End Time"
     type: time
     sql: ${TABLE}.endTime ;;
@@ -81,13 +95,14 @@ view: com_report_dwelltime_by_group {
   measure: DwellTime {
     type: number
     description: "Dwell Time"
+    value_format: "0.00"
     sql: CASE WHEN {% condition Statistics %} 'Average' {% endcondition %} THEN ${com_report_dwelltime_by_group.Avg_Group_Dwelltime}
       WHEN {% condition Statistics %} 'Minimum' {% endcondition %} THEN ${com_report_dwelltime_by_group.Min_Group_Dwelltime}
       WHEN {% condition Statistics %} 'Maximum' {% endcondition %} THEN ${com_report_dwelltime_by_group.Max_Group_Dwelltime}
       END ;;
     link: {
       label: "See Spots - Dwelltime on 15min interval"
-      url: "/dashboards/125?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Starttime=after+{{ startTime_time._value | url_encode }}&Endtime=before+{{ endTime_time._value | url_encode }},{{ endTime_time._value | url_encode }}&Statistics={{_filters['com_report_dwelltime_by_group.Statistics']}}"
+      url: "/dashboards/125?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{ endTime_time_time._value | url_encode }}+for+1+hour&Statistics={{_filters['com_report_dwelltime_by_group.Statistics']}}"
     }
   }
 

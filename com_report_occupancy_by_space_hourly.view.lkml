@@ -99,11 +99,12 @@ view: com_report_occupancy_by_space_hourly {
     description: "Spot Avg Occupancy"
     type: average
     sql: ${spotOccupancy} ;;
-    link: {
-      # spots micro dashboard
-      label: "See Spots - Occupancy on 15min interval"
-      url: "/dashboards/137?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Space={{ parkingSpotId._value | url_encode}}&Starttime=after+{{ startTime_measure._value | url_encode }}&Endtime={{ startTime_measure._value | url_encode }}+for+1+hour"
-    }
+    value_format_name: decimal_2
+#     link: {
+#       # spots micro dashboard
+#       label: "See Spots - Occupancy on 15min interval"
+#       url: "/dashboards/137?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Space={{ parkingSpotId._value | url_encode}}&Starttime=after+{{ startTime_measure._value | url_encode }}&Endtime={{ startTime_measure._value | url_encode }}+for+1+hour"
+#     }
   }
 
 }
