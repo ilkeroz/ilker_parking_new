@@ -89,7 +89,7 @@ view: com_report_violations_count_by_group {
     sql: ${TABLE}.endTime ;;
   }
 
-  dimension_group: endTime_time {
+  dimension_group: endTime_time_hidden {
     description: "Time"
     type: time
     sql: ${TABLE}.endTime ;;
@@ -109,7 +109,7 @@ view: com_report_violations_count_by_group {
 #     sql:${violation};;
     link: {
       label: "See Spots Violations count"
-      url: "/dashboards/168?Group={{ parkinggroupname_hidden._value | url_encode}}&Site={{sitename_hidden._value | url_encode }}&Violation={{violation_hidden._value | url_encode}}&Time={{endTime_time_time._value | url_encode }}"
+      url: "/dashboards/168?Group={{ parkinggroupname_hidden._value | url_encode}}&Site={{sitename_hidden._value | url_encode }}&Violation={{violation_hidden._value | url_encode}}&Time={{endTime_time_hidden_time._value | url_encode }}"
     }
 
   }
