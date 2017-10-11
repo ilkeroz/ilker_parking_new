@@ -16,7 +16,7 @@ view: com_turnover_with_threshold_by_group_micro {
 #     sql:${objectid};;
     link: {
       label: "See Spots - Turnover on 15min interval"
-      url: "/dashboards/162?Site={{ sitename_hidden._value | url_encode}}&Group={{ parkinggroupname_hidden._value | url_encode}}&Time={{endTime_minute15._value | url_encode }}&Duration={{_filters['com_turnover_with_threshold_by_group_micro.duration'] }}"
+      url: "/dashboards/162?Site={{ sitename_hidden._value | url_encode}}&Group={{ parkinggroupname_hidden._value | url_encode}}&Time={{endTime_minute15._value | url_encode }}+for+1+hour&Duration={{_filters['com_turnover_with_threshold_by_group_micro.duration'] }}"
     }
   }
 
