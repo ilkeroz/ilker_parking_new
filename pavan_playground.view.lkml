@@ -6,6 +6,7 @@ view: pavan_playground {
           group_level.parkingsitename as siteName,
           group_level.parkinggroupid as parkingGroupId,
           group_level.parkinggroupname as parkingGroupName,
+          group_level.turnover as turnOver,
           date_parse(group_level.starttime,'%Y-%m-%d %H:%i:%s') as startTime,
           date_parse(group_level.endtime,'%Y-%m-%d %H:%i:%s') as endTime
           from hive.dwh_qastage1.agg_report_group_level_micro group_level
@@ -67,6 +68,20 @@ view: pavan_playground {
     description: "Group Occupancy"
     type: number
     sql: ${TABLE}.groupOccupancy ;;
+
+  }
+
+  dimension: turnOver {
+    description: "Turn Over"
+    type: number
+    sql: ${TABLE}.turnOver ;;
+
+  }
+
+  measure: Sum_TurnOver {
+    description: "Turnover sum"
+    type: sum
+    sql: ${turnOver} ;;
 
   }
 
