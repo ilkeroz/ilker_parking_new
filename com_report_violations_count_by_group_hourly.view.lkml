@@ -95,7 +95,7 @@ dimension_group: startTime {
   dimension: endFullHour {
     description: "Time"
     type: string
-    sql:CONCAT(${endTime_hour}, ':00:01')  ;;
+    sql:CONCAT(${endTime_hour}, ':00:00')  ;;
   }
 
 measure: count {
