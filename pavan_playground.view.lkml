@@ -59,7 +59,7 @@ view: pavan_playground {
 
   dimension: endTime {
     description: "End Time"
-    type: date
+    type: date_time
     sql: ${TABLE}.endTime ;;
   }
 
