@@ -101,12 +101,6 @@ view: com_report_violations_count_by_group {
 #     sql: ${TABLE}.endTime ;;
 #   }
 
-#   dimension_group: startTimeStamp {
-#     description: "Time"
-#     type: time
-#     sql: ${TABLE}.startTimeStamp ;;
-#   }
-
 
 
   measure: count {
