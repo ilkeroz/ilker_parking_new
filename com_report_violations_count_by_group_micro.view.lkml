@@ -85,21 +85,20 @@ view: com_report_violations_count_by_group {
   dimension_group: endTime {
     description: "Time"
     type: time
-    timeframes: [minute15]
     sql: ${TABLE}.endTime ;;
   }
 
-  dimension: endTime_time {
-    description: "Time"
-    type: date_time
-    sql: ${TABLE}.endTime ;;
-  }
-
-  dimension: endTime_time_hour {
-    description: "Time"
-    type: date_hour_of_day
-    sql: ${TABLE}.endTime ;;
-  }
+#   dimension: endTime_time {
+#     description: "Time"
+#     type: date_time
+#     sql: ${TABLE}.endTime ;;
+#   }
+#
+#   dimension: endTime_time_hour {
+#     description: "Time"
+#     type: date_hour_of_day
+#     sql: ${TABLE}.endTime ;;
+#   }
 
 #   dimension_group: startTimeStamp {
 #     description: "Time"
