@@ -10,8 +10,8 @@ view: com_report_violations_count_by_group {
           starttimestamp,
           endtimestamp,
           from_unixtime(starttimestamp/1000000) as startTime,
-          date_add('minute',15,from_unixtime(starttimestamp/1000000)) as endTime
-          --,from_unixtime(endtimestamp/1000000) as endTime
+          --date_add('minute',15,from_unixtime(starttimestamp/1000000)) as endTime
+          from_unixtime(endtimestamp/1000000) as endTime
           from hive.dwh_qastage1.dwh_parking_spot_report
           cross join UNNEST(violationlist) as t (group_violation)
           cross join UNNEST(split(group_violation.violationtype,'=')) as v (violation)
