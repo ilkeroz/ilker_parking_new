@@ -91,7 +91,7 @@ view: com_report_violations_count_by_group_day {
 #     sql:${violation};;
     link: {
       label: "See Group Violations count - hourly"
-      url: "/dashboards/112?Group={{ parkinggroupname_hidden._value | url_encode}}&Site={{sitename_hidden._value | url_encode }}&Violation={{violation_hidden._value | url_encode}}&Time={{endTime._value | url_encode }}"
+      url: "/dashboards/112?Group={{ parkinggroupname_hidden._value | url_encode}}&Site={{sitename_hidden._value | url_encode }}&Violation={{violation_hidden._value | url_encode}}&Time={{endTime_date._value | url_encode }}"
     }
 
     link: {
