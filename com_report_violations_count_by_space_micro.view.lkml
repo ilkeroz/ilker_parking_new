@@ -56,11 +56,17 @@ view: com_report_violations_count_by_space {
     sql: ${TABLE}.violation ;;
   }
 
-  dimension_group: startTime {
+  dimension_group: endTime {
     description: "Time"
     type: time
-    sql: ${TABLE}.startTime ;;
+    sql: ${TABLE}.endTime ;;
     timeframes: [minute15]
+  }
+
+  dimension_group: endTime_time {
+    description: "Time"
+    type: time
+    sql: ${TABLE}.endTime ;;
   }
 
   measure: count {
