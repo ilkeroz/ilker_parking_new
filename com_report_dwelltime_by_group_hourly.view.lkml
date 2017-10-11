@@ -89,7 +89,7 @@ view: com_report_dwelltime_by_group_hourly {
           link: {
       # spots micro dashboard
       label: "See Spots - Dwelltime on 15min interval"
-      url: "/dashboards/125?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Starttime=after+{{ startTime_time._value | url_encode }}&Endtime=before+{{ endTime_time._value | url_encode }},{{ endTime_time._value | url_encode }}&Statistics={{_filters['com_report_dwelltime_by_group_hourly.Statistics']}}"
+      url: "/dashboards/125?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Time={{ startTime_time._value | url_encode }}+for+1+hour&Statistics={{_filters['com_report_dwelltime_by_group_hourly.Statistics']}}"
     }
 #     link: {
 #       label: "See Spots - Dwelltime on hourly"

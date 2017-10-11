@@ -76,7 +76,7 @@ view: com_report_turnover_by_group_hourly {
     sql: ${groupTurnover} ;;
     link: {
       label: "See Spots - Turnover on 15min interval"
-      url: "/dashboards/149?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Starttime=after+{{startTime_time._value | url_encode }}&Endtime=before+{{ endTime_time._value | url_encode }},{{ endTime_time._value | url_encode }}"
+      url: "/dashboards/149?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&&Time={{ startTime_time._value | url_encode }}+for+1+hour"
     }
 #     link: {
 #       label: "See Spots - Turnover on hourly"
@@ -85,7 +85,7 @@ view: com_report_turnover_by_group_hourly {
     link: {
       # group micro dashboard
       label: "See Group - Turnover on 15min interval"
-      url: "/dashboards/143?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Starttime=after+{{ startTime_time._value | url_encode }}&Endtime=before+{{ endTime_time._value | url_encode }},{{ endTime_time._value | url_encode }}"
+      url: "/dashboards/143?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&&Time={{ startTime_time._value | url_encode }}+for+1+hour"
     }
   }
 

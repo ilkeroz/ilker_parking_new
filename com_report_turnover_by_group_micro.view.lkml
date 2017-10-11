@@ -90,7 +90,7 @@ measure: Group_Turnover {
   sql: ${groupTurnover} ;;
     link: {
       label: "See Spots - Turnover on 15min interval"
-      url: "/dashboards/149?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Starttime=after+{{startTime_minute15._value | url_encode }}&Endtime=before+{{ endTime_minute15._value | url_encode }},{{ endTime_minute15._value | url_encode }}"
+      url: "/dashboards/149?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&&Time={{ startTime_time._value | url_encode }}+for+1+hour"
     }
 }
 
