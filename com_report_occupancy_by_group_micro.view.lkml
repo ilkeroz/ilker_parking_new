@@ -91,7 +91,7 @@ view: com_report_occupancy_by_group_micro {
     value_format_name: decimal_2
     link: {
       label: "See Spots - Occupancy on 15min interval"
-      url: "/dashboards/137?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&&Time={{ startTime_time._value | url_encode }}+for+1+hour"
+      url: "/dashboards/137?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&&Time={{ endTime_time_time._value | url_encode }}+for+1+hour"
     }
   }
 
