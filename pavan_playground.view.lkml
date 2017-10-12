@@ -94,10 +94,10 @@ view: pavan_playground {
 
   }
 
-  dimension: endTime_day {
-    description: "Endtime_day"
+  dimension: startTime_day {
+    description: "Start time"
     type: date_day_of_week
-    sql: ${TABLE}.endTime ;;
+    sql: ${TABLE}.startTime ;;
 
   }
 
