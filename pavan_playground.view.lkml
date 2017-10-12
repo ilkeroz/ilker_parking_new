@@ -94,6 +94,13 @@ view: pavan_playground {
 
   }
 
+  dimension: endTime_day {
+    description: "Endtime_day"
+    type: date_day_of_week
+    sql: ${TABLE}.endTime ;;
+
+  }
+
 
   measure: Sum_TurnOver {
     description: "Turnover sum"
