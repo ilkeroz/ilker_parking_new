@@ -119,10 +119,7 @@ view: pavan_playground {
     description: "Group Avg Occupancy"
     type: average
     sql: ${groupOccupancy} ;;
-    link: {
-      label: "See Spots - Occupancy on 15min interval"
-      url: "/dashboards/137?Site={{ siteName_hidden._value | url_encode}}&Group={{ parkingGroupId_hidden._value | url_encode}}&Starttime=after+{{startTime_time._value | url_encode }}&Endtime=before+{{ endTime_time._value | url_encode }},{{ endTime_time._value | url_encode }}"
-    }
+
   }
 
 }
