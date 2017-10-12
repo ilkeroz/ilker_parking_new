@@ -7,7 +7,8 @@ view: pavan_playground {
           group_level.parkinggroupid as parkingGroupId,
           group_level.parkinggroupname as parkingGroupName,
           group_level.turnover as turnOver,
-          group_level.violationlist as violationCount,
+          group_level.avgdwelltime as avgDwellTime,
+          group_level.totalrevenue as totalRevenue,
           date_parse(group_level.starttime,'%Y-%m-%d %H:%i:%s') as startTime,
           date_parse(group_level.endtime,'%Y-%m-%d %H:%i:%s') as endTime
           from hive.dwh_qastage1.agg_report_group_level_micro group_level
@@ -72,10 +73,11 @@ view: pavan_playground {
 
   }
 
-  dimension : violationCount {
-    description: "Violation Count"
-    type: string
-    sql: ${TABLE}.violationCount ;;
+  dimension: avgDwellTime {
+    description: "Average Dwelltimer"
+    type: number
+    sql: ${TABLE}.avgDwellTime ;;
+
   }
 
   dimension: turnOver {
@@ -85,6 +87,14 @@ view: pavan_playground {
 
   }
 
+  dimension: totalRevenue {
+    description: "Total revenue"
+    type: number
+    sql: ${TABLE}.totalRevenue ;;
+
+  }
+
+
   measure: Sum_TurnOver {
     description: "Turnover sum"
     type: sum
@@ -92,6 +102,19 @@ view: pavan_playground {
 
   }
 
+  measure: Avg_DwellTime {
+    description: "Average Dwelltime"
+    type: average
+    sql: ${avgDwellTime} ;;
+
+  }
+
+  measure: Sum_Revenue {
+    description: "Revenue sum"
+    type: sum
+    sql: ${totalRevenue} ;;
+
+  }
   measure: Avg_Group_Occupancy {
     description: "Group Avg Occupancy"
     type: average
