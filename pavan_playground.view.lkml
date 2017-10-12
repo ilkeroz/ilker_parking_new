@@ -101,6 +101,12 @@ view: pavan_playground {
 
   }
 
+  dimension: startTime_hour {
+    description: "Start time hour"
+    type: date_hour
+    sql: ${TABLE}.startTime ;;
+
+  }
 
   measure: Sum_TurnOver {
     description: "Turnover sum"
