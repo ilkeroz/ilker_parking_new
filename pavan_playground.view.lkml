@@ -103,7 +103,7 @@ view: pavan_playground {
 
   dimension: startTime_hour {
     description: "Start time hour"
-    type: date_hour3
+    type: date_time_of_day
     sql: ${TABLE}.startTime ;;
 
   }
