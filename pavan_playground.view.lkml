@@ -11,7 +11,7 @@ view: pavan_playground {
           group_level.totalrevenue as totalRevenue,
           date_parse(group_level.starttime,'%Y-%m-%d %H:%i:%s') as startTime,
           date_parse(group_level.endtime,'%Y-%m-%d %H:%i:%s') as endTime
-          from hive.dwh_qastage1.agg_report_group_level_micro group_level
+          from hive.dwh_qastage1.agg_report_spot_level_micro group_level
           order by starttime DESC
       ;;
   }
@@ -56,7 +56,7 @@ view: pavan_playground {
 
   dimension: startTime {
     description: "Start Time"
-    type :  date
+    type :  date_time
     sql: ${TABLE}.startTime ;;
   }
 
