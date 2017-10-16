@@ -54,9 +54,10 @@ view: pavan_playground {
     sql: ${TABLE}.parkingGroupId ;;
   }
 
-  dimension: startTime {
+  dimension_group: startTime {
     description: "Start Time"
-    type :  date_time
+    type :  time
+    timeframes: [date,time_of_day]
     sql: ${TABLE}.startTime ;;
   }
 
