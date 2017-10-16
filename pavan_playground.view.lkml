@@ -57,7 +57,7 @@ view: pavan_playground {
   dimension_group: startTime {
     description: "Start Time"
     type :  time
-    timeframes: [date,hour,time_of_day]
+    timeframes: [date,hour, time,time_of_day]
     sql: ${TABLE}.startTime ;;
   }
 
