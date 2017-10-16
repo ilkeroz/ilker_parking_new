@@ -244,6 +244,8 @@ explore: com_report_violations_revenue_by_space {}
 
 explore: pavan_playground {}
 
+explore: aggregate_spot_violationscount_report {}
+
 # explore: report_violations {}
 
 explore: report_metrics {}
