@@ -57,7 +57,7 @@ view: pavan_playground {
   dimension_group: startTime {
     description: "Start Time"
     type :  time
-    timeframes: [date,time_of_day]
+    timeframes: [date,hour,time_of_day]
     sql: ${TABLE}.startTime ;;
   }
 
@@ -102,12 +102,12 @@ view: pavan_playground {
 
   }
 
-  dimension: startTime_hour {
-    description: "Start time hour"
-    type: date_time_of_day
-    sql: ${TABLE}.startTime ;;
-
-  }
+#   dimension: startTime_hour {
+#     description: "Start time hour"
+#     type: date_time_of_day
+#     sql: ${TABLE}.startTime ;;
+#
+#   }
 
   measure: Sum_TurnOver {
     description: "Turnover sum"
