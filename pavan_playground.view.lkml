@@ -55,7 +55,7 @@ view: pavan_playground {
   }
 
   dimension_group: startTime {
-    convert_tz: no
+    #convert_tz: no
     description: "Start Time"
     type :  time
     timeframes: [date,hour, time,time_of_day]
