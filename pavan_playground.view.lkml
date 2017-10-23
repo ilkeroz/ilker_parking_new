@@ -5,9 +5,9 @@ view: pavan_playground {
           group_level.parkingsiteid as siteId,
           group_level.parkingsitename as siteName,
           group_level.parkinggroupid as parkingGroupId,
-          group_level.parkinggroupname as parkingGroupName,
+          group_level.parkinggroupname as groups,
           group_level.turnover as turnOver,
-          group_level.avgdwelltime as avgDwellTime,
+          group_level.avgdwelltime as dwelltime,
           group_level.totalrevenue as totalRevenue,
           date_parse(group_level.starttime,'%Y-%m-%d %H:%i:%s') as startTime,
           date_parse(group_level.endtime,'%Y-%m-%d %H:%i:%s') as endTime
@@ -55,11 +55,60 @@ view: pavan_playground {
   }
 
   dimension_group: startTime {
+    convert_tz: no
     description: "Start Time"
     type :  time
     timeframes: [date,hour, time,time_of_day]
     sql: ${TABLE}.startTime ;;
   }
+
+#   dimension_group: created {
+#     #X# group_label:"Order Date"
+#     type: time
+#     timeframes: [time, time_of_day, hour, date, week, month, year, hour_of_day, day_of_week, month_num, raw, week_of_year, minute15]
+#     sql: ${TABLE}.created_at ;;
+#   }
+
+  dimension: data_minute_index {
+    type: number
+    sql: EXTRACT(HOUR FROM ${TABLE}.startTime)*60 +  EXTRACT(MINUTE FROM ${TABLE}.startTime)
+      ;;
+  }
+
+  filter: start_minute {
+    type: string
+  }
+
+  dimension: start_minute_indexed {
+    type: number
+    sql: (CAST( SPLIT_PART({% parameter start_minute %},':',1) AS integer )*60) + (CAST ( SPLIT_PART({% parameter start_minute %},':',2) AS integer )) ;;
+  }
+
+  filter: end_minute {
+    type: string
+  }
+
+  dimension: end_minute_indexed {
+    type: number
+    sql: (CAST( SPLIT_PART({% parameter end_minute %},':',1) AS integer )*60) + (CAST ( SPLIT_PART({% parameter end_minute %},':',2) AS integer )) ;;
+  }
+
+
+  dimension: greater_than_start {
+    type: yesno
+    sql:
+          ${data_minute_index} >= ${start_minute_indexed}
+          ;;
+  }
+
+  dimension: less_than_end {
+    type: yesno
+    sql:
+          ${data_minute_index} <= ${end_minute_indexed}
+          ;;
+  }
+
+#########
 
   dimension: endTime {
     description: "End Time"
@@ -74,10 +123,10 @@ view: pavan_playground {
 
   }
 
-  dimension: avgDwellTime {
+  dimension: dwelltime {
     description: "Average Dwelltimer"
     type: number
-    sql: ${TABLE}.avgDwellTime ;;
+    sql: ${TABLE}.dwelltime ;;
 
   }
 
@@ -116,10 +165,10 @@ view: pavan_playground {
 
   }
 
-  measure: Avg_DwellTime {
+  measure: dwelltime_average {
     description: "Average Dwelltime"
     type: average
-    sql: ${avgDwellTime} ;;
+    sql: ${dwelltime} ;;
 
   }
 
