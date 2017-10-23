@@ -5,9 +5,9 @@ view: pavan_playground {
           group_level.parkingsiteid as siteId,
           group_level.parkingsitename as siteName,
           group_level.parkinggroupid as parkingGroupId,
-          group_level.parkinggroupname as parkingGroupName,
+          group_level.parkinggroupname as groups,
           group_level.turnover as turnOver,
-          group_level.avgdwelltime as avgDwellTime,
+          group_level.avgdwelltime as dwelltime,
           group_level.totalrevenue as totalRevenue,
           date_parse(group_level.starttime,'%Y-%m-%d %H:%i:%s') as startTime,
           date_parse(group_level.endtime,'%Y-%m-%d %H:%i:%s') as endTime
@@ -123,10 +123,10 @@ view: pavan_playground {
 
   }
 
-  dimension: avgDwellTime {
+  dimension: dwelltime {
     description: "Average Dwelltimer"
     type: number
-    sql: ${TABLE}.avgDwellTime ;;
+    sql: ${TABLE}.dwelltime ;;
 
   }
 
@@ -165,10 +165,10 @@ view: pavan_playground {
 
   }
 
-  measure: Avg_DwellTime {
+  measure: dwelltime_average {
     description: "Average Dwelltime"
     type: average
-    sql: ${avgDwellTime} ;;
+    sql: ${dwelltime} ;;
 
   }
 
