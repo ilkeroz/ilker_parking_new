@@ -72,7 +72,7 @@ view: aggregate_spot_violationscount_report {
     sql: ${TABLE}.violation ;;
   }
 
-  measure: count {
+  measure: ViolationCount {
     type: count
   }
 }
