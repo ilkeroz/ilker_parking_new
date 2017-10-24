@@ -176,7 +176,7 @@ view: report_on_metrics_with_filters {
     sql: ${TABLE}.sitename ;;
   }
 
-  dimension: parkinggroupname {
+  dimension: groups {
     description: "Parking Group Name"
     type: string
     sql: ${TABLE}.groupname ;;
