@@ -125,7 +125,7 @@ view: report_on_metrics_with_filters {
     description: "AvgDwelltime"
     sql: ${TABLE}.AvgDwelltime ;;
   }
-  measure: Avg_Dwelltime {
+  measure: dwelltime_average {
     type: average
     description: "AvgDwelltime"
     value_format_name: decimal_2
