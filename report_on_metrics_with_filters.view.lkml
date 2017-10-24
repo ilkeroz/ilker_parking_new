@@ -23,8 +23,8 @@ view: report_on_metrics_with_filters {
           spot_micro.parkinggroupid as groupid,
           spot_micro.parkingspotname as spotname,
           spot_micro.parkingspotid as spotid,
-          date_parse(starttime,'%Y-%m-%d %H:%i:%s') as starttime,
-          date_parse(endtime,'%Y-%m-%d %H:%i:%s') as endtime
+          date_parse(starttime,'%Y-%m-%d %H:%i:%s') as startTime,
+          date_parse(endtime,'%Y-%m-%d %H:%i:%s') as endTime
           ,"violation_count"
           from
         hive.dwh_qastage1.agg_report_spot_level_micro spot_micro
@@ -69,13 +69,13 @@ view: report_on_metrics_with_filters {
   dimension_group:  startTime{
     description: "Start Time"
     type: time
-    sql: ${TABLE}.starttime ;;
+    sql: ${TABLE}.startTime ;;
   }
 
   dimension_group:  endTime{
     description: "End Time"
     type: time
-    sql: ${TABLE}.endtime ;;
+    sql: ${TABLE}.endTime ;;
   }
   dimension: Occupancy {
     type: number
@@ -243,6 +243,44 @@ view: report_on_metrics_with_filters {
     description: "AreaType"
     type: string
     sql: ${TABLE}.areaoftype ;;
+  }
+  dimension: data_minute_index {
+    type: number
+    sql: EXTRACT(HOUR FROM ${TABLE}.endTime)*60 +  EXTRACT(MINUTE FROM ${TABLE}.endTime)
+      ;;
+  }
+
+  filter: start_minute {
+    type: string
+  }
+
+  dimension: start_minute_indexed {
+    type: number
+    sql: (CAST( SPLIT_PART({% parameter start_minute %},':',1) AS integer )*60) + (CAST ( SPLIT_PART({% parameter start_minute %},':',2) AS integer )) ;;
+  }
+
+  filter: end_minute {
+    type: string
+  }
+
+  dimension: end_minute_indexed {
+    type: number
+    sql: (CAST( SPLIT_PART({% parameter end_minute %},':',1) AS integer )*60) + (CAST ( SPLIT_PART({% parameter end_minute %},':',2) AS integer )) ;;
+  }
+
+
+  dimension: greater_than_start {
+    type: yesno
+    sql:
+          ${data_minute_index} >= ${start_minute_indexed}
+          ;;
+  }
+
+  dimension: less_than_end {
+    type: yesno
+    sql:
+          ${data_minute_index} <= ${end_minute_indexed}
+          ;;
   }
 
 }
