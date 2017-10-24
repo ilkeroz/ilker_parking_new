@@ -82,7 +82,7 @@ view: report_on_metrics_with_filters {
     description: "Occupancy"
     sql: ${TABLE}.Occupancy ;;
   }
-  measure: AvgOccupancy {
+  measure: occupancy_average {
     type: average
     description: "Occupancy"
     value_format_name: decimal_2
@@ -93,7 +93,7 @@ view: report_on_metrics_with_filters {
     description: "Revenue"
     sql: ${TABLE}.Revenue ;;
   }
-  measure: AvgRevenue {
+  measure: revenue_average {
     type: average
     description: "Revenue"
     value_format_name: decimal_2
@@ -104,7 +104,7 @@ view: report_on_metrics_with_filters {
     description: "Turnover"
     sql: ${TABLE}.Turnover ;;
   }
-  measure: TotalTurnover {
+  measure: turnover_sum {
     type: sum
     description: "Turnover"
     sql: ${Turnover} ;;
@@ -114,7 +114,7 @@ view: report_on_metrics_with_filters {
     description: "Vacancy"
     sql: ${TABLE}.Vacancy ;;
   }
-  measure: AvgVacancy {
+  measure: vacancy_average {
     type: average
     description: "Vacancy"
     value_format_name: decimal_2
@@ -136,7 +136,7 @@ view: report_on_metrics_with_filters {
     description: "MedianDwelltime"
     sql: ${TABLE}.MedianDwelltime ;;
   }
-  measure: Median_Dwelltime {
+  measure: dwelltime_median {
     type: average
     description: "MedianDwelltime"
     value_format_name: decimal_2
@@ -147,7 +147,7 @@ view: report_on_metrics_with_filters {
     description: "Min_Dwelltime"
     sql: ${TABLE}.MinDwelltime ;;
   }
-  measure: Min_Dwelltime {
+  measure: dwelltime_min {
     type: average
     description: "MinDwelltime"
     value_format_name: decimal_2
@@ -158,7 +158,7 @@ view: report_on_metrics_with_filters {
     description: "MaxDwelltime"
     sql: ${TABLE}.MaxDwelltime ;;
   }
-  measure: Max_Dwelltime {
+  measure: dwelltime_max {
     type: average
     description: "MaxDwelltime"
     value_format_name: decimal_2
@@ -214,7 +214,7 @@ view: report_on_metrics_with_filters {
     description: "ViolationCount"
     sql: ${TABLE}.violation_count ;;
   }
-  measure: violation_count {
+  measure: violation_count_sum {
     type: sum
     description: "ViolationCount"
     sql: ${violationCount} ;;
