@@ -3,7 +3,7 @@ view: report_on_metrics_with_filters {
   derived_table: {
     sql:
     select spot_micro.occupancy as Occupancy,
-          spot_micro.avgrevenue as Revenue,
+          spot_micro.totalrevenue as Revenue,
           spot_micro.turnover as Turnover,
           spot_micro.vacancy as Vacancy,
           spot_micro.avgdwelltime as AvgDwelltime,
@@ -94,7 +94,7 @@ view: report_on_metrics_with_filters {
     sql: ${TABLE}.Revenue ;;
   }
   measure: revenue_average {
-    type: average
+    type: sum
     description: "Revenue"
     value_format_name: decimal_2
     sql: ${Revenue} ;;
