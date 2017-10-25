@@ -93,7 +93,7 @@ view: report_on_metrics_with_filters {
     description: "Revenue"
     sql: ${TABLE}.Revenue ;;
   }
-  measure: revenue_average {
+  measure: revenue_sum {
     type: sum
     description: "Revenue"
     value_format_name: decimal_2
