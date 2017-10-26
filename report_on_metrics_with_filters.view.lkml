@@ -93,7 +93,7 @@ view: report_on_metrics_with_filters {
     description: "Revenue"
     sql: ${TABLE}.Revenue ;;
   }
-  measure: revenue_sum {
+  measure: revenue_total {
     type: sum
     description: "Revenue"
     value_format_name: decimal_2
@@ -104,7 +104,7 @@ view: report_on_metrics_with_filters {
     description: "Turnover"
     sql: ${TABLE}.Turnover ;;
   }
-  measure: turnover_sum {
+  measure: turnover_total {
     type: sum
     description: "Turnover"
     sql: ${Turnover} ;;
@@ -214,7 +214,7 @@ view: report_on_metrics_with_filters {
     description: "ViolationCount"
     sql: ${TABLE}.violation_count ;;
   }
-  measure: violation_count_sum {
+  measure: violationcount_total {
     type: sum
     description: "ViolationCount"
     sql: ${violationCount} ;;
