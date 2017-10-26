@@ -199,7 +199,7 @@ view: report_on_metrics_with_filters {
     type: string
     sql: ${TABLE}.spotid ;;
   }
-  dimension: handicapped {
+  dimension: handicap {
     description: "Handicapped"
     type: yesno
     sql: ${TABLE}.handicapped;;
