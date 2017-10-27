@@ -170,7 +170,7 @@ view: report_on_metrics_with_filters {
     sql: ${TABLE}.siteid ;;
   }
 
-  dimension: siteName {
+  dimension: site_name {
     description: "Site Name"
     type: string
     sql: ${TABLE}.sitename ;;
