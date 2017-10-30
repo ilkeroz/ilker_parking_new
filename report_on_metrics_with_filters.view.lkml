@@ -75,6 +75,7 @@ view: report_on_metrics_with_filters {
   dimension_group:  endTime{
     description: "End Time"
     type: time
+    allow_fill: yes
     sql: ${TABLE}.endTime ;;
   }
   dimension: Occupancy {
