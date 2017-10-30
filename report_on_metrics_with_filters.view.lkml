@@ -78,7 +78,7 @@ view: report_on_metrics_with_filters {
     allow_fill: yes
     sql: ${TABLE}.endTime ;;
   }
-  dimension_group:  endTime_minute15{
+  dimension_group:  endTime{
     description: "End Time Minute 15"
     type: time
     timeframes: [minute15]
