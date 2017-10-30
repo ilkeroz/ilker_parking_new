@@ -78,6 +78,13 @@ view: report_on_metrics_with_filters {
     allow_fill: yes
     sql: ${TABLE}.endTime ;;
   }
+  dimension_group:  endTime_minute15{
+    description: "End Time Minute 15"
+    type: time
+    timeframes: [minute15]
+    allow_fill: yes
+    sql: ${TABLE}.endTime ;;
+  }
   dimension: Occupancy {
     type: number
     description: "Occupancy"
