@@ -1,6 +1,6 @@
 view: com_turnover_with_threshold_by_space_yearly {
  derived_table: {
-  sql: SELECT objectid, siteid, sitename, parkingspotid,
+  sql: SELECT objectid, siteid, sitename, name,
       date_diff('hour',from_unixtime(starttimestamp/1000000),from_unixtime(endtimestamp/1000000)) as duration,
       from_unixtime(starttimestamp/1000000)  as startTime,
       from_unixtime(endtimestamp/1000000)  as endTime
@@ -35,7 +35,7 @@ dimension: objectid {
 
   dimension: parkingspotid {
     type: string
-    sql: ${TABLE}.parkingspotid ;;
+    sql: ${TABLE}.name ;;
   }
 
 dimension: siteid {

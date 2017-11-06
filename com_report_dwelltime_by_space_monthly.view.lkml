@@ -65,7 +65,7 @@ dimension: parkingGroupId_hidden {
 dimension: parkingSpotId {
   description: "Parking Spot Id"
   type: string
-  sql: ${TABLE}.parkingSpotId ;;
+  sql: ${TABLE}.parkingSpotName ;;
 }
 
 # dimension: parkingSpotId_hidden {

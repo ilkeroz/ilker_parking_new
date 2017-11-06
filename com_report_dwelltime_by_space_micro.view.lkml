@@ -52,7 +52,7 @@ view: com_report_dwelltime_by_space {
   dimension: parkingSpotId {
     description: "Parking Spot Id"
     type: string
-    sql: ${TABLE}.parkingSpotId ;;
+    sql: ${TABLE}.parkingSpotName ;;
   }
 
   dimension_group: startTime {

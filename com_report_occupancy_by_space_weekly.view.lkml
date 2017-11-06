@@ -62,7 +62,7 @@ view: com_report_occupancy_by_space_weekly {
   dimension: parkingSpotId {
     description: "Parking Spot Id"
     type: string
-    sql: ${TABLE}.parkingSpotId ;;
+    sql: ${TABLE}.parkingSpotName ;;
   }
 
 #   dimension: parkingSpotId_hidden {

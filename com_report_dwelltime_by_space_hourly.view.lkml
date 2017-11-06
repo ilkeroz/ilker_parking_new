@@ -66,7 +66,7 @@ view: com_report_dwelltime_by_space_hourly {
   dimension: parkingSpotId {
     description: "Parking Spot Id"
     type: string
-    sql: ${TABLE}.parkingSpotId ;;
+    sql: ${TABLE}.parkingSpotName ;;
   }
 
 #   dimension: parkingSpotId_hidden {

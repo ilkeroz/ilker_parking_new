@@ -6,7 +6,7 @@ view: com_report_violations_count_by_space_yearly {
           violationlist,
           violation,
           parkinggroupid,
-          parkingspotid,
+          name,
           starttimestamp,
           endtimestamp,
           from_unixtime(starttimestamp/1000000) as startTime,
@@ -40,7 +40,7 @@ dimension: parkinggroupid {
 dimension: parkingspotid {
   description: "Parking Spot Id"
   type: string
-  sql: ${TABLE}.parkingspotid ;;
+  sql: ${TABLE}.name ;;
 }
 
 dimension: violation {
