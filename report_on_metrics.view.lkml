@@ -1,48 +1,71 @@
-view: aggregated_metrics {
-
+view: report_on_metrics {
   derived_table: {
     sql:
-    select
-      vlist.violationtype as violationtype,
-      vlist.fine as violationfine,
-      date_parse(starttime,'%Y-%m-%d %H:%i:%s') as startTime,
-      date_parse(endtime,'%Y-%m-%d %H:%i:%s') as endTime,
-      array_join(typeovehicle,',','NA') as typeofvehicle,
-      handicap as handicapped,
-      formfactor as formfactor,
-      array_join(areaoftype,',','NA') as areaoftype,
-      businessuse as businessuse,
-      howmetered as howmetered,
-      reservation as reservation,
-      parkingspotid as spotid,
-      parkinggroupid as groupid,
-      parkingsiteid as siteid,
-      parkingspotname as spotname,
-      parkinggroupname as groupname,
-      parkingsitename as sitename,
-      violationlist as violationlist,
-      minrevenue,
-      maxrevenue,
-      avgrevenue,
-      medianrevenue,
-      --totalrevenue as Revenue,
-      --turnover as Turnover,
-      (case when cardinality(violationlist)>1 then totalrevenue/cast(cardinality(violationlist) as double) else totalrevenue end) as Revenue,
-      (case when cardinality(violationlist)>1 then turnover/cast(cardinality(violationlist) as double) else turnover end) as Turnover,
-      vacancy as Vacancy,
-      occupancy as Occupancy,
-      occupancyinmin,
-      mindwelltime as MinDwelltime,
-      maxdwelltime as MaxDwelltime,
-      avgdwelltime as AvgDwelltime,
-      mediandwelltime as MedianDwelltime,
-      totaldwelltime,
-      totalevents,
-      spotcount,
-      currentbatch
-      from hive.dwh_qastage1.agg_report_spot_level_micro
-      CROSS join UNNEST(violationlist) as vl (vlist)
-      ;;
+    select spot_micro.occupancy as Occupancy,
+      (case when cardinality(spot_micro.violationlist)>1 then spot_micro.totalrevenue/cast(cardinality(spot_micro.violationlist) as double) else totalrevenue end) as Revenue,
+      (case when cardinality(spot_micro.violationlist)>1 then spot_micro.turnover/cast(cardinality(spot_micro.violationlist) as double) else turnover end) as Turnover,
+          spot_micro.vacancy as Vacancy,
+          spot_micro.avgdwelltime as AvgDwelltime,
+          spot_micro.mediandwelltime as MedianDwelltime,
+          spot_micro.mindwelltime as MinDwelltime,
+          spot_micro.maxdwelltime as MaxDwelltime,
+          spot_micro.parkingsiteid as siteid,
+          spot_micro.parkingsitename as sitename,
+          spot_micro.handicap as handicapped,
+          spot_micro.formfactor as formfactor,
+          array_join(spot_micro.typeovehicle,',','NA') as typeofvehicle,
+          spot_micro.reservation as reservation,
+          spot_micro.businessuse as businessuse,
+          spot_micro.howmetered as howmetered,
+          array_join(spot_micro.areaoftype,',','NA') as areaoftype,
+          spot_micro.parkinggroupname as groupname,
+          spot_micro.parkinggroupid as groupid,
+          spot_micro.parkingspotname as spotname,
+          spot_micro.parkingspotid as spotid,
+          date_parse(spot_micro.starttime,'%Y-%m-%d %H:%i:%s') as startTime,
+          date_parse(spot_micro.endtime,'%Y-%m-%d %H:%i:%s') as endTime,
+          "violationrevenue",
+          "violationtype"
+          from
+        hive.dwh_qastage1.agg_report_spot_level_micro spot_micro
+        left join (
+        WITH com_report_violations_revenue_by_space AS (select
+          parkingsiteid,
+          parkingsitename,
+          violationlist,
+          space_violation.violationtype as violationtype,
+          CAST(space_violation.fine as DOUBLE) as violationrevenue,
+          parkinggroupid,
+          parkinggroupname,
+          parkingspotid,
+          parkingspotname,
+          date_parse(starttime,'%Y-%m-%d %H:%i:%s') as starttime,
+          date_parse(endtime,'%Y-%m-%d %H:%i:%s') as endtime
+          from hive.dwh_qastage1.agg_report_spot_level_micro
+          cross join UNNEST(violationlist) as t (space_violation)
+          order by starttime ASC
+      )
+        SELECT
+        DATE_FORMAT((com_report_violations_revenue_by_space.endtime), '%Y-%m-%d %T') AS "endTime",
+      com_report_violations_revenue_by_space.parkingsiteid as siteid,
+      com_report_violations_revenue_by_space.parkingsitename as sitename,
+      com_report_violations_revenue_by_space.parkinggroupid as parkinggroupid,
+      com_report_violations_revenue_by_space.parkinggroupname as parkinggroupname,
+      com_report_violations_revenue_by_space.parkingspotid as parkingspotid,
+      com_report_violations_revenue_by_space.parkingspotname as parkingspotname,
+      com_report_violations_revenue_by_space.violationtype as violationtype,
+        COALESCE(SUM(com_report_violations_revenue_by_space.violationrevenue), 0) AS "violationrevenue"
+        FROM com_report_violations_revenue_by_space
+
+        GROUP BY 1,2,3,4,5,6,7,8
+        ORDER BY 1 DESC
+
+        ) spot_report
+        on spot_micro.parkingsiteid = spot_report.siteid
+        and spot_micro.parkinggroupid = spot_report.parkinggroupid
+        and spot_micro.parkingspotid = spot_report.parkingspotid
+        and spot_report.endTime = spot_micro.endTime
+          ;;
   }
 
   dimension_group:  startTime{
@@ -151,11 +174,6 @@ view: aggregated_metrics {
     value_format_name: decimal_2
     sql: ${MaxDwelltime} ;;
   }
-  dimension: violationtype {
-    description: "Violation Type"
-    type: string
-    sql: ${TABLE}.violationtype ;;
-  }
   dimension: siteid {
     description: "Site ID"
     type: string
@@ -201,22 +219,21 @@ view: aggregated_metrics {
     type: string
     sql: ${TABLE}.formfactor ;;
   }
-
-  dimension: violationlist {
-    description: "violationlist"
+  dimension: violationtype {
+    description: "Violation Type"
     type: string
-    sql: ${TABLE}.violationlist ;;
+    sql: ${TABLE}.violationtype ;;
   }
-#   dimension:  violationCount{
-#     type: number
-#     description: "ViolationCount"
-#     sql: ${TABLE}.violation_count ;;
-#   }
-#   measure: violationcount_total {
-#     type: sum
-#     description: "ViolationCount"
-#     sql: ${violationCount} ;;
-#   }
+  dimension:  violationrevenue{
+    type: number
+    description: "violationrevenue"
+    sql: ${TABLE}.violationrevenue ;;
+  }
+  measure: ViolationRevenue_total {
+    type: sum
+    description: "violationrevenue"
+    sql: ${violationrevenue} ;;
+  }
   dimension: typeofvehicle {
     description: "VehicleType"
     type: string

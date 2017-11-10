@@ -4,15 +4,14 @@ view: com_report_violations_revenue_by_space {
           parkingsiteid,
           parkingsitename,
           violationlist,
-          violation,
-          CAST(fine as DOUBLE) as violationrevenue,
+          space_violation.violationtype as violationtype,
+          CAST(space_violation.fine as DOUBLE) as violationrevenue,
           parkinggroupid,
           parkingspotid,
           date_parse(starttime,'%Y-%m-%d %H:%i:%s') as starttime,
           date_parse(endtime,'%Y-%m-%d %H:%i:%s') as endtime
-          from hive.dwh_qastage2.agg_report_spot_level_micro_demo
+          from hive.dwh_qastage1.agg_report_spot_level_micro
           cross join UNNEST(violationlist) as t (space_violation)
-          cross join UNNEST(split(space_violation.violationtype,'='),split(CAST(space_violation.fine as VARCHAR),'=')) as v (violation,fine)
           where cardinality(violationlist) != 0
           order by starttime ASC
       ;;
@@ -59,10 +58,14 @@ view: com_report_violations_revenue_by_space {
     type: time
     sql: ${TABLE}.endtime ;;
   }
-
+  dimension: violationtype {
+    description: "Violation Type"
+    type: string
+    sql: ${TABLE}.violationtype ;;
+  }
   dimension: violationrevenue {
     description: "Violation"
-    type: string
+    type: number
     sql: ${TABLE}.violationrevenue ;;
   }
 
