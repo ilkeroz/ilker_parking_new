@@ -242,7 +242,7 @@ view: report_on_metrics_for_home_page {
     description: "violationcount"
     sql: ${TABLE}.violationcount ;;
   }
-  measure: Violationcount_total {
+  measure: violationcount_total {
     type: sum
     description: "violationcount"
     sql: ${violationcount} ;;
