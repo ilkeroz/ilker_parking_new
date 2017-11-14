@@ -1,4 +1,4 @@
-view: report_on_metrics {
+view: report_on_metrics_for_home_page {
   derived_table: {
     sql:
     select spot_micro.occupancy as Occupancy,
@@ -25,9 +25,10 @@ view: report_on_metrics {
           date_parse(spot_micro.starttime,'%Y-%m-%d %H:%i:%s') as startTime,
           date_parse(spot_micro.endtime,'%Y-%m-%d %H:%i:%s') as endTime,
           "violationrevenue",
+          "violationcount",
           "violationtype"
           from
-        hive.dwh_qastage1.agg_report_spot_level_micro spot_micro
+        hive.unittest7.agg_report_spot_level_micro_update spot_micro
         left join (
         WITH com_report_violations_revenue_by_space AS (select
           parkingsiteid,
@@ -35,13 +36,14 @@ view: report_on_metrics {
           violationlist,
           space_violation.violationtype as violationtype,
           CAST(space_violation.fine as DOUBLE) as violationrevenue,
+          space_violation.violationcount as violationcount,
           parkinggroupid,
           parkinggroupname,
           parkingspotid,
           parkingspotname,
           date_parse(starttime,'%Y-%m-%d %H:%i:%s') as starttime,
           date_parse(endtime,'%Y-%m-%d %H:%i:%s') as endtime
-          from hive.dwh_qastage1.agg_report_spot_level_micro
+          from hive.unittest7.agg_report_spot_level_micro_update
           cross join UNNEST(violationlist) as t (space_violation)
           order by starttime ASC
       )
@@ -54,7 +56,8 @@ view: report_on_metrics {
       com_report_violations_revenue_by_space.parkingspotid as parkingspotid,
       com_report_violations_revenue_by_space.parkingspotname as parkingspotname,
       com_report_violations_revenue_by_space.violationtype as violationtype,
-        COALESCE(SUM(com_report_violations_revenue_by_space.violationrevenue), 0) AS "violationrevenue"
+        COALESCE(SUM(com_report_violations_revenue_by_space.violationrevenue), 0) AS "violationrevenue",
+        COALESCE(SUM(com_report_violations_revenue_by_space.violationcount), 0) AS "violationcount"
         FROM com_report_violations_revenue_by_space
 
         GROUP BY 1,2,3,4,5,6,7,8
@@ -233,6 +236,16 @@ view: report_on_metrics {
     type: sum
     description: "violationrevenue"
     sql: ${violationrevenue} ;;
+  }
+  dimension:  violationcount{
+    type: number
+    description: "violationcount"
+    sql: ${TABLE}.violationcount ;;
+  }
+  measure: ViolationCount_total {
+    type: sum
+    description: "violationcount"
+    sql: ${violationcount} ;;
   }
   dimension: typeofvehicle {
     description: "VehicleType"

@@ -2,47 +2,68 @@ view: aggregated_metrics {
 
   derived_table: {
     sql:
-    select
-      vlist.violationtype as violationtype,
-      vlist.fine as violationfine,
-      date_parse(starttime,'%Y-%m-%d %H:%i:%s') as startTime,
-      date_parse(endtime,'%Y-%m-%d %H:%i:%s') as endTime,
-      array_join(typeovehicle,',','NA') as typeofvehicle,
-      handicap as handicapped,
-      formfactor as formfactor,
-      array_join(areaoftype,',','NA') as areaoftype,
-      businessuse as businessuse,
-      howmetered as howmetered,
-      reservation as reservation,
-      parkingspotid as spotid,
-      parkinggroupid as groupid,
-      parkingsiteid as siteid,
-      parkingspotname as spotname,
-      parkinggroupname as groupname,
-      parkingsitename as sitename,
-      violationlist as violationlist,
-      minrevenue,
-      maxrevenue,
-      avgrevenue,
-      medianrevenue,
-      --totalrevenue as Revenue,
-      --turnover as Turnover,
-      (case when cardinality(violationlist)>1 then totalrevenue/cast(cardinality(violationlist) as double) else totalrevenue end) as Revenue,
-      (case when cardinality(violationlist)>1 then turnover/cast(cardinality(violationlist) as double) else turnover end) as Turnover,
-      vacancy as Vacancy,
-      occupancy as Occupancy,
-      occupancyinmin,
-      mindwelltime as MinDwelltime,
-      maxdwelltime as MaxDwelltime,
-      avgdwelltime as AvgDwelltime,
-      mediandwelltime as MedianDwelltime,
-      totaldwelltime,
-      totalevents,
-      spotcount,
-      currentbatch
-      from hive.dwh_qastage1.agg_report_spot_level_micro
-      CROSS join UNNEST(violationlist) as vl (vlist)
-      ;;
+    select spot_micro.occupancy as Occupancy,
+          spot_micro.totalrevenue as Revenue,
+          spot_micro.turnover as Turnover,
+          spot_micro.vacancy as Vacancy,
+          spot_micro.avgdwelltime as AvgDwelltime,
+          spot_micro.mediandwelltime as MedianDwelltime,
+          spot_micro.mindwelltime as MinDwelltime,
+          spot_micro.maxdwelltime as MaxDwelltime,
+          spot_micro.parkingsiteid as siteid,
+          spot_micro.parkingsitename as sitename,
+          spot_micro.handicap as handicapped,
+          spot_micro.formfactor as formfactor,
+          array_join(spot_micro.typeovehicle,',','NA') as typeofvehicle,
+          spot_micro.reservation as reservation,
+          spot_micro.businessuse as businessuse,
+          spot_micro.howmetered as howmetered,
+          array_join(spot_micro.areaoftype,',','NA') as areaoftype,
+          spot_micro.parkinggroupname as groupname,
+          spot_micro.parkinggroupid as groupid,
+          spot_micro.parkingspotname as spotname,
+          spot_micro.parkingspotid as spotid,
+          date_parse(starttime,'%Y-%m-%d %H:%i:%s') as startTime,
+          date_parse(endtime,'%Y-%m-%d %H:%i:%s') as endTime
+          ,"violation_count"
+          from
+        hive.unittest7.agg_report_spot_level_micro_update
+        left join (
+
+        WITH com_report_violations_count_by_space AS (select objectid,
+        siteid,
+        parkinggroupname,
+        sitename,
+        violationlist,
+        violation,
+        parkinggroupid,
+        parkingspotid,
+        starttimestamp,
+        endtimestamp,
+        from_unixtime(starttimestamp/1000000) as startTime,
+        from_unixtime(endtimestamp/1000000) as endTime
+        from hive.dwh_qastage1.dwh_parking_spot_report
+        cross join UNNEST(violationlist) as t (group_violation)
+        cross join UNNEST(split(group_violation.violationtype,'=')) as v (violation)
+        where cardinality(violationlist) != 0
+        order by starttime ASC
+        )
+        SELECT
+        DATE_FORMAT(DATE_TRUNC('MINUTE', DATE_ADD('minute', -1 * minute((com_report_violations_count_by_space.endTime)) % 15, (com_report_violations_count_by_space.endTime))),'%Y-%m-%d %H:%i:%s') AS "endTime15",
+        com_report_violations_count_by_space.siteid,
+        com_report_violations_count_by_space.sitename,
+        com_report_violations_count_by_space.parkinggroupid,
+        com_report_violations_count_by_space.parkinggroupname,
+        com_report_violations_count_by_space.parkingspotid,
+        COUNT(*) AS "violation_count"
+        FROM com_report_violations_count_by_space
+        GROUP BY 1,2,3,4,5,6
+        ORDER BY 1 ) spot_report
+        on spot_micro.parkingsiteid = spot_report.siteid
+        and spot_micro.parkinggroupid = spot_report.parkinggroupid
+        and spot_micro.parkingspotid = spot_report.parkingspotid
+        and spot_report.endTime15 = spot_micro.endTime
+          ;;
   }
 
   dimension_group:  startTime{
@@ -151,11 +172,6 @@ view: aggregated_metrics {
     value_format_name: decimal_2
     sql: ${MaxDwelltime} ;;
   }
-  dimension: violationtype {
-    description: "Violation Type"
-    type: string
-    sql: ${TABLE}.violationtype ;;
-  }
   dimension: siteid {
     description: "Site ID"
     type: string
@@ -201,22 +217,16 @@ view: aggregated_metrics {
     type: string
     sql: ${TABLE}.formfactor ;;
   }
-
-  dimension: violationlist {
-    description: "violationlist"
-    type: string
-    sql: ${TABLE}.violationlist ;;
+  dimension:  violationCount{
+    type: number
+    description: "ViolationCount"
+    sql: ${TABLE}.violation_count ;;
   }
-#   dimension:  violationCount{
-#     type: number
-#     description: "ViolationCount"
-#     sql: ${TABLE}.violation_count ;;
-#   }
-#   measure: violationcount_total {
-#     type: sum
-#     description: "ViolationCount"
-#     sql: ${violationCount} ;;
-#   }
+  measure: violation_count_total {
+    type: sum
+    description: "ViolationCount"
+    sql: ${violationCount} ;;
+  }
   dimension: typeofvehicle {
     description: "VehicleType"
     type: string
