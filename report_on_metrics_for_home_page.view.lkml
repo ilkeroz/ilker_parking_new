@@ -232,20 +232,64 @@ view: report_on_metrics_for_home_page {
     description: "violationrevenue"
     sql: ${TABLE}.violationrevenue ;;
   }
-  measure: ViolationRevenue_total {
+  measure: overstay_violation_fee_total {
     type: sum
     description: "violationrevenue"
     sql: ${violationrevenue} ;;
+    filters: {
+      field: violationtype
+      value: "max-time-exceeded"
+    }
+  }
+  measure: noparking_violation_fee_total {
+    type: sum
+    description: "violationrevenue"
+    sql: ${violationrevenue} ;;
+    filters: {
+      field: violationtype
+      value: "no-parking"
+    }
+  }
+  measure: ppv_violation_fee_total {
+    type: sum
+    description: "violationrevenue"
+    sql: ${violationrevenue} ;;
+    filters: {
+      field: violationtype
+      value: "ppv"
+    }
   }
   dimension:  violationcount{
     type: number
     description: "violationcount"
     sql: ${TABLE}.violationcount ;;
   }
-  measure: violationcount_total {
+  measure: overstay_violationcount_total {
     type: sum
     description: "violationcount"
     sql: ${violationcount} ;;
+    filters: {
+      field: violationtype
+      value: "max-time-exceeded"
+    }
+  }
+  measure: noparking_violationcount_total {
+    type: sum
+    description: "violationcount"
+    sql: ${violationcount} ;;
+    filters: {
+      field: violationtype
+      value: "no-parking"
+    }
+  }
+  measure: ppv_violationcount_total {
+    type: sum
+    description: "violationcount"
+    sql: ${violationcount} ;;
+    filters: {
+      field: violationtype
+      value: "ppv"
+    }
   }
   dimension: typeofvehicle {
     description: "VehicleType"
