@@ -232,7 +232,7 @@ view: report_on_metrics_for_home_page {
     description: "violationrevenue"
     sql: ${TABLE}.violationrevenue ;;
   }
-  measure: overstay_violation_fee_total {
+  measure: violationfee_overstay {
     type: sum
     description: "violationrevenue"
     sql: ${violationrevenue} ;;
@@ -241,7 +241,7 @@ view: report_on_metrics_for_home_page {
       value: "max-time-exceeded"
     }
   }
-  measure: noparking_violation_fee_total {
+  measure: violationfee_noparking {
     type: sum
     description: "violationrevenue"
     sql: ${violationrevenue} ;;
@@ -250,7 +250,7 @@ view: report_on_metrics_for_home_page {
       value: "no-parking"
     }
   }
-  measure: ppv_violation_fee_total {
+  measure: violationfee_poorlyparked {
     type: sum
     description: "violationrevenue"
     sql: ${violationrevenue} ;;
@@ -264,7 +264,7 @@ view: report_on_metrics_for_home_page {
     description: "violationcount"
     sql: ${TABLE}.violationcount ;;
   }
-  measure: overstay_violationcount_total {
+  measure: violationcount_overstay {
     type: sum
     description: "violationcount"
     sql: ${violationcount} ;;
@@ -273,7 +273,7 @@ view: report_on_metrics_for_home_page {
       value: "max-time-exceeded"
     }
   }
-  measure: noparking_violationcount_total {
+  measure: violationcount_noparking {
     type: sum
     description: "violationcount"
     sql: ${violationcount} ;;
@@ -282,7 +282,7 @@ view: report_on_metrics_for_home_page {
       value: "no-parking"
     }
   }
-  measure: ppv_violationcount_total {
+  measure: violationcount_poorlyparked {
     type: sum
     description: "violationcount"
     sql: ${violationcount} ;;

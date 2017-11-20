@@ -250,7 +250,7 @@ explore: aggregate_spot_violationscount_report {}
 
 explore: report_metrics {}
 
-explore: report_on_metrics_for_home_page {
+explore: report_on_metrics_for_home_page {}
 #   join: report_site {
 #     sql_on: ${report_on_metrics_for_home_page.siteid}=${report_site.siteid} ;;
 #     relationship: many_to_one
@@ -266,7 +266,7 @@ explore: report_on_metrics_for_home_page {
 #     relationship: many_to_one
 #     type: left_outer
 #   }
-}
+#}
 
 explore: report_metrics_with_filters {
   join: report_site {
