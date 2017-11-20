@@ -24,45 +24,10 @@ view: report_on_metrics_with_filters {
           spot_micro.parkingspotname as spotname,
           spot_micro.parkingspotid as spotid,
           date_parse(starttime,'%Y-%m-%d %H:%i:%s') as startTime,
-          date_parse(endtime,'%Y-%m-%d %H:%i:%s') as endTime
-          ,"violation_count"
+          date_parse(endtime,'%Y-%m-%d %H:%i:%s') as endTime,
+          totalviolationcount as violation_count
           from
-        hive.dwh_qastage1.agg_report_spot_level_micro spot_micro
-        left join (
-
-        WITH com_report_violations_count_by_space AS (select objectid,
-        siteid,
-        parkinggroupname,
-        sitename,
-        violationlist,
-        violation,
-        parkinggroupid,
-        parkingspotid,
-        starttimestamp,
-        endtimestamp,
-        from_unixtime(starttimestamp/1000000) as startTime,
-        from_unixtime(endtimestamp/1000000) as endTime
-        from hive.dwh_qastage1.dwh_parking_spot_report
-        cross join UNNEST(violationlist) as t (group_violation)
-        cross join UNNEST(split(group_violation.violationtype,'=')) as v (violation)
-        where cardinality(violationlist) != 0
-        order by starttime ASC
-        )
-        SELECT
-        DATE_FORMAT(DATE_TRUNC('MINUTE', DATE_ADD('minute', -1 * minute((com_report_violations_count_by_space.endTime)) % 15, (com_report_violations_count_by_space.endTime))),'%Y-%m-%d %H:%i:%s') AS "endTime15",
-        com_report_violations_count_by_space.siteid,
-        com_report_violations_count_by_space.sitename,
-        com_report_violations_count_by_space.parkinggroupid,
-        com_report_violations_count_by_space.parkinggroupname,
-        com_report_violations_count_by_space.parkingspotid,
-        COUNT(*) AS "violation_count"
-        FROM com_report_violations_count_by_space
-        GROUP BY 1,2,3,4,5,6
-        ORDER BY 1 ) spot_report
-        on spot_micro.parkingsiteid = spot_report.siteid
-        and spot_micro.parkinggroupid = spot_report.parkinggroupid
-        and spot_micro.parkingspotid = spot_report.parkingspotid
-        and spot_report.endTime15 = spot_micro.endTime
+          hive.dwh_qastage1.agg_report_spot_level_micro spot_micro
           ;;
   }
 
