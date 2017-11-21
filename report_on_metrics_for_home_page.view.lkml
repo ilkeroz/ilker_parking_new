@@ -69,6 +69,7 @@ view: report_on_metrics_for_home_page {
         and spot_micro.parkingspotid = spot_report.parkingspotid
         and spot_report.endTime = spot_micro.endTime
           ;;
+    sql_trigger_value: select case when date_format(current_timestamp,'%i') between '00' and '14' then '00' when date_format(current_timestamp,'%i') between '15' and '29' then '15' when date_format(current_timestamp,'%i') between '30' and '44' then '30' else '45' end ;;
   }
 
   dimension_group:  startTime{
@@ -111,6 +112,12 @@ view: report_on_metrics_for_home_page {
     description: "Revenue"
     value_format_name: decimal_2
     sql: ${Revenue} ;;
+  }
+  measure: revenue_parking_total {
+    type: number
+    description: "Revenue"
+    value_format_name: decimal_2
+    sql: ${revenue_total} - ${violationfee};;
   }
   dimension: Turnover {
     type: number
@@ -232,6 +239,11 @@ view: report_on_metrics_for_home_page {
     description: "violationrevenue"
     sql: ${TABLE}.violationrevenue ;;
   }
+  measure: violationfee {
+    type: sum
+    description: "violationrevenue"
+    sql: ${violationrevenue} ;;
+  }
   measure: violationfee_overstay {
     type: sum
     description: "violationrevenue"
@@ -264,6 +276,12 @@ view: report_on_metrics_for_home_page {
     description: "violationcount"
     sql: ${TABLE}.violationcount ;;
   }
+  measure: violationcount_total {
+    type: sum
+    description: "violationcount"
+    sql: ${violationcount} ;;
+  }
+
   measure: violationcount_overstay {
     type: sum
     description: "violationcount"

@@ -29,6 +29,7 @@ view: report_on_metrics_with_filters {
           from
           hive.dwh_qastage1.agg_report_spot_level_micro spot_micro
           ;;
+          sql_trigger_value: select case when date_format(current_timestamp,'%i') between '00' and '14' then '00' when date_format(current_timestamp,'%i') between '15' and '29' then '15' when date_format(current_timestamp,'%i') between '30' and '44' then '30' else '45' end ;;
   }
 
   dimension_group:  startTime{

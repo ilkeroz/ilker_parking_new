@@ -286,7 +286,7 @@ explore: report_metrics_with_filters {
   }
 }
 
-explore: report_on_metrics_with_filters{}
+explore: report_on_metrics_with_filters {
 #   join: report_site {
 #     sql_on: ${report_on_metrics_with_filters.siteid}=${report_site.siteid} ;;
 #     relationship: many_to_one
@@ -302,7 +302,7 @@ explore: report_on_metrics_with_filters{}
 #     relationship: many_to_one
 #     type: left_outer
 #   }
-#}
+}
 
 explore: aggregated_metrics{
 #   join: report_site {
