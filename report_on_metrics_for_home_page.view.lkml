@@ -107,17 +107,17 @@ view: report_on_metrics_for_home_page {
     description: "Revenue"
     sql: ${TABLE}.Revenue ;;
   }
-  measure: revenue_total {
+  measure: revenue_parking_total {
     type: sum
     description: "Revenue"
     value_format_name: decimal_2
     sql: ${Revenue} ;;
   }
-  measure: revenue_parking_total {
+  measure: revenue_total {
     type: number
     description: "Revenue"
     value_format_name: decimal_2
-    sql: ${revenue_total} - ${violationfee_total};;
+    sql: ${revenue_parking_total} + ${violationfee_total};;
   }
   dimension: Turnover {
     type: number
