@@ -117,7 +117,7 @@ view: report_on_metrics_for_home_page {
     type: number
     description: "Revenue"
     value_format_name: decimal_2
-    sql: ${revenue_total} - ${violationfee};;
+    sql: ${revenue_total} - ${violationfee_total};;
   }
   dimension: Turnover {
     type: number
@@ -239,7 +239,7 @@ view: report_on_metrics_for_home_page {
     description: "violationrevenue"
     sql: ${TABLE}.violationrevenue ;;
   }
-  measure: violationfee {
+  measure: violationfee_total {
     type: sum
     description: "violationrevenue"
     sql: ${violationrevenue} ;;
