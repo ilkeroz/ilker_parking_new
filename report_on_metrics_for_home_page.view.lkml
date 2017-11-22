@@ -242,11 +242,13 @@ view: report_on_metrics_for_home_page {
   measure: violationRevenue_total {
     type: sum
     description: "violationrevenue"
+    value_format_name: decimal_2
     sql: ${violationrevenue} ;;
   }
   measure: violationfee_overstay {
     type: sum
     description: "violationrevenue"
+    value_format_name: decimal_2
     sql: ${violationrevenue} ;;
     filters: {
       field: violationtype
@@ -256,6 +258,7 @@ view: report_on_metrics_for_home_page {
   measure: violationfee_noparking {
     type: sum
     description: "violationrevenue"
+    value_format_name: decimal_2
     sql: ${violationrevenue} ;;
     filters: {
       field: violationtype
@@ -265,6 +268,7 @@ view: report_on_metrics_for_home_page {
   measure: violationfee_poorlyparked {
     type: sum
     description: "violationrevenue"
+    value_format_name: decimal_2
     sql: ${violationrevenue} ;;
     filters: {
       field: violationtype
