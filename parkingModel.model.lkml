@@ -17,6 +17,8 @@ explore: report_user {
 
 explore: report_site {}
 
+explore: report_customer {}
+
 explore: dwh_site {}
 
 explore: daily_parking_aggregates {}
@@ -282,13 +284,13 @@ explore: report_metrics_with_filters {
     relationship: many_to_one
     type: inner
   }
-  join: dwh_customer {
-    sql_on: ${report_site.orgid}=${dwh_customer.orgid} ;;
+  join: report_customer {
+    sql_on: ${report_site.orgid}=${report_customer.orgid} ;;
     relationship: many_to_one
     type: inner
   }
   join: report_user {
-    sql_on: ${report_user.orgid}=${dwh_customer.orgid} ;;
+    sql_on: ${report_user.orgid}=${report_customer.orgid} ;;
     relationship: many_to_one
     type: inner
   }
