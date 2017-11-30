@@ -9,10 +9,10 @@ include: "*.dashboard"
 week_start_day: sunday
 
 explore: report_user {
-  access_filter: {
-    field: report_user.email
-    user_attribute: email
-  }
+#   access_filter: {
+#     field: report_user.email
+#     user_attribute: email
+#   }
 }
 
 explore: report_site {}
