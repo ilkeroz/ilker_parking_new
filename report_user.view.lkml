@@ -4,7 +4,8 @@ view: report_user {
   derived_table: {
     sql:
     select distinct s.*
-    from   hive.{{ _user_attributes['platform'] }}.dwh_user s
+    from   hive.dwh_qastage1.dwh_user s
+    ;;
     }
 
   dimension: userid {
