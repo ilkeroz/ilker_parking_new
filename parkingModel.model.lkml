@@ -275,10 +275,10 @@ explore: report_on_metrics_for_home_page {
 }
 
 explore: report_metrics_with_filters {
-#   access_filter: {
-#     field: report_user.email
-#     user_attribute: email
-#   }
+  access_filter: {
+    field: report_user.email
+    user_attribute: email
+  }
   join: report_site {
     sql_on: ${report_metrics_with_filters.siteid}=${report_site.siteid} ;;
     relationship: many_to_one
