@@ -4,7 +4,7 @@ view: report_user {
   derived_table: {
     sql:
     select distinct s.*
-    from   hive.dwh_qastage1.dwh_user s
+    from   hive.dwh_sdqa.dwh_user s
     ;;
     }
 

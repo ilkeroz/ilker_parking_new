@@ -2,7 +2,7 @@ view: report_site {
   derived_table: {
     sql:
     select distinct s.*
-    from   hive.dwh_qastage1.dwh_site s
+    from   hive.dwh_sdqa.dwh_site s
     ;;
     }
 

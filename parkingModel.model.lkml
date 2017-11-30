@@ -255,21 +255,21 @@ explore: report_on_metrics_for_home_page {
 #     field: report_user.email
 #     user_attribute: email
 #   }
-  join: report_site {
-    sql_on: ${report_on_metrics_for_home_page.siteid}=${report_site.siteid} ;;
-    relationship: many_to_one
-    type: inner
-  }
-  join: dwh_customer {
-    sql_on: ${report_site.orgid}=${dwh_customer.orgid} ;;
-    relationship: many_to_one
-    type: inner
-  }
-  join: report_user {
-    sql_on: ${dwh_customer.orgid}=${report_user.orgid} ;;
-    relationship: many_to_one
-    type: inner
-  }
+#   join: report_site {
+#     sql_on: ${report_on_metrics_for_home_page.siteid}=${report_site.siteid} ;;
+#     relationship: many_to_one
+#     type: inner
+#   }
+#   join: dwh_customer {
+#     sql_on: ${report_site.orgid}=${dwh_customer.orgid} ;;
+#     relationship: many_to_one
+#     type: inner
+#   }
+#   join: report_user {
+#     sql_on: ${dwh_customer.orgid}=${report_user.orgid} ;;
+#     relationship: many_to_one
+#     type: inner
+#   }
 }
 
 explore: report_metrics_with_filters {

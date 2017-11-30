@@ -28,7 +28,7 @@ view: report_metrics_with_filters {
           "violationcount",
           "violationtype"
           from
-        hive.dwh_qastage1.agg_report_spot_level_micro spot_micro
+        hive.dwh_sdqa.agg_report_spot_level_micro spot_micro
         left join (
         WITH com_report_violations_revenue_by_space AS (select
           parkingsiteid,
@@ -43,7 +43,7 @@ view: report_metrics_with_filters {
           parkingspotname,
           date_parse(starttime,'%Y-%m-%d %H:%i:%s') as starttime,
           date_parse(endtime,'%Y-%m-%d %H:%i:%s') as endtime
-          from hive.dwh_qastage1.agg_report_spot_level_micro
+          from hive.dwh_sdqa.agg_report_spot_level_micro
           cross join UNNEST(violationlist) as t (space_violation)
           order by starttime ASC
       )
