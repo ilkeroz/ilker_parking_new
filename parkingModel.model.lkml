@@ -252,6 +252,7 @@ explore: aggregate_spot_violationscount_report {}
 
 explore: report_metrics {}
 
+explore: report_on_metrics{}
 explore: report_on_metrics_for_home_page {
 #   access_filter: {
 #     field: report_user.email
