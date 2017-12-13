@@ -81,7 +81,7 @@ view: report_on_metrics_with_filters {
   measure: turnover_total {
     type: sum
     description: "Turnover"
-    sql: ${Turnover} ;;
+    sql: COALESCE(${Turnover},0) ;;
   }
   dimension: Vacancy {
     type: number
