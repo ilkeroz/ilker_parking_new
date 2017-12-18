@@ -24,6 +24,7 @@ view: report_on_metrics_for_home_page {
           spot_micro.parkingspotid as spotid,
           date_parse(spot_micro.starttime,'%Y-%m-%d %H:%i:%s') as startTime,
           date_parse(spot_micro.endtime,'%Y-%m-%d %H:%i:%s') as endTime,
+          date_parse(spot_micro.currentbatch,'%Y-%m-%d') as currentbatch,
           "violationrevenue",
           "violationcount",
           "violationtype"
@@ -42,8 +43,10 @@ view: report_on_metrics_for_home_page {
           parkingspotid,
           parkingspotname,
           date_parse(starttime,'%Y-%m-%d %H:%i:%s') as starttime,
-          date_parse(endtime,'%Y-%m-%d %H:%i:%s') as endtime
-          from hive.dwh_qastage1.agg_report_spot_level_micro
+          date_parse(endtime,'%Y-%m-%d %H:%i:%s') as endtime,
+          date_parse(currentbatch,'%Y-%m-%d') as currentbatch
+          from
+          hive.dwh_qastage1.agg_report_spot_level_micro
           cross join UNNEST(violationlist) as t (space_violation)
           order by starttime ASC
       )
@@ -65,12 +68,22 @@ view: report_on_metrics_for_home_page {
 
         ) spot_report
         on spot_micro.parkingsiteid = spot_report.siteid
+        and spot_micro.parkingsitename = spot_report.sitename
         and spot_micro.parkinggroupid = spot_report.parkinggroupid
+        and spot_micro.parkinggroupname = spot_report.parkinggroupname
         and spot_micro.parkingspotid = spot_report.parkingspotid
         and spot_micro.parkingspotname = spot_report.parkingspotname
         and spot_report.endTime = spot_micro.endTime
           ;;
     sql_trigger_value: select case when date_format(current_timestamp,'%i') between '00' and '14' then '00' when date_format(current_timestamp,'%i') between '15' and '29' then '15' when date_format(current_timestamp,'%i') between '30' and '44' then '30' else '45' end ;;
+  }
+
+  dimension_group:  currentbatch{
+    description: "Current Batch"
+    type: time
+    sql:CAST( ${TABLE}.currentbatch AS TIMESTAMP) ;;
+    convert_tz: no
+
   }
 
   dimension_group:  startTime{
@@ -108,7 +121,7 @@ view: report_on_metrics_for_home_page {
     description: "Revenue"
     sql: ${TABLE}.Revenue ;;
   }
-  measure: parkingRevenue_total {
+  measure: revenue_parking {
     type: sum
     description: "Revenue"
     value_format_name: decimal_2
@@ -118,7 +131,7 @@ view: report_on_metrics_for_home_page {
     type: number
     description: "Revenue"
     value_format_name: decimal_2
-    sql: ${parkingRevenue_total} + ${violationRevenue_total};;
+    sql: ${revenue_parking} + ${revenue_violations};;
   }
   dimension: Turnover {
     type: number
@@ -158,7 +171,7 @@ view: report_on_metrics_for_home_page {
     sql: ${TABLE}.MedianDwelltime ;;
   }
   measure: dwelltime_median {
-    type: average
+    type: median
     description: "MedianDwelltime"
     value_format_name: decimal_2
     sql: ${MedianDwelltime} ;;
@@ -169,7 +182,7 @@ view: report_on_metrics_for_home_page {
     sql: ${TABLE}.MinDwelltime ;;
   }
   measure: dwelltime_min {
-    type: average
+    type: min
     description: "MinDwelltime"
     value_format_name: decimal_2
     sql: ${MinDwelltime} ;;
@@ -180,7 +193,7 @@ view: report_on_metrics_for_home_page {
     sql: ${TABLE}.MaxDwelltime ;;
   }
   measure: dwelltime_max {
-    type: average
+    type: max
     description: "MaxDwelltime"
     value_format_name: decimal_2
     sql: ${MaxDwelltime} ;;
@@ -240,7 +253,7 @@ view: report_on_metrics_for_home_page {
     description: "violationrevenue"
     sql: ${TABLE}.violationrevenue ;;
   }
-  measure: violationRevenue_total {
+  measure: revenue_violations {
     type: sum
     description: "violationrevenue"
     value_format_name: decimal_2
@@ -341,8 +354,8 @@ view: report_on_metrics_for_home_page {
   }
   dimension: data_minute_index {
     type: number
-    sql: EXTRACT(HOUR FROM ${TABLE}.endTime)*60 +  EXTRACT(MINUTE FROM ${TABLE}.endTime)
-      ;;
+    sql: EXTRACT(HOUR FROM ( ${TABLE}.endTime  AT TIME ZONE '{{ _query._query_timezone }}'))*60 +  EXTRACT(MINUTE FROM ( ${TABLE}.endTime  AT TIME ZONE '{{ _query._query_timezone }}')) ;;
+    # sql: EXTRACT(HOUR FROM ${TABLE}.endTime)*60 +  EXTRACT(MINUTE FROM ${TABLE}.endTime);;
   }
 
   filter: start_minute {

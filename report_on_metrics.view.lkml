@@ -45,7 +45,8 @@ view: report_on_metrics {
           date_parse(starttime,'%Y-%m-%d %H:%i:%s') as starttime,
           date_parse(endtime,'%Y-%m-%d %H:%i:%s') as endtime,
           date_parse(currentbatch,'%Y-%m-%d') as currentbatch
-          from hive.dwh_qastage1.agg_report_spot_level_micro
+          from
+          hive.dwh_qastage1.agg_report_spot_level_micro
           cross join UNNEST(violationlist) as t (space_violation)
           order by starttime ASC
       )
@@ -80,7 +81,9 @@ view: report_on_metrics {
   dimension_group:  currentbatch{
     description: "Current Batch"
     type: time
-    sql: ${TABLE}.currentbatch ;;
+    sql:CAST( ${TABLE}.currentbatch AS TIMESTAMP) ;;
+    convert_tz: no
+
   }
 
   dimension_group:  startTime{
