@@ -75,7 +75,7 @@ view: report_on_metrics {
         and spot_micro.parkingspotname = spot_report.parkingspotname
         and spot_report.endTime = spot_micro.endTime
           ;;
-    sql_trigger_value: select case when date_format(current_timestamp,'%i') between '00' and '14' then '00' when date_format(current_timestamp,'%i') between '15' and '29' then '15' when date_format(current_timestamp,'%i') between '30' and '44' then '30' else '45' end ;;
+#     sql_trigger_value: select case when date_format(current_timestamp,'%i') between '00' and '14' then '00' when date_format(current_timestamp,'%i') between '15' and '29' then '15' when date_format(current_timestamp,'%i') between '30' and '44' then '30' else '45' end ;;
   }
 
   dimension_group:  currentbatch{
