@@ -258,13 +258,13 @@ explore: report_on_metrics{
     relationship: many_to_one
     type: inner
   }
-  join: dwh_customer {
-    sql_on: ${report_site.orgid}=${dwh_customer.orgid} ;;
+  join: report_customer {
+    sql_on: ${report_site.orgid}=${report_customer.orgid} ;;
     relationship: many_to_one
     type: inner
   }
   join: report_user {
-    sql_on: ${dwh_customer.orgid}=${report_user.orgid} ;;
+    sql_on: ${report_customer.orgid}=${report_user.orgid} ;;
     relationship: many_to_one
     type: inner
   }
