@@ -2,13 +2,13 @@ view: agg_report_site_level_day_parking {
   # Or, you could make this view a derived table, like this:
   derived_table: {
     sql: SELECT
-        siteid as siteid
-        , sitename as sitename
+        parkingsiteid as siteid
+        , parkingsitename as sitename
         , date_parse(starttime,'%Y-%m-%d %H:%i:%s') as starttime
         , occupancy as occupancy
         , minrevenue as minrevenue
         , maxrevenue as maxrevenue
-      FROM hive.dwh_qastage2.agg_report_site_level_day
+      FROM hive.dwh_sdqa.agg_report_site_level_day
       ORDER BY starttime
       ;;
   }
