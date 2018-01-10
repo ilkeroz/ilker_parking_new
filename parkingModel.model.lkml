@@ -252,23 +252,23 @@ explore: aggregate_spot_violationscount_report {}
 
 explore: report_metrics {}
 
-explore: report_on_metrics{
-    join: report_site {
-    sql_on: ${report_on_metrics.siteid}=${report_site.siteid} ;;
-    relationship: many_to_one
-    type: inner
-  }
-  join: report_customer {
-    sql_on: ${report_site.orgid}=${report_customer.orgid} ;;
-    relationship: many_to_one
-    type: inner
-  }
-  join: report_user {
-    sql_on: ${report_customer.orgid}=${report_user.orgid} ;;
-    relationship: many_to_one
-    type: inner
-  }
-}
+explore: report_on_metrics{}
+#     join: report_site {
+#     sql_on: ${report_on_metrics.siteid}=${report_site.siteid} ;;
+#     relationship: many_to_one
+#     type: inner
+#   }
+#   join: report_customer {
+#     sql_on: ${report_site.orgid}=${report_customer.orgid} ;;
+#     relationship: many_to_one
+#     type: inner
+#   }
+#   join: report_user {
+#     sql_on: ${report_customer.orgid}=${report_user.orgid} ;;
+#     relationship: many_to_one
+#     type: inner
+#   }
+# }
 explore: report_on_metrics_for_home_page {
 #   access_filter: {
 #     field: report_user.email
