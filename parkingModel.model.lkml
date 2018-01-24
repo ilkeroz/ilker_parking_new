@@ -391,6 +391,8 @@ explore: daily_parking_aggregates_spot {
   }
 }
 
+explore: report_on_metrics_with_map {}
+
 # explore: occ_report_drill_down_site {
 #   join: occ_report_drill_down_zone {
 #     sql_on: ${occ_report_drill_down_site.siteid}=${occ_report_drill_down_zone.siteid} ;;
