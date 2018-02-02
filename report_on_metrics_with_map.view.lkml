@@ -27,8 +27,7 @@ view: report_on_metrics_with_map {
           date_parse(spot_micro.currentbatch,'%Y-%m-%d') as currentbatch,
           "violationrevenue",
           "violationcount",
-          "violationtype",
-          "totalspots"
+          "violationtype"
           from
         hive.dwh_sdqa.dwh_agg_report_spot_level_micro_consolidate spot_micro
         left join (
