@@ -28,10 +28,9 @@ view: report_on_metrics_with_map {
           "violationrevenue",
           "violationcount",
           "violationtype",
-          "lat1",
-          "lng1"
+          "totalspots"
           from
-        hive.dwh_sdqa.agg_report_spot_level_micro spot_micro
+        hive.dwh_sdqa.dwh_agg_report_spot_level_micro_consolidate spot_micro
         left join (
         WITH com_report_violations_revenue_by_space AS (select
           parkingsiteid,
@@ -48,7 +47,7 @@ view: report_on_metrics_with_map {
           date_parse(endtime,'%Y-%m-%d %H:%i:%s') as endtime,
           date_parse(currentbatch,'%Y-%m-%d') as currentbatch
           from
-          hive.dwh_sdqa.agg_report_spot_level_micro
+          hive.dwh_sdqa.dwh_agg_report_spot_level_micro_consolidate
           cross join UNNEST(violationlist) as t (space_violation)
           order by starttime ASC
       )
@@ -76,21 +75,44 @@ view: report_on_metrics_with_map {
         and spot_micro.parkingspotid = spot_report.parkingspotid
         and spot_micro.parkingspotname = spot_report.parkingspotname
         and spot_report.endTime = spot_micro.endTime
-        left join (
-        select lat1,lng1,parkingspotid,siteid from hive.dwh_sdqa.dwh_parking_spot
-        ) spot_location on
-        spot_location.parkingspotid = spot_micro.parkingspotid
-        and spot_location.siteid = spot_micro.parkingsiteid
+--         inner join (
+--         select totalspots,parkingspotid,parking_spot.parkinggroupid,siteid from (
+--         select count(parkingspotid) as totalspots_minute15,count(parkingspotid)*4 as totalspots_hourly,count(parkingspotid)*24*4 as totalspots_daily,
+--         count(parkingspotid) as totalspots_minute15,parkinggroupid from hive.dwh_sdqa.dwh_parking_spot
+--         group by parkinggroupid
+--         ) parking_spot inner join hive.dwh_sdqa.dwh_parking_spot spot on parking_spot.parkinggroupid = spot.parkinggroupid) spot_location on
+--         spot_location.parkingspotid = spot_micro.parkingspotid
+--         and spot_location.parkinggroupid = spot_micro.parkinggroupid
+--         and spot_location.siteid = spot_micro.parkingsiteid
+
+--      right outer join (
+--      select 1 as totalspots,parkingspotid,parkinggroupid,siteid from hive.dwh_sdqa.dwh_parking_spot) parking_spot
+--      on spot_micro.parkingsiteid = parking_spot.siteid
+--      and spot_micro.parkinggroupid = parking_spot.parkinggroupid
+
           ;;
-     sql_trigger_value: select case when date_format(current_timestamp,'%i') between '00' and '14' then '00' when date_format(current_timestamp,'%i') between '15' and '29' then '15' when date_format(current_timestamp,'%i') between '30' and '44' then '30' else '45' end ;;
+#      sql_trigger_value: select case when date_format(current_timestamp,'%i') between '00' and '14' then '00' when date_format(current_timestamp,'%i') between '15' and '29' then '15' when date_format(current_timestamp,'%i') between '30' and '44' then '30' else '45' end ;;
     }
 
-  dimension: spot_location_1 {
-    description: "Location"
-    type: location
-    sql_latitude: ${TABLE}.lat1 ;;
-    sql_longitude: ${TABLE}.lng1 ;;
-  }
+#   dimension: spot_location {
+#     description: "Location"
+#     type: location
+#     sql_latitude: ${TABLE}.lat1 ;;
+#     sql_longitude: ${TABLE}.lng1 ;;
+#   }
+
+#   dimension: totalspots {
+#     description: "Total Spots"
+#     type: number
+#     sql: ${TABLE}.totalspots ;;
+#   }
+#
+#   measure: spots_sum {
+#     type: sum
+#     description: "Total Spots"
+#     sql: ${totalspots} ;;
+#   }
+
 
     dimension_group:  currentbatch{
       description: "Current Batch"
@@ -124,11 +146,17 @@ view: report_on_metrics_with_map {
       description: "Occupancy"
       sql: ${TABLE}.Occupancy ;;
     }
+#   measure: occupancy_sum {
+#     type: sum
+#     description: "Occupancy"
+#     value_format_name: decimal_2
+#     sql: ${Occupancy};;
+#   }
     measure: occupancy_average {
-      type: average
+      type: number
       description: "Occupancy"
       value_format_name: decimal_2
-      sql: ${Occupancy} ;;
+      sql: ${Occupancy};;
     }
     dimension: Revenue {
       type: number
@@ -404,5 +432,9 @@ view: report_on_metrics_with_map {
           ${data_minute_index} <= ${end_minute_indexed}
           ;;
     }
+
+#   filter: interval {
+#     type: string
+#   }
 
   }
