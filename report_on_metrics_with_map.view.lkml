@@ -152,7 +152,7 @@ view: report_on_metrics_with_map {
 #     sql: ${Occupancy};;
 #   }
     measure: occupancy_average {
-      type: number
+      type: average
       description: "Occupancy"
       value_format_name: decimal_2
       sql: ${Occupancy};;
