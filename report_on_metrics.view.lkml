@@ -27,7 +27,9 @@ view: report_on_metrics {
           date_parse(spot_micro.currentbatch,'%Y-%m-%d') as currentbatch,
           "violationrevenue",
           "violationcount",
-          "violationtype"
+          "violationtype",
+          "lat1",
+          "lng1"
           from
         hive.dwh_sdqa.agg_report_spot_level_micro spot_micro
         left join (
@@ -74,8 +76,19 @@ view: report_on_metrics {
         and spot_micro.parkingspotid = spot_report.parkingspotid
         and spot_micro.parkingspotname = spot_report.parkingspotname
         and spot_report.endTime = spot_micro.endTime
+        left join
+        (select lat1,lng1,parkingspotid,parkinggroupid,siteid from hive.dwh_sdqa.dwh_parking_spot) parking_spot
+        on spot_micro.parkingsiteid = parking_spot.siteid
+        and spot_micro.parkinggroupid = parking_spot.parkinggroupid
+        and spot_micro.parkingspotid = parking_spot.parkingspotid
           ;;
-    sql_trigger_value: select case when date_format(current_timestamp,'%i') between '00' and '14' then '00' when date_format(current_timestamp,'%i') between '15' and '29' then '15' when date_format(current_timestamp,'%i') between '30' and '44' then '30' else '45' end ;;
+  #  sql_trigger_value: select case when date_format(current_timestamp,'%i') between '00' and '14' then '00' when date_format(current_timestamp,'%i') between '15' and '29' then '15' when date_format(current_timestamp,'%i') between '30' and '44' then '30' else '45' end ;;
+  }
+
+  dimension: spotlocation {
+    type: location
+    sql_latitude: ${TABLE}.lat1 ;;
+    sql_longitude: ${TABLE}.lng1 ;;
   }
 
   dimension_group:  currentbatch{
