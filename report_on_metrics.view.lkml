@@ -5,10 +5,10 @@ view: report_on_metrics {
       (case when cardinality(spot_micro.violationlist)>1 then spot_micro.totalrevenue/cast(cardinality(spot_micro.violationlist) as double) else totalrevenue end) as Revenue,
       (case when cardinality(spot_micro.violationlist)>1 then spot_micro.turnover/cast(cardinality(spot_micro.violationlist) as double) else turnover end) as Turnover,
           spot_micro.vacancy as Vacancy,
-          coalesce(spot_micro.avgdwelltime,0) as AvgDwelltime,
-          coalesce(spot_micro.mediandwelltime,0) as MedianDwelltime,
-          coalesce(spot_micro.mindwelltime,0) as MinDwelltime,
-          coalesce(spot_micro.maxdwelltime,0) as MaxDwelltime,
+          spot_micro.avgdwelltime as AvgDwelltime,
+          spot_micro.mediandwelltime as MedianDwelltime,
+          spot_micro.mindwelltime as MinDwelltime,
+          spot_micro.maxdwelltime as MaxDwelltime,
           spot_micro.parkingsiteid as siteid,
           spot_micro.parkingsitename as sitename,
           spot_micro.handicap as handicapped,
@@ -27,9 +27,9 @@ view: report_on_metrics {
           date_parse(spot_micro.currentbatch,'%Y-%m-%d') as currentbatch,
           "violationrevenue",
           "violationcount",
-          "violationtype",
-          "lat1",
-          "lng1"
+          "violationtype"
+        --  ,"lat1",
+        --  "lng1"
           from
         hive.dwh_sdqa.agg_report_spot_level_micro spot_micro
         left join (
@@ -76,20 +76,20 @@ view: report_on_metrics {
         and spot_micro.parkingspotid = spot_report.parkingspotid
         and spot_micro.parkingspotname = spot_report.parkingspotname
         and spot_report.endTime = spot_micro.endTime
-        left join
-        (select lat1,lng1,parkingspotid,parkinggroupid,siteid from hive.dwh_sdqa.dwh_parking_spot) parking_spot
-        on spot_micro.parkingsiteid = parking_spot.siteid
-        and spot_micro.parkinggroupid = parking_spot.parkinggroupid
-        and spot_micro.parkingspotid = parking_spot.parkingspotid
+      --  left join
+      --  (select lat1,lng1,parkingspotid,parkinggroupid,siteid from hive.dwh_sdqa.dwh_parking_spot) parking_spot
+      --  on spot_micro.parkingsiteid = parking_spot.siteid
+      --  and spot_micro.parkinggroupid = parking_spot.parkinggroupid
+      --  and spot_micro.parkingspotid = parking_spot.parkingspotid
           ;;
-  #  sql_trigger_value: select case when date_format(current_timestamp,'%i') between '00' and '14' then '00' when date_format(current_timestamp,'%i') between '15' and '29' then '15' when date_format(current_timestamp,'%i') between '30' and '44' then '30' else '45' end ;;
+    sql_trigger_value: select case when date_format(current_timestamp,'%i') between '00' and '14' then '00' when date_format(current_timestamp,'%i') between '15' and '29' then '15' when date_format(current_timestamp,'%i') between '30' and '44' then '30' else '45' end ;;
   }
 
-  dimension: spotlocation {
-    type: location
-    sql_latitude: ${TABLE}.lat1 ;;
-    sql_longitude: ${TABLE}.lng1 ;;
-  }
+#   dimension: spotlocation {
+#     type: location
+#     sql_latitude: ${TABLE}.lat1 ;;
+#     sql_longitude: ${TABLE}.lng1 ;;
+#   }
 
   dimension_group:  currentbatch{
     description: "Current Batch"
