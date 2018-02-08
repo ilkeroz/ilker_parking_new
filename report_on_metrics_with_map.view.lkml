@@ -167,7 +167,7 @@ view: report_on_metrics_with_map {
     description: "TotalDwelltime"
     sql: ${TotalDwelltime} ;;
   }
-  measure: dwelltime_average_with_turnover {
+  measure: dwelltime_average {
     type: number
     description: "AvgDwelltime"
     value_format_name: decimal_2
@@ -178,12 +178,12 @@ view: report_on_metrics_with_map {
       description: "AvgDwelltime"
       sql: ${TABLE}.AvgDwelltime ;;
     }
-    measure: dwelltime_average {
-      type: average
-      description: "AvgDwelltime"
-      value_format_name: decimal_2
-      sql: ${AvgDwelltime} ;;
-    }
+#     measure: dwelltime_average {
+#       type: average
+#       description: "AvgDwelltime"
+#       value_format_name: decimal_2
+#       sql: ${AvgDwelltime} ;;
+#     }
     dimension: MedianDwelltime {
       type: number
       description: "MedianDwelltime"
