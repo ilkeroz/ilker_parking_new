@@ -6,6 +6,7 @@ view: report_on_metrics_with_map {
       (case when cardinality(spot_micro.violationlist)>1 then spot_micro.turnover/cast(cardinality(spot_micro.violationlist) as double) else turnover end) as Turnover,
           spot_micro.vacancy as Vacancy,
           spot_micro.avgdwelltime as AvgDwelltime,
+          spot_micro.totaldwelltime as TotalDwelltime,
           spot_micro.mediandwelltime as MedianDwelltime,
           spot_micro.mindwelltime as MinDwelltime,
           spot_micro.maxdwelltime as MaxDwelltime,
@@ -155,6 +156,23 @@ view: report_on_metrics_with_map {
       value_format_name: decimal_2
       sql: ${Vacancy} ;;
     }
+
+  dimension: TotalDwelltime {
+    type: number
+    description: "TotalDwelltime"
+    sql: ${TABLE}.TotalDwelltime ;;
+  }
+  measure:dwelltime_total {
+    type: sum
+    description: "TotalDwelltime"
+    sql: ${TotalDwelltime} ;;
+  }
+  measure: dwelltime_average_with_turnover {
+    type: number
+    description: "AvgDwelltime"
+    value_format_name: decimal_2
+    sql: sum(${TotalDwelltime})/sum(${Turnover}) ;;
+  }
     dimension: AvgDwelltime {
       type: number
       description: "AvgDwelltime"
