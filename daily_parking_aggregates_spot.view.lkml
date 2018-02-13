@@ -10,7 +10,7 @@ view: daily_parking_aggregates_spot {
     and spot.parkingspotid != 'F95AA0C3-D486-4982-BFF9-DEFADAD1FEA0'
       GROUP BY spot.siteid, spot.parkingspotid, spot.startday
       ;;
-      ##sql_trigger_value: select date_format(current_timestamp,'%d') ;;
+      sql_trigger_value: select date_format(current_timestamp,'%d') ;;
   }
 
   suggestions: yes
