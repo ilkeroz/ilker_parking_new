@@ -1,4 +1,4 @@
-connection: "netsense"
+connection: "scale"
 
 # include all the views
 include: "*.view"
